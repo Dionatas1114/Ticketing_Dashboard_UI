@@ -1,0 +1,19 @@
+{
+  "name": "ticketing_dashboard_ui",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dionatas1114/Ticketing_Dashboard_UI.git"
+  },
+  "author": "Dionatas1114",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Dionatas1114/Ticketing_Dashboard_UI/issues"
+  },
+  "homepage": "https://github.com/Dionatas1114/Ticketing_Dashboard_UI#readme",
+  "description": "The TicketingDashboardUI is a frontend application developed in TypeScript and using Material-UI (MUI) for ticket management. This application aims to provide a friendly and efficient interface for the support team, enabling the monitoring and quick resolution of support tickets."
+}
