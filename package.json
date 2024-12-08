@@ -1,19 +1,26 @@
 {
   "name": "ticketing_dashboard_ui",
-  "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "description": "The TicketingDashboardUI is a frontend application developed in TypeScript and using Material-UI (MUI) for ticket management. This application aims to provide a friendly and efficient interface for the support team, enabling the monitoring and quick resolution of support tickets.",
+  "license": "MIT",
+  "author": "Dionatas Lazzari <sem.dionatas@gmail.com>",
+  "homepage": "https://github.com/Dionatas1114/Ticketing_Dashboard_UI#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Dionatas1114/Ticketing_Dashboard_UI.git"
   },
-  "author": "Dionatas1114",
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/Dionatas1114/Ticketing_Dashboard_UI/issues"
   },
-  "homepage": "https://github.com/Dionatas1114/Ticketing_Dashboard_UI#readme",
-  "description": "The TicketingDashboardUI is a frontend application developed in TypeScript and using Material-UI (MUI) for ticket management. This application aims to provide a friendly and efficient interface for the support team, enabling the monitoring and quick resolution of support tickets."
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "react-scripts": "latest"
+  }
 }
