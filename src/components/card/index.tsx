@@ -1,7 +1,6 @@
-import MuiCard from '@mui/material/Card';
-import { styled } from '@mui/material/styles';
+import { Card as MuiCard, styled } from '@mui/material';
 
-export const Card = styled(MuiCard)(({ theme }) => ({
+const CardStyled = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   alignSelf: 'center',
@@ -19,3 +18,7 @@ export const Card = styled(MuiCard)(({ theme }) => ({
       'hsla(220, 30%, 5%, 0.5) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.08) 0px 15px 35px -5px',
   }),
 }));
+
+const Card = ({ children }: ChildrenProps) => <CardStyled>{children}</CardStyled>;
+
+export default Card;
