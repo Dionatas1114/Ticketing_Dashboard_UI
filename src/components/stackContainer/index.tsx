@@ -1,7 +1,6 @@
-import Stack from '@mui/material/Stack';
-import { styled } from '@mui/material/styles';
+import { Stack, StackProps, styled } from '@mui/material';
 
-export const StackContainer = styled(Stack)(({ theme }) => ({
+const StackContainerStyled = styled(Stack)(({ theme }) => ({
   height: 'calc((1 - var(--template-frame-height, 0)) * 100dvh)',
   minHeight: '100%',
   padding: theme.spacing(2),
@@ -21,3 +20,11 @@ export const StackContainer = styled(Stack)(({ theme }) => ({
     }),
   },
 }));
+
+const StackContainer = ({ children, ...props }: StackProps) => (
+  <StackContainerStyled direction="column" justifyContent="space-between" {...props}>
+    {children}
+  </StackContainerStyled>
+);
+
+export default StackContainer;
