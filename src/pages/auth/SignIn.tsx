@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import { useFormik } from 'formik';
+
 import * as MUI from '@mui/material';
 
 import AppTheme from '../../assets/themes/AppTheme';
@@ -19,7 +19,7 @@ import { loginSchema as validationSchema } from '../../validations/schemas/UserS
 // import ForgotPassword from './ForgotPassword';
 // import { GoogleIcon, FacebookIcon, SitemarkIcon } from './CustomIcons';
 
-type SignInType = {
+export type SignInType = {
   email: string;
   password: string;
 };
@@ -56,7 +56,7 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
       <MUI.CssBaseline enableColorScheme />
       <StackContainer>
         <ColorModeSelect sx={{ position: 'fixed', top: '1rem', right: '1rem' }} />
-        <Card variant="outlined">
+        <Card>
           {/* <SitemarkIcon /> */}
           <MUI.Typography
             component="h1"
@@ -98,7 +98,7 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
             />
             {/* <ForgotPassword open={open} handleClose={handleClose} /> */}
             <SubmitButton isSubmitting={isSubmitting}>Sign in</SubmitButton>
-            <RouterLink to="/auth/forgot-password">Forgot your password?</RouterLink>
+            <RouterLink to="/forgot-password">Forgot your password?</RouterLink>
           </SubmitBox>
           <MUI.Divider>or</MUI.Divider>
           <MUI.Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
@@ -121,7 +121,7 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
               Sign in with Facebook
             </MUI.Button>
             <MUI.Typography sx={{ textAlign: 'center' }}>
-              Don&apos;t have an account? <RouterLink to="/auth/sign-up">Sign up</RouterLink>
+              Don&apos;t have an account? <RouterLink to="/signup">Sign up</RouterLink>
             </MUI.Typography>
           </MUI.Box>
         </Card>
