@@ -19,6 +19,8 @@ const CardStyled = styled(MuiCard)(({ theme }) => ({
   }),
 }));
 
-const Card = ({ children }: ChildrenProps) => <CardStyled>{children}</CardStyled>;
+const Card = ({ children }: ChildrenProps) => (
+  <CardStyled variant="outlined">{children}</CardStyled>
+);
 
 export default Card;
