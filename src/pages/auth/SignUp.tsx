@@ -10,26 +10,28 @@ import ColorModeSelect from '../../assets/themes/ColorModeSelect';
 import Card from '../../components/card';
 import StackContainer from '../../components/stackContainer';
 import RouterLink from '../../components/link';
+import InputUserName from '../../components/inputs/inputUserName';
 import InputEmail from '../../components/inputs/inputEmail';
 import InputPassword from '../../components/inputs/inputPassword';
 import SubmitBox from '../../components/box/submitBox';
 import SubmitButton from '../../components/button/submitButton';
-
-import { loginSchema as validationSchema } from '../../validations/schemas/UserSchema';
-// import ForgotPassword from './ForgotPassword';
 // import { GoogleIcon, FacebookIcon, SitemarkIcon } from './CustomIcons';
 
-export type SignInType = {
-  email: string;
-  password: string;
+import { signUpSchema as validationSchema } from '../../validations/schemas/UserSchema';
+
+import { SignInType } from './SignIn';
+
+export type SignUpType = SignInType & {
+  name: string;
 };
 
-const initialValues: SignInType = {
+const initialValues: SignUpType = {
   email: '',
   password: '',
+  name: '',
 };
 
-export default function SignIn(props: { disableCustomTheme?: boolean }) {
+export default function SignUp(props: { disableCustomTheme?: boolean }) {
   const navigateTo = useNavigate();
 
   const [showPassword, setShowPassword] = React.useState<boolean>(false);
@@ -37,14 +39,14 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
   const handleClickShowPassword = () => setShowPassword(!showPassword);
 
   const { handleSubmit, resetForm, handleChange, values, isSubmitting, touched, errors } =
-    useFormik<SignInType>({
+    useFormik<SignUpType>({
       initialValues,
       validationSchema,
       onSubmit: (values, { setSubmitting }) => {
         setTimeout(async () => {
           setSubmitting(false);
           console.log('useFormik values: ', values);
-          // await HandleLogin(values);
+          // await HandleSignUp(values);
           resetForm();
           navigateTo('/dash');
         }, 500);
@@ -54,8 +56,8 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
   return (
     <AppTheme {...props}>
       <MUI.CssBaseline enableColorScheme />
-      <StackContainer>
-        <ColorModeSelect sx={{ position: 'fixed', top: '1rem', right: '1rem' }} />
+      <ColorModeSelect sx={{ position: 'fixed', top: '1rem', right: '1rem' }} />
+      <StackContainer direction="column" justifyContent="space-between">
         <Card>
           {/* <SitemarkIcon /> */}
           <MUI.Typography
@@ -63,9 +65,20 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
             variant="h4"
             sx={{ width: '100%', fontSize: 'clamp(2rem, 10vw, 2.15rem)' }}
           >
-            Sign in
+            Sign up
           </MUI.Typography>
           <SubmitBox handleSubmit={handleSubmit}>
+            <MUI.FormControl>
+              <MUI.FormLabel htmlFor="name">Full name</MUI.FormLabel>
+              <InputUserName
+                value={values.name.trim()}
+                onChange={handleChange}
+                color={touched.name && Boolean(errors.name) ? 'error' : 'primary'}
+                error={touched.name && Boolean(errors.name)}
+                helperText={(touched.name && errors.name) || ' '}
+                // TODO: add name mask
+              />
+            </MUI.FormControl>
             <MUI.FormControl>
               <MUI.FormLabel htmlFor="email">Email</MUI.FormLabel>
               <InputEmail
@@ -93,35 +106,35 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
               />
             </MUI.FormControl>
             <MUI.FormControlLabel
-              control={<MUI.Checkbox value="remember" color="primary" />}
-              label="Remember me"
+              control={<MUI.Checkbox value="allowExtraEmails" color="primary" />}
+              label="I want to receive updates via email."
             />
-            {/* <ForgotPassword open={open} handleClose={handleClose} /> */}
-            <SubmitButton isSubmitting={isSubmitting}>Sign in</SubmitButton>
-            <RouterLink to="/forgot-password">Forgot your password?</RouterLink>
+            <SubmitButton isSubmitting={isSubmitting}>Sign up</SubmitButton>
           </SubmitBox>
-          <MUI.Divider>or</MUI.Divider>
+          <MUI.Divider>
+            <MUI.Typography sx={{ color: 'text.secondary' }}>or</MUI.Typography>
+          </MUI.Divider>
           <MUI.Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             <MUI.Button
               disabled
               fullWidth
               variant="outlined"
-              onClick={() => alert('Sign in with Google')}
+              onClick={() => alert('Sign up with Google')}
               // startIcon={<GoogleIcon />}
             >
-              Sign in with Google
+              Sign up with Google
             </MUI.Button>
             <MUI.Button
               disabled
               fullWidth
               variant="outlined"
-              onClick={() => alert('Sign in with Facebook')}
+              onClick={() => alert('Sign up with Facebook')}
               // startIcon={<FacebookIcon />}
             >
-              Sign in with Facebook
+              Sign up with Facebook
             </MUI.Button>
             <MUI.Typography sx={{ textAlign: 'center' }}>
-              Don&apos;t have an account? <RouterLink to="/signup">Sign up</RouterLink>
+              Already have an account? <RouterLink to="/">Sign in</RouterLink>
             </MUI.Typography>
           </MUI.Box>
         </Card>

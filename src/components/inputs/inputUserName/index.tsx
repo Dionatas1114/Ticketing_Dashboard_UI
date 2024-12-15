@@ -1,19 +1,18 @@
 import { TextField, TextFieldProps } from '@mui/material';
 
-const InputEmail = ({ value, onChange, error, color, helperText, children }: TextFieldProps) => (
+const InputUserName = ({ value, onChange, error, color, helperText, children }: TextFieldProps) => (
   <TextField
-    id="email"
-    required
-    fullWidth
-    autoFocus
-    type="email"
-    autoComplete="email"
-    placeholder="your@email.com"
+    id="user name"
+    name="name"
+    autoComplete="name"
+    placeholder="Your name"
     value={value}
     onChange={onChange}
-    color={color}
     error={error}
+    color={color}
     helperText={helperText}
+    fullWidth
+    required
     sx={{
       '& .MuiFormHelperText-root': {
         height: '0.5rem', // Ajusta a altura do helperText
@@ -24,4 +23,4 @@ const InputEmail = ({ value, onChange, error, color, helperText, children }: Tex
   </TextField>
 );
 
-export default InputEmail;
+export default InputUserName;
