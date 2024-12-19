@@ -1,19 +1,9 @@
-import { Link as RouterLink } from 'react-router-dom';
 import { Link } from '@mui/material';
+import { LinkProps, Link as RouterLink } from 'react-router-dom';
 
-interface RouterLinkProps {
-  to: string;
-}
-
-const RouterLinkComponent = ({ children, to }: RouterLinkProps & ChildrenProps) => (
-  <Link
-    id="router link"
-    to={to}
-    component={RouterLink}
-    variant="body2"
-    sx={{ alignSelf: 'center' }}
-  >
-    {children}
+const RouterLinkComponent = (props: LinkProps) => (
+  <Link id="router link" component={RouterLink} sx={{ alignSelf: 'center' }} {...props}>
+    {props.children}
   </Link>
 );
 
