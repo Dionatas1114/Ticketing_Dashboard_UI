@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { List, ListItem, ListItemButton, ListItemIcon, ListItemText, Stack } from '@mui/material';
+import { List, ListItem, ListItemIcon, ListItemText, Stack } from '@mui/material';
 import {
   HomeRounded as HomeRoundedIcon,
   WhatsApp as WhatsAppIcon,
@@ -17,9 +17,9 @@ import {
 // import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
 // import HelpRoundedIcon from '@mui/icons-material/HelpRounded';
 
-import RouterLink from '../../../components/Link';
+import Router from '../../../components/Router';
 
-import ItemSelectedContext from '../../../context/ItemSelectedContext';
+import ItemSelectedContext from '../../../context/MenuItemSelectedContext';
 
 interface RouteType {
   text: string;
@@ -53,14 +53,10 @@ export default function MenuContent() {
   const memoSecondaryListItems = React.useMemo(() => secondaryListItems, []);
 
   const context = React.useContext(ItemSelectedContext);
-
   if (!context) throw new Error('Error with ItemSelectedProvider');
-
   const { itemSelected, setItemSelected } = context;
 
-  const navigateToRoute = (route: string) => {
-    navigate(`/dash/${route}`);
-  };
+  const navigateToRoute = (route: string) => navigate(`/dash/${route}`);
 
   React.useEffect(() => {
     if (itemSelected === homePage.text) {
@@ -78,15 +74,14 @@ export default function MenuContent() {
   const renderListItems = (items: RouteType[]) => {
     return items.map((item) => (
       <ListItem key={item.route} disablePadding sx={{ display: 'block' }}>
-        <RouterLink to={item.route}>
-          <ListItemButton
-            selected={item.text === itemSelected}
-            onClick={() => handleItemClick(item)}
-          >
-            <ListItemIcon>{item.icon}</ListItemIcon>
-            <ListItemText primary={item.text} />
-          </ListItemButton>
-        </RouterLink>
+        <Router
+          to={item.route}
+          selected={item.text === itemSelected}
+          onClick={() => handleItemClick(item)}
+        >
+          <ListItemIcon>{item.icon}</ListItemIcon>
+          <ListItemText primary={item.text} />
+        </Router>
       </ListItem>
     ));
   };
