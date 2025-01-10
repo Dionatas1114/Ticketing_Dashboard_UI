@@ -7,13 +7,13 @@ import SideMenu from './SideMenu/SideMenu';
 import AppNavbar from './AppNavbar';
 import Header from './Header';
 
-import { ItemSelectedProvider } from '../../context/ItemSelectedContext';
+import { MenuItemSelectedProvider } from '../../context/MenuItemSelectedContext';
 
 import AppTheme from '../../assets/themes/AppTheme';
 
 export default function Dashboard(props: { disableCustomTheme?: boolean }) {
   return (
-    <ItemSelectedProvider>
+    <MenuItemSelectedProvider>
       <AppTheme {...props}>
         <CssBaseline enableColorScheme />
         <Box sx={{ display: 'flex' }}>
@@ -38,12 +38,11 @@ export default function Dashboard(props: { disableCustomTheme?: boolean }) {
               }}
             >
               <Header />
-              {/* <MainGrid /> */}
               <Outlet />
             </Stack>
           </Box>
         </Box>
-      </AppTheme>{' '}
-    </ItemSelectedProvider>
+      </AppTheme>
+    </MenuItemSelectedProvider>
   );
 }

@@ -6,7 +6,7 @@ import { MenuRounded as MenuIcon, DashboardRounded as DashboardIcon } from '@mui
 import SideMenuMobile from '../SideMenu/SideMenuMobile';
 
 import MenuButton from '../../../components/Button/MenuButton';
-import ColorModeIconDropdown from '../../../assets/themes/ColorModeSelect';
+import { ColorModeSelectDropdown } from '../../../assets/themes/ColorModeSelect';
 
 const ToolbarStyled = styled(Toolbar)({
   width: '100%',
@@ -60,7 +60,7 @@ export default function AppNavbar() {
               Dashboard
             </Typography>
           </Stack>
-          <ColorModeIconDropdown />
+          <ColorModeSelectDropdown />
           <MenuButton aria-label="menu" onClick={toggleDrawer(true)}>
             <MenuIcon />
           </MenuButton>

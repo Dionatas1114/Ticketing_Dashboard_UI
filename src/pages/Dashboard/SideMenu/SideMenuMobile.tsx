@@ -5,7 +5,7 @@ import { LogoutRounded as LogoutIcon } from '@mui/icons-material';
 
 import Notifications from '../../../components/Notifications';
 import UserProfile from '../../../components/UserProfile';
-import MenuContent from './MenuContent';
+import MenuContent from '../LeftBar';
 // import CardAlert from './CardAlert';
 
 interface SideMenuMobileProps {
