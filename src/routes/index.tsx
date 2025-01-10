@@ -6,13 +6,14 @@ import SignUp from '../pages/auth/SignUp';
 
 // Dashboard pages
 import Dashboard from '../pages/Dashboard';
-import Home from '../pages/Dashboard/LeftBar/home';
-import Tickets from '../pages/Dashboard/LeftBar/tickets';
-import Contacts from '../pages/Dashboard/LeftBar/contacts';
-import QuickAnswers from '../pages/Dashboard/LeftBar/quickAnswers';
-import Users from '../pages/Dashboard/LeftBar/users';
-import Connections from '../pages/Dashboard/LeftBar/connections';
-import Queues from '../pages/Dashboard/LeftBar/queues';
+import Home from '../pages/Dashboard/Contents/home';
+import Tickets from '../pages/Dashboard/Contents/tickets';
+import Contacts from '../pages/Dashboard/Contents/contacts';
+import QuickAnswers from '../pages/Dashboard/Contents/quickAnswers';
+import Users from '../pages/Dashboard/Contents/users';
+import Connections from '../pages/Dashboard/Contents/connections';
+import Queues from '../pages/Dashboard/Contents/queues';
+import Settings from '../pages/Dashboard/Contents/Settings';
 
 const AppRoutes = () => (
   <Routes>
@@ -28,7 +29,7 @@ const AppRoutes = () => (
       <Route path="users" element={<Users />} />
       <Route path="connections" element={<Connections />} />
       <Route path="queues" element={<Queues />} />
-      <Route path="settings" element={<div>settings</div>} />
+      <Route path="settings" element={<Settings />} />
     </Route>
   </Routes>
 );

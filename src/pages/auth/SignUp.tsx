@@ -5,7 +5,7 @@ import { useFormik } from 'formik';
 import * as MUI from '@mui/material';
 
 import AppTheme from '../../assets/themes/AppTheme';
-import ColorModeSelect from '../../assets/themes/ColorModeSelect';
+import { ColorModeSelectDropdown } from '../../assets/themes/ColorModeSelect';
 
 import Card from '../../components/Card';
 import StackContainer from '../../components/StackContainer';
@@ -56,7 +56,7 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
   return (
     <AppTheme {...props}>
       <MUI.CssBaseline enableColorScheme />
-      <ColorModeSelect sx={{ position: 'fixed', top: '1rem', right: '1rem' }} />
+      <ColorModeSelectDropdown sx={{ position: 'fixed', top: '1rem', right: '1rem' }} />
       <StackContainer direction="column" justifyContent="space-between">
         <Card>
           {/* <SitemarkIcon /> */}

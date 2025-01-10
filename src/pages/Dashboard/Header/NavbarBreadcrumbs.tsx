@@ -3,7 +3,7 @@ import * as React from 'react';
 import { styled, Typography, Breadcrumbs, breadcrumbsClasses } from '@mui/material';
 import { NavigateNextRounded as NavigateNextIcon } from '@mui/icons-material';
 
-import ItemSelectedContext from '../../../context/ItemSelectedContext';
+import MenuItemSelectedContext from '../../../context/MenuItemSelectedContext';
 
 const StyledBreadcrumbs = styled(Breadcrumbs)(({ theme }) => ({
   margin: theme.spacing(1, 0),
@@ -17,7 +17,7 @@ const StyledBreadcrumbs = styled(Breadcrumbs)(({ theme }) => ({
 }));
 
 export default function NavbarBreadcrumbs() {
-  const context = React.useContext(ItemSelectedContext);
+  const context = React.useContext(MenuItemSelectedContext);
 
   if (!context) throw new Error('Error with ItemSelectedProvider');
 

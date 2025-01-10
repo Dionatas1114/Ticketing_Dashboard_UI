@@ -27,7 +27,7 @@ export default function AppTheme({ children, disableCustomTheme, themeComponents
         colorSchemeSelector: 'data-mui-color-scheme',
         cssVarPrefix: 'template',
       },
-      colorSchemes, // building light & dark mode app, see https://mui.com/material-ui/customization/palette/#color-schemes
+      colorSchemes,
       typography,
       shadows,
       shape,
