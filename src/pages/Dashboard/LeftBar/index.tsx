@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { List, ListItem, ListItemIcon, ListItemText, Stack } from '@mui/material';
+import { List, ListItem, ListItemIcon, ListItemText, Stack, Typography } from '@mui/material';
 import {
   HomeRounded as HomeRoundedIcon,
   WhatsApp as WhatsAppIcon,
@@ -52,6 +52,9 @@ export default function MenuContent() {
   const memoMainListItems = React.useMemo(() => mainListItems, []);
   const memoSecondaryListItems = React.useMemo(() => secondaryListItems, []);
 
+  const firstMainListItems = memoMainListItems.slice(0, 3); // Until "Contacts"
+  const secondMainListItems = memoMainListItems.slice(3); // From "Quick Answers" onwards
+
   const context = React.useContext(ItemSelectedContext);
   if (!context) throw new Error('Error with ItemSelectedProvider');
   const { itemSelected, setItemSelected } = context;
@@ -88,7 +91,13 @@ export default function MenuContent() {
 
   return (
     <Stack sx={{ flexGrow: 1, p: 1, justifyContent: 'space-between' }}>
-      <List dense>{renderListItems(memoMainListItems)}</List>
+      <List dense>
+        {renderListItems(firstMainListItems)}
+        <Typography variant="h6" sx={{ mb: 0.5, mt: 1 }}>
+          Admin
+        </Typography>
+        {renderListItems(secondMainListItems)} {/* //TODO: Render only if user is admin */}
+      </List>
       <List dense>{renderListItems(memoSecondaryListItems)}</List>
     </Stack>
   );

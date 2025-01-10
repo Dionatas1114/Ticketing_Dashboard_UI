@@ -6,7 +6,7 @@ import Search from '../../../components/Search';
 import NavbarBreadcrumbs from './NavbarBreadcrumbs';
 import Notifications from '../../../components/Notifications';
 
-import ColorModeIconDropdown from '../../../assets/themes/ColorModeSelect';
+import { ColorModeSelectDropdown } from '../../../assets/themes/ColorModeSelect';
 
 export default function Header() {
   return (
@@ -27,7 +27,7 @@ export default function Header() {
         <Search />
         {/* <CustomDatePicker /> */}
         <Notifications />
-        <ColorModeIconDropdown />
+        <ColorModeSelectDropdown />
       </Stack>
     </Stack>
   );

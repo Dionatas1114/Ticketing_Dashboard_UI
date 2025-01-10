@@ -3,7 +3,7 @@ import { styled, Drawer as MuiDrawer, drawerClasses, Divider } from '@mui/materi
 
 // import SelectContent from './nonUse/SelectContent';
 // import CardAlert from './CardAlert';
-import MenuContent from './MenuContent';
+import MenuContent from '../LeftBar';
 
 import UserProfile from '../../../components/UserProfile';
 
