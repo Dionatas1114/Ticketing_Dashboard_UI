@@ -2,22 +2,19 @@ import * as React from 'react';
 import {
   Box,
   Grid2 as Grid,
-  Card,
   CardContent,
   Stack,
   FormControl,
   RadioGroup,
   useColorScheme,
   List,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
   Chip,
   Typography,
 } from '@mui/material';
 import { MenuRounded as MenuIcon, Settings as SettingsIcon } from '@mui/icons-material';
 
 import Title from '../../../../components/Title';
+import Card from '../../../../components/Card';
 import { i18n } from '../../../../translate/i18n';
 import { ColorModeList } from '../../../../assets/themes/ColorModeSelect';
 
@@ -33,16 +30,7 @@ export default function Settings() {
       <Grid container spacing={2} columns={12} sx={{ mb: (theme) => theme.spacing(2) }}>
         <Grid size={{ xs: 12, md: 6, lg: 3 }}>
           Settings
-          <Card
-            variant="outlined"
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '8px',
-              flexGrow: 1,
-              borderRadius: 2,
-            }}
-          >
+          <Card>
             <CardContent>
               <Stack direction="row" spacing={1}>
                 <Typography variant="h4" component="p">
@@ -54,16 +42,7 @@ export default function Settings() {
           </Card>
         </Grid>
         <Grid size={{ xs: 12, md: 6, lg: 9 }}>
-          <Card
-            variant="outlined"
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '8px',
-              flexGrow: 1,
-              borderRadius: 2,
-            }}
-          >
+          <Card>
             <CardContent>
               <Stack direction="row" spacing={1}>
                 <FormControl>

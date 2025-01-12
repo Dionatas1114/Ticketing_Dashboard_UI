@@ -1,14 +1,12 @@
 import { Typography, TypographyProps } from '@mui/material';
 
-export default function Title({ children, ...props }: TypographyProps) {
-  return (
-    <Typography
-      component="h2"
-      variant="h6"
-      sx={{ mb: 2, display: 'flex', justifyContent: 'space-between' }}
-      {...props}
-    >
-      {children}
-    </Typography>
-  );
-}
+const Title = ({ variant = 'h6', component = 'h2', ...props }: TypographyProps) => (
+  <Typography
+    component={component}
+    variant={variant}
+    sx={{ mb: 2, display: 'flex', justifyContent: 'space-between' }}
+    {...props}
+  />
+);
+
+export default Title;
