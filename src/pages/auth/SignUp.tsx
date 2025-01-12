@@ -4,6 +4,8 @@ import { useFormik } from 'formik';
 
 import * as MUI from '@mui/material';
 
+import { i18n } from '../../translate/i18n';
+
 import AppTheme from '../../assets/themes/AppTheme';
 import { ColorModeSelectDropdown } from '../../assets/themes/ColorModeSelect';
 
@@ -65,32 +67,38 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
             variant="h4"
             sx={{ width: '100%', fontSize: 'clamp(2rem, 10vw, 2.15rem)' }}
           >
-            Sign up
+            {i18n.t('signup.title')}
           </MUI.Typography>
           <SubmitBox handleSubmit={handleSubmit}>
             <MUI.FormControl>
-              <MUI.FormLabel htmlFor="name">Full name</MUI.FormLabel>
+              <MUI.FormLabel htmlFor="name">{i18n.t('signup.form.userName.title')}</MUI.FormLabel>
               <InputUserName
                 value={values.name.trim()}
                 onChange={handleChange}
                 color={touched.name && Boolean(errors.name) ? 'error' : 'primary'}
                 error={touched.name && Boolean(errors.name)}
                 helperText={(touched.name && errors.name) || ' '}
+                placeholder={i18n.t('signup.form.userName.placeholder')}
                 // TODO: add name mask
               />
             </MUI.FormControl>
             <MUI.FormControl>
-              <MUI.FormLabel htmlFor="email">Email</MUI.FormLabel>
+              <MUI.FormLabel htmlFor="email"> {i18n.t('signup.form.email.title')}</MUI.FormLabel>
               <InputEmail
                 value={values.email.trim()}
                 onChange={handleChange}
                 color={touched.email && Boolean(errors.email) ? 'error' : 'primary'}
                 error={touched.email && Boolean(errors.email)}
                 helperText={(touched.email && errors.email) || ' '}
+                placeholder={
+                  touched.email && Boolean(errors.email)
+                    ? ''
+                    : i18n.t('signin.form.email.placeholder')
+                }
               />
             </MUI.FormControl>
             <MUI.FormControl>
-              <MUI.FormLabel htmlFor="password">Password</MUI.FormLabel>
+              <MUI.FormLabel htmlFor="password">{i18n.t('signup.form.password')}</MUI.FormLabel>
               <InputPassword
                 value={values.password.trim()}
                 onChange={handleChange}
@@ -107,34 +115,39 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
             </MUI.FormControl>
             <MUI.FormControlLabel
               control={<MUI.Checkbox value="allowExtraEmails" color="primary" />}
-              label="I want to receive updates via email."
+              label={i18n.t('signup.form.allowExtraEmails')}
             />
-            <SubmitButton isSubmitting={isSubmitting}>Sign up</SubmitButton>
+            <SubmitButton isSubmitting={isSubmitting}>
+              {i18n.t('signup.buttons.submit')}
+            </SubmitButton>
           </SubmitBox>
           <MUI.Divider>
-            <MUI.Typography sx={{ color: 'text.secondary' }}>or</MUI.Typography>
+            <MUI.Typography sx={{ color: 'text.secondary' }}>
+              {i18n.t('signup.form.or')}
+            </MUI.Typography>
           </MUI.Divider>
           <MUI.Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             <MUI.Button
               disabled
               fullWidth
               variant="outlined"
-              onClick={() => alert('Sign up with Google')}
+              onClick={() => alert(i18n.t('signup.form.google'))}
               // startIcon={<GoogleIcon />}
             >
-              Sign up with Google
+              {i18n.t('signup.form.google')}
             </MUI.Button>
             <MUI.Button
               disabled
               fullWidth
               variant="outlined"
-              onClick={() => alert('Sign up with Facebook')}
+              onClick={() => alert(i18n.t('signup.form.facebook'))}
               // startIcon={<FacebookIcon />}
             >
-              Sign up with Facebook
+              {i18n.t('signup.form.facebook')}
             </MUI.Button>
             <MUI.Typography sx={{ textAlign: 'center' }}>
-              Already have an account? <RouterLink to="/">Sign in</RouterLink>
+              {i18n.t('signup.form.alreadyHaveAccount')}{' '}
+              <RouterLink to="/">{i18n.t('signup.buttons.loginLink')}</RouterLink>
             </MUI.Typography>
           </MUI.Box>
         </Card>
