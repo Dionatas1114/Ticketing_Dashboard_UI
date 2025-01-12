@@ -4,6 +4,8 @@ import { useFormik } from 'formik';
 
 import * as MUI from '@mui/material';
 
+import { i18n } from '../../translate/i18n';
+
 import AppTheme from '../../assets/themes/AppTheme';
 import { ColorModeSelectDropdown } from '../../assets/themes/ColorModeSelect';
 
@@ -63,21 +65,26 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
             variant="h4"
             sx={{ width: '100%', fontSize: 'clamp(2rem, 10vw, 2.15rem)' }}
           >
-            Sign in
+            {i18n.t('signin.title')}
           </MUI.Typography>
           <SubmitBox handleSubmit={handleSubmit}>
             <MUI.FormControl>
-              <MUI.FormLabel htmlFor="email">Email</MUI.FormLabel>
+              <MUI.FormLabel htmlFor="email">{i18n.t('signin.form.email.title')}</MUI.FormLabel>
               <InputEmail
                 value={values.email.trim()}
                 onChange={handleChange}
                 color={touched.email && Boolean(errors.email) ? 'error' : 'primary'}
                 error={touched.email && Boolean(errors.email)}
                 helperText={(touched.email && errors.email) || ' '}
+                placeholder={
+                  touched.email && Boolean(errors.email)
+                    ? ''
+                    : i18n.t('signin.form.email.placeholder')
+                }
               />
             </MUI.FormControl>
             <MUI.FormControl>
-              <MUI.FormLabel htmlFor="password">Password</MUI.FormLabel>
+              <MUI.FormLabel htmlFor="password">{i18n.t('signin.form.password')}</MUI.FormLabel>
               <InputPassword
                 value={values.password.trim()}
                 onChange={handleChange}
@@ -94,13 +101,15 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
             </MUI.FormControl>
             <MUI.FormControlLabel
               control={<MUI.Checkbox value="remember" color="primary" />}
-              label="Remember me"
+              label={i18n.t('signin.form.rememberMe')}
             />
             {/* <ForgotPassword open={open} handleClose={handleClose} /> */}
-            <SubmitButton isSubmitting={isSubmitting}>Sign in</SubmitButton>
-            <RouterLink to="/forgot-password">Forgot your password?</RouterLink>
+            <SubmitButton isSubmitting={isSubmitting}>
+              {i18n.t('signin.buttons.submit')}
+            </SubmitButton>
+            <RouterLink to="/forgot-password">{i18n.t('signin.buttons.forgotPassword')}</RouterLink>
           </SubmitBox>
-          <MUI.Divider>or</MUI.Divider>
+          <MUI.Divider>{i18n.t('signin.form.or')}</MUI.Divider>
           <MUI.Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             <MUI.Button
               disabled
@@ -109,7 +118,7 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
               onClick={() => alert('Sign in with Google')}
               // startIcon={<GoogleIcon />}
             >
-              Sign in with Google
+              {i18n.t('signin.form.google')}
             </MUI.Button>
             <MUI.Button
               disabled
@@ -118,10 +127,11 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
               onClick={() => alert('Sign in with Facebook')}
               // startIcon={<FacebookIcon />}
             >
-              Sign in with Facebook
+              {i18n.t('signin.form.facebook')}
             </MUI.Button>
             <MUI.Typography sx={{ textAlign: 'center' }}>
-              Don&apos;t have an account? <RouterLink to="/signup">Sign up</RouterLink>
+              {i18n.t('signin.form.noAccount')}{' '}
+              <RouterLink to="/signup">{i18n.t('signin.buttons.registerLink')}</RouterLink>
             </MUI.Typography>
           </MUI.Box>
         </Card>

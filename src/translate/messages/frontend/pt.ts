@@ -1,412 +1,428 @@
-import { messages as backMessages } from "../backend/pt";
+import { messages as backMessages } from '../backend/pt';
 
 const messages = {
   pt: {
     translations: {
       signup: {
-        title: "Cadastre-se",
+        title: 'Cadastre-se',
         toasts: {
-          success: "Usuário criado com sucesso! Faça seu login!!!.",
-          fail: "Erro ao criar usuário. Verifique os dados informados."
+          success: 'Usuário criado com sucesso! Faça seu login',
+          fail: 'Erro ao criar usuário. Verifique os dados informados',
         },
         form: {
-          name: "Nome",
-          email: "Email",
-          password: "Senha"
+          userName: {
+            title: 'Nome',
+            placeholder: 'Nome Completo',
+          },
+          email: {
+            title: 'Email',
+            placeholder: 'seu@email',
+          },
+          password: 'Senha',
+          allowExtraEmails: 'Quero receber atualizações por email',
+          or: 'Ou',
+          google: 'Entrar com Google',
+          facebook: 'Entrar com Facebook',
+          alreadyHaveAccount: 'Já tem uma conta?',
         },
         buttons: {
-          submit: "Cadastrar",
-          login: "Já tem uma conta? Entre!"
-        }
+          submit: 'Cadastrar',
+          loginLink: 'Entre',
+        },
       },
-      login: {
-        title: "Login",
+      signin: {
+        title: 'Entre',
         form: {
-          email: "Email",
-          password: "Senha"
+          email: {
+            title: 'Email',
+            placeholder: 'seu@email',
+          },
+          password: 'Senha',
+          rememberMe: 'Lembrar-me',
+          or: 'Ou',
+          google: 'Entrar com Google',
+          facebook: 'Entrar com Facebook',
+          noAccount: 'Não tem uma conta?',
         },
         buttons: {
-          submit: "Entrar",
-          register: "Não tem um conta? Cadastre-se!"
-        }
+          submit: 'Entrar',
+          registerLink: 'Cadastre-se!',
+          forgotPassword: 'Esqueceu a senha?',
+        },
       },
       auth: {
         toasts: {
-          success: "Login efetuado com sucesso!"
-        }
+          success: 'Login efetuado com sucesso!',
+          fail: 'Erro ao efetuar login. Verifique os dados informados.',
+        },
       },
       dashboard: {
         charts: {
           perDay: {
-            title: "Tickets hoje: "
-          }
-        }
+            title: 'Tickets hoje: ',
+          },
+        },
       },
       connections: {
-        title: "Conexões",
+        title: 'Conexões',
         toasts: {
-          deleted: "Conexão com o WhatsApp excluída com sucesso!"
+          deleted: 'Conexão com o WhatsApp excluída com sucesso!',
         },
         confirmationModal: {
-          deleteTitle: "Deletar",
-          deleteMessage: "Você tem certeza? Essa ação não pode ser revertida.",
-          disconnectTitle: "Desconectar",
-          disconnectMessage:
-            "Tem certeza? Você precisará ler o QR Code novamente."
+          deleteTitle: 'Deletar',
+          deleteMessage: 'Você tem certeza? Essa ação não pode ser revertida.',
+          disconnectTitle: 'Desconectar',
+          disconnectMessage: 'Tem certeza? Você precisará ler o QR Code novamente.',
         },
         buttons: {
-          add: "Adicionar WhatsApp",
-          disconnect: "desconectar",
-          tryAgain: "Tentar novamente",
-          qrcode: "QR CODE",
-          newQr: "Novo QR CODE",
-          connecting: "Conectando"
+          add: 'Adicionar WhatsApp',
+          disconnect: 'desconectar',
+          tryAgain: 'Tentar novamente',
+          qrcode: 'QR CODE',
+          newQr: 'Novo QR CODE',
+          connecting: 'Conectando',
         },
         toolTips: {
           disconnected: {
-            title: "Falha ao iniciar sessão do WhatsApp",
+            title: 'Falha ao iniciar sessão do WhatsApp',
             content:
-              "Certifique-se de que seu celular esteja conectado à internet e tente novamente, ou solicite um novo QR Code"
+              'Certifique-se de que seu celular esteja conectado à internet e tente novamente, ou solicite um novo QR Code',
           },
           qrcode: {
-            title: "Esperando leitura do QR Code",
+            title: 'Esperando leitura do QR Code',
             content:
-              "Clique no botão 'QR CODE' e leia o QR Code com o seu celular para iniciar a sessão"
+              "Clique no botão 'QR CODE' e leia o QR Code com o seu celular para iniciar a sessão",
           },
           connected: {
-            title: "Conexão estabelecida!"
+            title: 'Conexão estabelecida!',
           },
           timeout: {
-            title: "A conexão com o celular foi perdida",
+            title: 'A conexão com o celular foi perdida',
             content:
-              "Certifique-se de que seu celular esteja conectado à internet e o WhatsApp esteja aberto, ou clique no botão 'Desconectar' para obter um novo QR Code"
-          }
+              "Certifique-se de que seu celular esteja conectado à internet e o WhatsApp esteja aberto, ou clique no botão 'Desconectar' para obter um novo QR Code",
+          },
         },
         table: {
-          name: "Nome",
-          status: "Status",
-          lastUpdate: "Última atualização",
-          default: "Padrão",
-          actions: "Ações",
-          session: "Sessão"
-        }
+          name: 'Nome',
+          status: 'Status',
+          lastUpdate: 'Última atualização',
+          default: 'Padrão',
+          actions: 'Ações',
+          session: 'Sessão',
+        },
       },
       whatsappModal: {
         title: {
-          add: "Adicionar WhatsApp",
-          edit: "Editar WhatsApp"
+          add: 'Adicionar WhatsApp',
+          edit: 'Editar WhatsApp',
         },
         form: {
-          name: "Nome",
-          default: "Padrão",
-          farewellMessage: "Mensagem de despedida"
+          name: 'Nome',
+          default: 'Padrão',
+          farewellMessage: 'Mensagem de despedida',
         },
         buttons: {
-          okAdd: "Adicionar",
-          okEdit: "Salvar",
-          cancel: "Cancelar"
+          okAdd: 'Adicionar',
+          okEdit: 'Salvar',
+          cancel: 'Cancelar',
         },
-        success: "WhatsApp salvo com sucesso."
+        success: 'WhatsApp salvo com sucesso.',
       },
       qrCode: {
-        message: "Leia o QrCode para iniciar a sessão"
+        message: 'Leia o QrCode para iniciar a sessão',
       },
       contacts: {
-        title: "Contatos",
+        title: 'Contatos',
         toasts: {
-          deleted: "Contato excluído com sucesso!"
+          deleted: 'Contato excluído com sucesso!',
         },
-        searchPlaceholder: "Pesquisar...",
+        searchPlaceholder: 'Pesquisar...',
         confirmationModal: {
-          deleteTitle: "Deletar ",
-          importTitlte: "Importar contatos",
+          deleteTitle: 'Deletar ',
+          importTitlte: 'Importar contatos',
           deleteMessage:
-            "Tem certeza que deseja deletar este contato? Todos os tickets relacionados serão perdidos.",
-          importMessage: "Deseja importas todos os contatos do telefone?"
+            'Tem certeza que deseja deletar este contato? Todos os tickets relacionados serão perdidos.',
+          importMessage: 'Deseja importas todos os contatos do telefone?',
         },
         buttons: {
-          import: "Importar Contatos",
-          add: "Adicionar Contato"
+          import: 'Importar Contatos',
+          add: 'Adicionar Contato',
         },
         table: {
-          name: "Nome",
-          whatsapp: "WhatsApp",
-          email: "Email",
-          actions: "Ações"
-        }
+          name: 'Nome',
+          whatsapp: 'WhatsApp',
+          email: 'Email',
+          actions: 'Ações',
+        },
       },
       contactModal: {
         title: {
-          add: "Adicionar contato",
-          edit: "Editar contato"
+          add: 'Adicionar contato',
+          edit: 'Editar contato',
         },
         form: {
-          mainInfo: "Dados do contato",
-          extraInfo: "Informações adicionais",
-          name: "Nome",
-          number: "Número do Whatsapp",
-          email: "Email",
-          extraName: "Nome do campo",
-          extraValue: "Valor"
+          mainInfo: 'Dados do contato',
+          extraInfo: 'Informações adicionais',
+          name: 'Nome',
+          number: 'Número do Whatsapp',
+          email: 'Email',
+          extraName: 'Nome do campo',
+          extraValue: 'Valor',
         },
         buttons: {
-          addExtraInfo: "Adicionar informação",
-          okAdd: "Adicionar",
-          okEdit: "Salvar",
-          cancel: "Cancelar"
+          addExtraInfo: 'Adicionar informação',
+          okAdd: 'Adicionar',
+          okEdit: 'Salvar',
+          cancel: 'Cancelar',
         },
-        success: "Contato salvo com sucesso."
+        success: 'Contato salvo com sucesso.',
       },
       quickAnswersModal: {
         title: {
-          add: "Adicionar Resposta Rápida",
-          edit: "Editar Resposta Rápida"
+          add: 'Adicionar Resposta Rápida',
+          edit: 'Editar Resposta Rápida',
         },
         form: {
-          shortcut: "Atalho",
-          message: "Resposta Rápida"
+          shortcut: 'Atalho',
+          message: 'Resposta Rápida',
         },
         buttons: {
-          okAdd: "Adicionar",
-          okEdit: "Salvar",
-          cancel: "Cancelar"
+          okAdd: 'Adicionar',
+          okEdit: 'Salvar',
+          cancel: 'Cancelar',
         },
-        success: "Resposta Rápida salva com sucesso."
+        success: 'Resposta Rápida salva com sucesso.',
       },
       queueModal: {
         title: {
-          add: "Adicionar fila",
-          edit: "Editar fila"
+          add: 'Adicionar fila',
+          edit: 'Editar fila',
         },
         form: {
-          name: "Nome",
-          color: "Cor",
-          greetingMessage: "Mensagem de saudação"
+          name: 'Nome',
+          color: 'Cor',
+          greetingMessage: 'Mensagem de saudação',
         },
         buttons: {
-          okAdd: "Adicionar",
-          okEdit: "Salvar",
-          cancel: "Cancelar"
+          okAdd: 'Adicionar',
+          okEdit: 'Salvar',
+          cancel: 'Cancelar',
         },
         toasts: {
           success: {
-            created: "Fila criada com sucesso",
-            updated: "Fila atualizada com sucesso",
-            deleted: "Fila deletada com sucesso"
-          }
-        }
+            created: 'Fila criada com sucesso',
+            updated: 'Fila atualizada com sucesso',
+            deleted: 'Fila deletada com sucesso',
+          },
+        },
       },
       userModal: {
         title: {
-          add: "Adicionar usuário",
-          edit: "Editar usuário"
+          add: 'Adicionar usuário',
+          edit: 'Editar usuário',
         },
         form: {
-          name: "Nome",
-          email: "Email",
-          password: "Senha",
-          profile: "Perfil"
+          name: 'Nome',
+          email: 'Email',
+          password: 'Senha',
+          profile: 'Perfil',
         },
         buttons: {
-          okAdd: "Adicionar",
-          okEdit: "Salvar",
-          cancel: "Cancelar"
+          okAdd: 'Adicionar',
+          okEdit: 'Salvar',
+          cancel: 'Cancelar',
         },
-        success: "Usuário salvo com sucesso."
+        success: 'Usuário salvo com sucesso.',
       },
       chat: {
-        noTicketMessage: "Selecione um ticket para começar a conversar."
+        noTicketMessage: 'Selecione um ticket para começar a conversar.',
       },
       ticketsManager: {
         buttons: {
-          newTicket: "Novo"
-        }
+          newTicket: 'Novo',
+        },
       },
       ticketsQueueSelect: {
-        placeholder: "Filas"
+        placeholder: 'Filas',
       },
       tickets: {
         toasts: {
-          deleted: "O ticket foi deletado."
+          deleted: 'O ticket foi deletado.',
         },
         notification: {
-          message: "Mensagem de"
+          message: 'Mensagem de',
         },
         tabs: {
-          open: { title: "Inbox" },
-          closed: { title: "Resolvidos", badge: "Resolvido" },
-          search: { title: "Busca" }
+          open: { title: 'Inbox' },
+          closed: { title: 'Resolvidos', badge: 'Resolvido' },
+          search: { title: 'Busca' },
         },
         search: {
-          placeholder: "Buscar tickets e mensagens"
+          placeholder: 'Buscar tickets e mensagens',
         },
         buttons: {
-          showAll: "Todos"
-        }
+          showAll: 'Todos',
+        },
       },
       transferTicketModal: {
-        title: "Transferir Ticket",
-        fieldLabel: "Digite para buscar usuários",
-        noOptions: "Nenhum usuário encontrado com esse nome",
+        title: 'Transferir Ticket',
+        fieldLabel: 'Digite para buscar usuários',
+        noOptions: 'Nenhum usuário encontrado com esse nome',
         buttons: {
-          ok: "Transferir",
-          cancel: "Cancelar"
-        }
+          ok: 'Transferir',
+          cancel: 'Cancelar',
+        },
       },
       ticketsList: {
-        pendingHeader: "Aguardando",
-        assignedHeader: "Atendendo",
-        noTicketsTitle: "Nada aqui!",
-        noTicketsMessage:
-          "Nenhum ticket encontrado com esse status ou termo pesquisado",
+        pendingHeader: 'Aguardando',
+        assignedHeader: 'Atendendo',
+        noTicketsTitle: 'Nada aqui!',
+        noTicketsMessage: 'Nenhum ticket encontrado com esse status ou termo pesquisado',
         buttons: {
-          accept: "Aceitar"
-        }
+          accept: 'Aceitar',
+        },
       },
       newTicketModal: {
-        title: "Criar Ticket",
-        fieldLabel: "Digite para pesquisar o contato",
-        add: "Adicionar",
+        title: 'Criar Ticket',
+        fieldLabel: 'Digite para pesquisar o contato',
+        add: 'Adicionar',
         buttons: {
-          ok: "Salvar",
-          cancel: "Cancelar"
-        }
+          ok: 'Salvar',
+          cancel: 'Cancelar',
+        },
       },
       mainDrawer: {
         listItems: {
-          dashboard: "Dashboard",
-          connections: "Conexões",
-          tickets: "Tickets",
-          contacts: "Contatos",
-          quickAnswers: "Respostas Rápidas",
-          queues: "Filas",
-          administration: "Administração",
-          users: "Usuários"
+          dashboard: 'Dashboard',
+          connections: 'Conexões',
+          tickets: 'Tickets',
+          contacts: 'Contatos',
+          quickAnswers: 'Respostas Rápidas',
+          queues: 'Filas',
+          administration: 'Administração',
+          users: 'Usuários',
         },
         appBar: {
           user: {
-            profile: "Perfil",
-            logout: "Sair"
-          }
-        }
+            profile: 'Perfil',
+            logout: 'Sair',
+          },
+        },
       },
       notifications: {
-        noTickets: "Nenhuma notificação."
+        noTickets: 'Nenhuma notificação.',
       },
       queues: {
-        title: "Filas",
+        title: 'Filas',
         table: {
-          name: "Nome",
-          color: "Cor",
-          greeting: "Mensagem de saudação",
-          actions: "Ações"
+          name: 'Nome',
+          color: 'Cor',
+          greeting: 'Mensagem de saudação',
+          actions: 'Ações',
         },
         buttons: {
-          add: "Adicionar fila"
+          add: 'Adicionar fila',
         },
         confirmationModal: {
-          deleteTitle: "Excluir",
+          deleteTitle: 'Excluir',
           deleteMessage:
-            "Você tem certeza? Essa ação não pode ser revertida! Os tickets dessa fila continuarão existindo, mas não terão mais nenhuma fila atribuída."
-        }
+            'Você tem certeza? Essa ação não pode ser revertida! Os tickets dessa fila continuarão existindo, mas não terão mais nenhuma fila atribuída.',
+        },
       },
       queueSelect: {
-        inputLabel: "Filas"
+        inputLabel: 'Filas',
       },
       quickAnswers: {
-        title: "Respostas Rápidas",
+        title: 'Respostas Rápidas',
         table: {
-          shortcut: "Atalho",
-          message: "Resposta Rápida",
-          actions: "Ações"
+          shortcut: 'Atalho',
+          message: 'Resposta Rápida',
+          actions: 'Ações',
         },
         buttons: {
-          add: "Adicionar Resposta Rápida"
+          add: 'Adicionar Resposta Rápida',
         },
         toasts: {
-          deleted: "Resposta Rápida excluída com sucesso."
+          deleted: 'Resposta Rápida excluída com sucesso.',
         },
-        searchPlaceholder: "Pesquisar...",
+        searchPlaceholder: 'Pesquisar...',
         confirmationModal: {
-          deleteTitle:
-            "Você tem certeza que quer excluir esta Resposta Rápida: ",
-          deleteMessage: "Esta ação não pode ser revertida."
-        }
+          deleteTitle: 'Você tem certeza que quer excluir esta Resposta Rápida: ',
+          deleteMessage: 'Esta ação não pode ser revertida.',
+        },
       },
       users: {
-        title: "Usuários",
+        title: 'Usuários',
         table: {
-          name: "Nome",
-          email: "Email",
-          profile: "Perfil",
-          actions: "Ações"
+          name: 'Nome',
+          email: 'Email',
+          profile: 'Perfil',
+          actions: 'Ações',
         },
         buttons: {
-          add: "Adicionar usuário"
+          add: 'Adicionar usuário',
         },
         toasts: {
-          deleted: "Usuário excluído com sucesso."
+          deleted: 'Usuário excluído com sucesso.',
         },
         confirmationModal: {
-          deleteTitle: "Excluir",
+          deleteTitle: 'Excluir',
           deleteMessage:
-            "Todos os dados do usuário serão perdidos. Os tickets abertos deste usuário serão movidos para a fila."
-        }
+            'Todos os dados do usuário serão perdidos. Os tickets abertos deste usuário serão movidos para a fila.',
+        },
       },
       messagesList: {
         header: {
-          assignedTo: "Atribuído à:",
+          assignedTo: 'Atribuído à:',
           buttons: {
-            return: "Retornar",
-            resolve: "Resolver",
-            reopen: "Reabrir",
-            accept: "Aceitar"
-          }
-        }
+            return: 'Retornar',
+            resolve: 'Resolver',
+            reopen: 'Reabrir',
+            accept: 'Aceitar',
+          },
+        },
       },
       messagesInput: {
-        placeholderOpen: "Digite uma mensagem",
-        placeholderClosed:
-          "Reabra ou aceite esse ticket para enviar uma mensagem.",
-        signMessage: "Assinar"
+        placeholderOpen: 'Digite uma mensagem',
+        placeholderClosed: 'Reabra ou aceite esse ticket para enviar uma mensagem.',
+        signMessage: 'Assinar',
       },
       contactDrawer: {
-        header: "Dados do contato",
+        header: 'Dados do contato',
         buttons: {
-          edit: "Editar contato"
+          edit: 'Editar contato',
         },
-        extraInfo: "Outras informações"
+        extraInfo: 'Outras informações',
       },
       ticketOptionsMenu: {
-        delete: "Deletar",
-        transfer: "Transferir",
+        delete: 'Deletar',
+        transfer: 'Transferir',
         confirmationModal: {
-          title: "Deletar o ticket do contato",
-          message:
-            "Atenção! Todas as mensagens relacionadas ao ticket serão perdidas."
+          title: 'Deletar o ticket do contato',
+          message: 'Atenção! Todas as mensagens relacionadas ao ticket serão perdidas.',
         },
         buttons: {
-          delete: "Excluir",
-          cancel: "Cancelar"
-        }
+          delete: 'Excluir',
+          cancel: 'Cancelar',
+        },
       },
       confirmationModal: {
         buttons: {
-          confirm: "Ok",
-          cancel: "Cancelar"
-        }
+          confirm: 'Ok',
+          cancel: 'Cancelar',
+        },
       },
       messageOptionsMenu: {
-        delete: "Deletar",
-        reply: "Responder",
+        delete: 'Deletar',
+        reply: 'Responder',
         confirmationModal: {
-          title: "Apagar mensagem?",
-          message: "Esta ação não pode ser revertida."
-        }
+          title: 'Apagar mensagem?',
+          message: 'Esta ação não pode ser revertida.',
+        },
       },
-      backendErrors: backMessages
-    }
-  }
+      backendErrors: backMessages,
+    },
+  },
 };
 
 export { messages };
