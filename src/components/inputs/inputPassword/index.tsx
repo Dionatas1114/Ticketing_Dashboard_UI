@@ -6,7 +6,7 @@ interface InputPasswordProps {
   onClick: MUI.IconButtonProps['onClick'];
 }
 
-const InputPassword = (props: InputPasswordProps & MUI.TextFieldProps) => (
+const InputPassword = ({ onClick, ...props }: InputPasswordProps & MUI.TextFieldProps) => (
   <MUI.TextField
     id="password"
     autoComplete="current-password"
@@ -23,6 +23,7 @@ const InputPassword = (props: InputPasswordProps & MUI.TextFieldProps) => (
               aria-label="toggle password visibility"
               edge="end"
               size="small"
+              onClick={onClick}
               sx={{
                 // border: 'none', // Remove a borda do IconButton
                 marginRight: '-0.7rem', // Garante ícone bem posicionado
