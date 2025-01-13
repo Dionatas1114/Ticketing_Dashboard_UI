@@ -95,8 +95,6 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
                 color={touched.password && Boolean(errors.password) ? 'error' : 'primary'}
                 error={touched.password && Boolean(errors.password)}
                 helperText={(touched.password && errors.password) || ' '}
-                // TODO: add password strength meter
-                // TODO: add password mask
               />
             </MUI.FormControl>
             <MUI.FormControlLabel
