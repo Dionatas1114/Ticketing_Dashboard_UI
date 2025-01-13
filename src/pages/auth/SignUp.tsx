@@ -1,8 +1,17 @@
-import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 
-import * as MUI from '@mui/material';
+import {
+  Box,
+  Button,
+  Checkbox,
+  CssBaseline,
+  Divider,
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  Typography,
+} from '@mui/material';
 
 import { i18n } from '../../translate/i18n';
 
@@ -35,10 +44,8 @@ const initialValues: SignUpType = {
 
 export default function SignUp(props: { disableCustomTheme?: boolean }) {
   const navigateTo = useNavigate();
-
-  const [showPassword, setShowPassword] = React.useState<boolean>(false);
-
-  const handleClickShowPassword = () => setShowPassword(!showPassword);
+  // const [showPassword, setShowPassword] = React.useState<boolean>(false);
+  // const handleClickShowPassword = () => setShowPassword(!showPassword);
 
   const { handleSubmit, resetForm, handleChange, values, isSubmitting, touched, errors } =
     useFormik<SignUpType>({
@@ -58,21 +65,21 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
 
   return (
     <AppTheme {...props}>
-      <MUI.CssBaseline enableColorScheme />
+      <CssBaseline enableColorScheme />
       <ColorModeSelectDropdown sx={{ position: 'fixed', top: '1rem', right: '1rem' }} />
       <StackContainer direction="column" justifyContent="space-between">
         <Card>
           {/* <SitemarkIcon /> */}
-          <MUI.Typography
+          <Typography
             component="h1"
             variant="h4"
             sx={{ width: '100%', fontSize: 'clamp(2rem, 10vw, 2.15rem)' }}
           >
             {i18n.t('signup.title')}
-          </MUI.Typography>
+          </Typography>
           <SubmitBox handleSubmit={handleSubmit}>
-            <MUI.FormControl>
-              <MUI.FormLabel htmlFor="name">{i18n.t('signup.form.userName.title')}</MUI.FormLabel>
+            <FormControl>
+              <FormLabel htmlFor="name">{i18n.t('signup.form.userName.title')}</FormLabel>
               <InputUserName
                 value={values.name}
                 onChange={handleChange}
@@ -81,9 +88,9 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
                 helperText={(touched.name && errors.name) || ' '}
                 placeholder={i18n.t('signup.form.userName.placeholder')}
               />
-            </MUI.FormControl>
-            <MUI.FormControl>
-              <MUI.FormLabel htmlFor="email"> {i18n.t('signup.form.email.title')}</MUI.FormLabel>
+            </FormControl>
+            <FormControl>
+              <FormLabel htmlFor="email"> {i18n.t('signup.form.email.title')}</FormLabel>
               <InputEmail
                 value={values.email.trim()}
                 onChange={handleChange}
@@ -96,36 +103,31 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
                     : i18n.t('signin.form.email.placeholder')
                 }
               />
-            </MUI.FormControl>
-            <MUI.FormControl>
-              <MUI.FormLabel htmlFor="password">{i18n.t('signup.form.password')}</MUI.FormLabel>
+            </FormControl>
+            <FormControl>
+              <FormLabel htmlFor="password">{i18n.t('signup.form.password')}</FormLabel>
               <InputPassword
                 value={values.password.trim()}
                 onChange={handleChange}
-                onClick={handleClickShowPassword}
-                showPassword={showPassword}
-                type={showPassword ? 'text' : 'password'}
                 placeholder={touched.password && Boolean(errors.password) ? '' : '••••••'}
                 color={touched.password && Boolean(errors.password) ? 'error' : 'primary'}
                 error={touched.password && Boolean(errors.password)}
                 helperText={(touched.password && errors.password) || ' '}
               />
-            </MUI.FormControl>
-            <MUI.FormControlLabel
-              control={<MUI.Checkbox value="allowExtraEmails" color="primary" />}
+            </FormControl>
+            <FormControlLabel
+              control={<Checkbox value="allowExtraEmails" color="primary" />}
               label={i18n.t('signup.form.allowExtraEmails')}
             />
             <SubmitButton isSubmitting={isSubmitting}>
               {i18n.t('signup.buttons.submit')}
             </SubmitButton>
           </SubmitBox>
-          <MUI.Divider>
-            <MUI.Typography sx={{ color: 'text.secondary' }}>
-              {i18n.t('signup.form.or')}
-            </MUI.Typography>
-          </MUI.Divider>
-          <MUI.Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-            <MUI.Button
+          <Divider>
+            <Typography sx={{ color: 'text.secondary' }}>{i18n.t('signup.form.or')}</Typography>
+          </Divider>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+            <Button
               disabled
               fullWidth
               variant="outlined"
@@ -133,8 +135,8 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
               // startIcon={<GoogleIcon />}
             >
               {i18n.t('signup.form.google')}
-            </MUI.Button>
-            <MUI.Button
+            </Button>
+            <Button
               disabled
               fullWidth
               variant="outlined"
@@ -142,12 +144,12 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
               // startIcon={<FacebookIcon />}
             >
               {i18n.t('signup.form.facebook')}
-            </MUI.Button>
-            <MUI.Typography sx={{ textAlign: 'center' }}>
+            </Button>
+            <Typography sx={{ textAlign: 'center' }}>
               {i18n.t('signup.form.alreadyHaveAccount')}{' '}
               <RouterLink to="/">{i18n.t('signup.buttons.loginLink')}</RouterLink>
-            </MUI.Typography>
-          </MUI.Box>
+            </Typography>
+          </Box>
         </Card>
       </StackContainer>
     </AppTheme>
