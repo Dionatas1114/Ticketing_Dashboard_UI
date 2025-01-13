@@ -5,14 +5,13 @@ const InputEmail = (props: TextFieldProps) => (
     id="email"
     type="email"
     autoComplete="email"
+    fullWidth
+    autoFocus
     sx={{
       '& .MuiFormHelperText-root': {
         height: '0.5rem', // Ajusta a altura do helperText
       },
     }}
-    required
-    fullWidth
-    autoFocus
     {...props}
   />
 );
