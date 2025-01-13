@@ -1,4 +1,5 @@
 import { messages as backMessages } from '../backend/pt';
+import rules from '../../../validations/rules';
 
 const messages = {
   pt: {
@@ -418,6 +419,27 @@ const messages = {
         confirmationModal: {
           title: 'Apagar mensagem?',
           message: 'Esta ação não pode ser revertida.',
+        },
+      },
+      form: {
+        validations: {
+          userName: {
+            required: 'O nome é obrigatório.',
+            minLength: `O nome deve conter no mínimo ${rules.userNameMinLength} caracteres.`,
+            maxLength: `O nome deve conter no máximo ${rules.userNameMaxLength} caracteres.`,
+            isValid: 'O nome deve conter apenas letras e espaços.',
+          },
+          email: {
+            required: 'O e-mail é obrigatório.',
+            isValid: 'Informe um e-mail válido.',
+          },
+          password: {
+            required: 'A senha é obrigatória.',
+            minLength: `A senha deve conter no mínimo ${rules.passwMinLength} caracteres.`,
+            maxLength: `A senha deve conter no máximo ${rules.passwMaxLength} caracteres.`,
+            isValid: 'A senha deve conter: maiúscula, minúscula, número e caractere especial.',
+            samePassword: 'A nova senha não pode ser igual à senha antiga.',
+          },
         },
       },
       backendErrors: backMessages,

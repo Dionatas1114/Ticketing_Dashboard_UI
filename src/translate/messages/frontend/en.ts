@@ -1,4 +1,5 @@
 import { messages as backMessages } from '../backend/en';
+import rules from '../../../validations/rules';
 
 const messages = {
   en: {
@@ -418,6 +419,28 @@ const messages = {
         confirmationModal: {
           title: 'Delete message?',
           message: 'This action cannot be reverted.',
+        },
+      },
+      form: {
+        validations: {
+          userName: {
+            required: 'The name is required.',
+            minLength: `The name must contain at least ${rules.userNameMinLength} characters.`,
+            maxLength: `The name must contain at most ${rules.userNameMaxLength} characters.`,
+            isValid: 'The name must contain only letters and spaces.',
+          },
+          email: {
+            required: 'The email is required.',
+            isValid: 'Please enter a valid email.',
+          },
+          password: {
+            required: 'The password is required.',
+            minLength: `The password must contain at least ${rules.passwMinLength} characters.`,
+            maxLength: `The password must contain at most ${rules.passwMaxLength} characters.`,
+            isValid:
+              'The password must contain at least one uppercase letter, one lowercase letter, one number and one special character.',
+            samePassword: 'The new password cannot be the same as the old one.',
+          },
         },
       },
       backendErrors: backMessages,
