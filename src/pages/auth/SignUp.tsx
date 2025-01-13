@@ -44,7 +44,8 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
     useFormik<SignUpType>({
       initialValues,
       validationSchema,
-      onSubmit: (values, { setSubmitting }) => {
+      onSubmit: ({ email, password, name }, { setSubmitting }) => {
+        const values = { email, password, name: name.trim() }; // remove espacos no inicio e no final do nome
         setTimeout(async () => {
           setSubmitting(false);
           console.log('useFormik values: ', values);
@@ -73,13 +74,12 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
             <MUI.FormControl>
               <MUI.FormLabel htmlFor="name">{i18n.t('signup.form.userName.title')}</MUI.FormLabel>
               <InputUserName
-                value={values.name.trim()}
+                value={values.name}
                 onChange={handleChange}
                 color={touched.name && Boolean(errors.name) ? 'error' : 'primary'}
                 error={touched.name && Boolean(errors.name)}
                 helperText={(touched.name && errors.name) || ' '}
                 placeholder={i18n.t('signup.form.userName.placeholder')}
-                // TODO: add name mask
               />
             </MUI.FormControl>
             <MUI.FormControl>
@@ -109,8 +109,6 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
                 color={touched.password && Boolean(errors.password) ? 'error' : 'primary'}
                 error={touched.password && Boolean(errors.password)}
                 helperText={(touched.password && errors.password) || ' '}
-                // TODO: add password strength meter
-                // TODO: add password mask
               />
             </MUI.FormControl>
             <MUI.FormControlLabel

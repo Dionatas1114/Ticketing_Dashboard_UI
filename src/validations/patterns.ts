@@ -1,23 +1,24 @@
-import rules from './rules';
+const specialCharsRegex = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
 
-const { userNameMinLength, userNameMaxLength, passwMinLength, passwMaxLength, phoneLength } = rules;
+const passwordStrength = (password: string) => {
+  let strength = 0;
 
-const patterns: StringElements | RegExpElements = {
-  userName:
-    "(?i)(^[a-z])((?![? .,'-]$)[ .]?[a-z]){" + userNameMinLength + ',' + userNameMaxLength + '}$',
-  email:
-    "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$",
-  // /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
-  password:
-    "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{" +
-    passwMinLength +
-    ',' +
-    passwMaxLength +
-    '}$',
-  phone: '^\\d{' + phoneLength + '}$',
+  // Pontuação com base em critérios
+  if (password.length >= 6) strength += 1; // Tem ao menos 6 caracteres
+  if (/[A-Z]/.test(password)) strength += 1; // Tem ao menos 1 letra maiúscula
+  if (/[a-z]/.test(password)) strength += 1; // Tem ao menos 1 letra minúscula
+  if (/\d/.test(password)) strength += 1; // Tem ao menos 1 número
+  if (specialCharsRegex.test(password)) strength += 1; // Tem ao menos 1 caractere especial
+
+  return strength;
 };
 
-// const patternTest = (pattern: string, data: string) => new RegExp(patterns[pattern]).test(data);
-const regexPatterns = (pattern: string) => new RegExp(patterns[pattern]);
+const patterns: RegExpElements = {
+  userName: /^[a-zA-Z\\s]*$/,
+  email: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+  // phone: '^\\d{' + phoneLength + '}$',
+};
 
-export { patterns, regexPatterns };
+const regexPatterns = (pattern: string) => patterns[pattern];
+
+export { regexPatterns, passwordStrength };

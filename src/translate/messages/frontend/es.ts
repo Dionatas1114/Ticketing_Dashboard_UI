@@ -1,4 +1,5 @@
 import { messages as backMessages } from '../backend/es';
+import rules from '../../../validations/rules';
 
 const messages = {
   es: {
@@ -420,6 +421,28 @@ const messages = {
         confirmationModal: {
           title: '¿Borrar mensaje?',
           message: 'Esta acción no puede ser revertida.',
+        },
+      },
+      form: {
+        validations: {
+          userName: {
+            required: 'El nombre es requerido.',
+            minLength: `El nombre debe contener al menos ${rules.userNameMinLength} caracteres.`,
+            maxLength: `El nombre debe contener al menos ${rules.userNameMaxLength} caracteres.`,
+            isValid: 'El nombre debe contener solo letras y espacios.',
+          },
+          email: {
+            required: 'El correo electrónica es requerido.',
+            isValid: 'Por favor, introduzca un correo electrónica válido.',
+          },
+          password: {
+            required: 'La contrasena es requerida.',
+            minLength: `La contrasena debe contener al menos ${rules.passwMinLength} caracteres.`,
+            maxLength: `La contrasena debe contener en máximo ${rules.passwMaxLength} caracteres.`,
+            isValid:
+              'La contrasena debe contener: mayúscula, minúscula, número y carácter especial.',
+            samePassword: 'La nueva contrasena no puede ser la misma que la antigua.',
+          },
         },
       },
       backendErrors: backMessages,
