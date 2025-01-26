@@ -1,42 +1,22 @@
-import { Box, CardContent, Grid2 as Grid, Stack, CircularProgress, Alert } from '@mui/material';
-
 import {
-  WbSunny as SunnyIcon, // ensolarado
-  Bedtime as MoonIcon, // luar
-  Thunderstorm as RainIcon, // chuva ou tempestade
-} from '@mui/icons-material';
-import SunWithCloudsIcon from '../../assets/icons/SunWithCloudsIcon'; // sol entre nuvens
+  Box,
+  CardContent,
+  Grid2 as Grid,
+  Stack,
+  CircularProgress,
+  Alert,
+  Typography,
+} from '@mui/material';
 
 import Title from '../title';
 import Card from '../card';
-import WeatherCarousel from './carousel';
-import { getDateNow } from './getDateNow';
+import Carousel from '../carousel';
+import { getWeatherIcon, getDailyWeatherIcon } from './weatherIcons';
 
 import { fetchWeatherData } from '../../hooks/weather';
 
-const fahrenheitToCelsius = (fahrenheit: number): number => Math.round(((fahrenheit - 32) * 5) / 9);
-
-const dailyWeatherIcons = {
-  night: <MoonIcon sx={{ fontSize: 30, color: 'white' }} />,
-  day: <SunnyIcon sx={{ fontSize: 30, color: 'orange' }} />,
-};
-
-function getDailyWeatherIconByHour(hour: number) {
-  const period = hour >= 6 && hour < 18 ? 'day' : 'night';
-  return dailyWeatherIcons[period];
-}
-
-const weatherIcons = {
-  rain: <RainIcon sx={{ fontSize: 80, color: 'white' }} />,
-  cloudy: <SunWithCloudsIcon sx={{ fontSize: 80, color: 'orange' }} />,
-  clear: <SunnyIcon sx={{ fontSize: 80, color: 'orange' }} />,
-};
-
-function getWeatherIcon(main: string) {
-  if (['Rain', 'Drizzle', 'Thunderstorm'].includes(main)) return 'rain';
-  if (['Clouds'].includes(main)) return 'cloudy';
-  return 'clear';
-}
+import { getDateNow } from '../../utils/functions/getDateNow';
+import fahrenheitToCelsius from '../../utils/functions/fahrenheitToCelsius';
 
 export default function Weather() {
   const { weather, isLoading, error } = fetchWeatherData();
@@ -55,14 +35,21 @@ export default function Weather() {
   // const feelsLike = main?.feels_like ? fahrenheitToCelsius(main.feels_like) : 0; // Sensação termica
   const mainData = weatherData[0]?.main || '';
 
-  const weatherIcon = weatherIcons[getWeatherIcon(mainData)];
-  const dailyWeatherIcon = getDailyWeatherIconByHour(hours);
+  const weatherIcon = getWeatherIcon(mainData);
+  const dailyWeatherIcon = getDailyWeatherIcon(hours);
 
   // Exibir loader ou mensagem enquanto os dados estão sendo carregados
   if (isLoading) return <CircularProgress />;
 
   // Caso os dados da API tenha retornado um erro
   if (error) return <Alert severity="error">{error}</Alert>;
+
+  const contents = [
+    <Typography variant="h2" sx={{ display: 'flex', justifyContent: 'center', mt: '0.5em' }}>
+      {weatherTemperature} °C
+    </Typography>,
+    <Box sx={{ display: 'flex', justifyContent: 'center' }}>{weatherIcon}</Box>,
+  ];
 
   // Renderizar o componente apenas após os dados serem carregados
   return (
@@ -74,7 +61,7 @@ export default function Weather() {
           </Stack>
           <Box sx={{ display: 'flex', justifyContent: 'center', width: 150, margin: '0 auto' }}>
             {/* carrousel: nuvem e temperatura */}
-            <WeatherCarousel {...{ weatherTemperature, weatherIcon }} />
+            <Carousel contents={contents} />
           </Box>
           <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 1 }}>
             {weatherCity + ' ' + weatherCountry}
