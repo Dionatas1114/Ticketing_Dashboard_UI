@@ -1,78 +1,47 @@
-import * as React from 'react';
 import { Box, CardContent, Grid2 as Grid, Stack, CircularProgress, Alert } from '@mui/material';
 
-import SunnyIcon from '@mui/icons-material/WbSunny'; // ensolarado
-import MoonIcon from '@mui/icons-material/Bedtime'; // luar
-import CloudIcon from '@mui/icons-material/WbCloudy'; // nublado
-import RainIcon from '@mui/icons-material/Thunderstorm'; // chuva ou tempestade
+import {
+  WbSunny as SunnyIcon, // ensolarado
+  Bedtime as MoonIcon, // luar
+  WbCloudy as CloudIcon, // nublado
+  Thunderstorm as RainIcon, // chuva ou tempestade
+} from '@mui/icons-material';
 
 import Title from '../title';
 import Card from '../card';
 import WeatherCarousel from './carousel';
 import { getDateNow } from './getDateNow';
 
-import { city, fetchWeatherData, fetchForecastData } from '../../hooks/weather/fetchWeather';
-
-export type WeatherProps = {
-  coord: {
-    lon: number;
-    lat: number;
-  };
-  wind: {
-    speed: number;
-  };
-  weather: {
-    description: string;
-    icon: string;
-    main: string;
-  }[];
-  main: {
-    temp: number;
-    pressure: number;
-    humidity: number;
-    feels_like: number;
-  };
-  sys: {
-    country: string;
-  };
-  name: string;
-};
+import { fetchWeatherData } from '../../hooks/weather';
 
 const fahrenheitToCelsius = (fahrenheit: number): number => Math.round(((fahrenheit - 32) * 5) / 9);
 
+const dailyWeatherIcons = {
+  night: <MoonIcon sx={{ fontSize: 30, color: 'white' }} />,
+  day: <SunnyIcon sx={{ fontSize: 30, color: 'orange' }} />,
+};
+
+function getDailyWeatherIconByHour(hour: number) {
+  const period = hour >= 6 && hour < 18 ? 'day' : 'night';
+  return dailyWeatherIcons[period];
+}
+
+const weatherIcons = {
+  rain: <RainIcon sx={{ fontSize: 80, color: 'white' }} />,
+  cloudy: <CloudIcon sx={{ fontSize: 80, color: 'white' }} />,
+  clear: <SunnyIcon sx={{ fontSize: 80, color: 'orange' }} />,
+};
+
+function getWeatherIcon(main: string) {
+  if (['Rain', 'Drizzle', 'Thunderstorm'].includes(main)) return 'rain';
+  if (['Clouds'].includes(main)) return 'cloudy';
+  return 'clear';
+}
+
 export default function Weather() {
-  const [weather, setWeather] = React.useState<WeatherProps | null>(null);
-  const [isLoading, setIsLoading] = React.useState<boolean>(true);
-  const [error, setError] = React.useState<string | null>(null);
+  const { weather, isLoading, error } = fetchWeatherData();
 
   const { dateNow, hours } = getDateNow();
-
-  const dailyWeatherIcons = {
-    night: <MoonIcon sx={{ fontSize: 30, color: 'white' }} />,
-    day: <SunnyIcon sx={{ fontSize: 30, color: 'orange' }} />,
-  };
-
-  function getPeriodByHour(hour: number): keyof typeof dailyWeatherIcons {
-    if (hour >= 18 || hour < 6) return 'night';
-    return 'day';
-  }
-
-  function getDailyWeatherIconByHour(hour: number) {
-    const period = getPeriodByHour(hour);
-    return dailyWeatherIcons[period];
-  }
-
-  const weatherIcons = {
-    rain: <RainIcon sx={{ fontSize: 80, color: 'white' }} />,
-    cloudy: <CloudIcon sx={{ fontSize: 80, color: 'white' }} />,
-    clear: <SunnyIcon sx={{ fontSize: 80, color: 'orange' }} />,
-  };
-
-  const getWeatherIcon = (main: string) => {
-    if (['Rain', 'Drizzle', 'Thunderstorm'].includes(main)) return 'rain';
-    if (['Clouds'].includes(main)) return 'cloudy';
-    return 'clear';
-  };
 
   const { name, sys, main, coord, weather: weatherData = [] } = weather || {};
   const weatherCity = name || '';
@@ -88,24 +57,6 @@ export default function Weather() {
 
   const weatherIcon = weatherIcons[getWeatherIcon(mainData)];
   const dailyWeatherIcon = getDailyWeatherIconByHour(hours);
-
-  React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const weatherData = await fetchWeatherData(city);
-        // const foreCastData = await fetchForecastData(city);
-        // console.log('🚀 ~ fetchData ~ foreCastData:', foreCastData);
-        setWeather(weatherData);
-      } catch (error) {
-        setError('Não foi possível carregar os dados do clima. Tente novamente mais tarde.');
-        console.error(error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   // Exibir loader ou mensagem enquanto os dados estão sendo carregados
   if (isLoading) return <CircularProgress />;
