@@ -11,7 +11,7 @@ import Card from '../card';
 import WeatherCarousel from './carousel';
 import { getDateNow } from './getDateNow';
 
-import { api, fetchWeatherData, fetchForecastData } from '../../hooks/weather/fetchWeather';
+import { city, fetchWeatherData, fetchForecastData } from '../../hooks/weather/fetchWeather';
 
 export type WeatherProps = {
   coord: {
@@ -92,9 +92,8 @@ export default function Weather() {
   React.useEffect(() => {
     const fetchData = async () => {
       try {
-        const weatherData = await fetchWeatherData(api.city);
-        console.log('🚀 ~ fetchData ~ data:', weatherData);
-        // const foreCastData = await fetchForecastData(api.city);
+        const weatherData = await fetchWeatherData(city);
+        // const foreCastData = await fetchForecastData(city);
         // console.log('🚀 ~ fetchData ~ foreCastData:', foreCastData);
         setWeather(weatherData);
       } catch (error) {
