@@ -2,14 +2,12 @@ import * as React from 'react';
 import { useKeenSlider } from 'keen-slider/react';
 import 'keen-slider/keen-slider.min.css';
 
-import { Box, Typography } from '@mui/material';
-
-type WeatherCarouselProps = {
-  weatherTemperature: number;
-  weatherIcon: React.JSX.Element;
+type CarouselProps = {
+  contents: React.JSX.Element[];
+  delay?: number; // change frames in milliseconds
 };
 
-const WeatherCarousel = ({ weatherTemperature, weatherIcon }: WeatherCarouselProps) => {
+const Carousel = ({ contents, delay = 2000 }: CarouselProps) => {
   const [sliderRef] = useKeenSlider(
     {
       loop: true,
@@ -26,7 +24,7 @@ const WeatherCarousel = ({ weatherTemperature, weatherIcon }: WeatherCarouselPro
           if (mouseOver) return;
           timeout = setTimeout(() => {
             slider.next();
-          }, 2000);
+          }, delay); // Change slide every 2 seconds
         }
         slider.on('created', () => {
           slider.container.addEventListener('mouseover', () => {
@@ -48,16 +46,13 @@ const WeatherCarousel = ({ weatherTemperature, weatherIcon }: WeatherCarouselPro
 
   return (
     <div ref={sliderRef} className="keen-slider">
-      <div className="keen-slider__slide">
-        <Typography variant="h2" sx={{ display: 'flex', justifyContent: 'center', mt: '0.5em' }}>
-          {weatherTemperature} °C
-        </Typography>
-      </div>
-      <div className="keen-slider__slide">
-        <Box sx={{ display: 'flex', justifyContent: 'center' }}>{weatherIcon}</Box>
-      </div>
+      {contents.map((content) => (
+        <div className="keen-slider__slide" key={contents.indexOf(content)}>
+          {content}
+        </div>
+      ))}
     </div>
   );
 };
 
-export default WeatherCarousel;
+export default Carousel;
