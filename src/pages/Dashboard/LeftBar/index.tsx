@@ -17,7 +17,7 @@ import {
 // import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
 // import HelpRoundedIcon from '@mui/icons-material/HelpRounded';
 
-import Router from '../../../components/Router';
+import Router from '../../../components/router';
 
 import ItemSelectedContext from '../../../context/MenuItemSelectedContext';
 

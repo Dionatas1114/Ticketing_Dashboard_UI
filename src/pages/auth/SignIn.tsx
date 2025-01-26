@@ -18,13 +18,13 @@ import { i18n } from '../../translate/i18n';
 import AppTheme from '../../assets/themes/AppTheme';
 import { ColorModeSelectDropdown } from '../../assets/themes/ColorModeSelect';
 
-import Card from '../../components/Card';
-import StackContainer from '../../components/StackContainer';
-import RouterLink from '../../components/Link';
-import InputEmail from '../../components/Inputs/inputEmail';
-import InputPassword from '../../components/Inputs/inputPassword';
-import SubmitBox from '../../components/Box/SubmitBox';
-import SubmitButton from '../../components/Button/SubmitButton';
+import Card from '../../components/card';
+import StackContainer from '../../components/stackContainer';
+import RouterLink from '../../components/link';
+import InputEmail from '../../components/inputs/inputEmail';
+import InputPassword from '../../components/inputs/inputPassword';
+import SubmitBox from '../../components/box/submitBox';
+import SubmitButton from '../../components/button/submitButton';
 
 import { loginSchema as validationSchema } from '../../validations/schemas/UserSchema';
 // import ForgotPassword from './ForgotPassword';

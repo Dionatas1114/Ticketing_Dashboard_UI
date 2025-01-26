@@ -1,4 +1,4 @@
-import { Card as MuiCard, styled } from '@mui/material';
+import { CardProps, Card as MuiCard, styled } from '@mui/material';
 
 const CardStyled = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -19,8 +19,6 @@ const CardStyled = styled(MuiCard)(({ theme }) => ({
   }),
 }));
 
-const Card = ({ children }: ChildrenProps) => (
-  <CardStyled variant="outlined">{children}</CardStyled>
-);
+const Card = (props: CardProps) => <CardStyled variant="outlined" {...props} />;
 
 export default Card;

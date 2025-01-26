@@ -1,34 +1,24 @@
-import { Box, Card, CardContent, Grid2 as Grid, Stack } from '@mui/material';
-import Title from '../../../../components/Title';
+import { Box, Grid2 as Grid } from '@mui/material';
 
-export default function Queues() {
+import Title from '../../../../components/title';
+import Weather from '../../../../components/weather';
+import { i18n } from '../../../../translate/i18n';
+
+export default function Home() {
   return (
-    <div>
-      <Title>Home</Title>
-      {/* Weather */}
-      <Box>
-        <Grid size={{ xs: 12, md: 6, lg: 9 }}>
-          <Card
-            variant="outlined"
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '8px',
-              flexGrow: 1,
-              borderRadius: 2,
-            }}
-          >
-            <CardContent>
-              <Stack direction="row" spacing={1}>
-                <Title>TESTE</Title>
-              </Stack>
-            </CardContent>
-          </Card>
-        </Grid>
-        {/* nuvem ou temperatura */}
-        TESTE
-        {/* Cidade */}
-      </Box>
-    </div>
+    <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
+      <Grid
+        size={{ xs: 12, md: 6, lg: 9 }}
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+        }}
+      >
+        <Title>{i18n.t('home.title')}</Title>
+        <Weather />
+      </Grid>
+      {/* <Tickets /> */}
+      Tickets
+    </Box>
   );
 }
