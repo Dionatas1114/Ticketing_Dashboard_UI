@@ -4,8 +4,7 @@ import { styled, AppBar, Box, Stack, Toolbar, tabsClasses, Typography } from '@m
 import { MenuRounded as MenuIcon, DashboardRounded as DashboardIcon } from '@mui/icons-material';
 
 import SideMenuMobile from '../SideMenu/SideMenuMobile';
-
-import MenuButton from '../../../components/Button/MenuButton';
+import MenuButton from '../../../components/button/menuButton';
 import { ColorModeSelectDropdown } from '../../../assets/themes/ColorModeSelect';
 
 const ToolbarStyled = styled(Toolbar)({
@@ -23,53 +22,6 @@ const ToolbarStyled = styled(Toolbar)({
     pb: 0,
   },
 });
-
-export default function AppNavbar() {
-  const [open, setOpen] = React.useState(false);
-
-  const toggleDrawer = (newOpen: boolean) => () => {
-    setOpen(newOpen);
-  };
-
-  return (
-    <AppBar
-      position="fixed"
-      sx={{
-        display: { xs: 'auto', md: 'none' },
-        boxShadow: 0,
-        bgcolor: 'background.paper',
-        backgroundImage: 'none',
-        borderBottom: '1px solid',
-        borderColor: 'divider',
-        top: 'var(--template-frame-height, 0px)',
-      }}
-    >
-      <ToolbarStyled variant="regular">
-        <Stack
-          direction="row"
-          sx={{
-            alignItems: 'center',
-            flexGrow: 1,
-            width: '100%',
-            gap: 1,
-          }}
-        >
-          <Stack direction="row" spacing={1} sx={{ justifyContent: 'center', mr: 'auto' }}>
-            <CustomIcon />
-            <Typography variant="h4" component="h1" sx={{ color: 'text.primary' }}>
-              Dashboard
-            </Typography>
-          </Stack>
-          <ColorModeSelectDropdown />
-          <MenuButton aria-label="menu" onClick={toggleDrawer(true)}>
-            <MenuIcon />
-          </MenuButton>
-          <SideMenuMobile open={open} toggleDrawer={toggleDrawer} />
-        </Stack>
-      </ToolbarStyled>
-    </AppBar>
-  );
-}
 
 export function CustomIcon() {
   return (
@@ -92,5 +44,50 @@ export function CustomIcon() {
     >
       <DashboardIcon color="inherit" sx={{ fontSize: '1rem' }} />
     </Box>
+  );
+}
+
+export default function AppNavbar() {
+  const [open, setOpen] = React.useState(false);
+
+  const toggleDrawer = (newOpen: boolean) => () => setOpen(newOpen);
+
+  return (
+    <AppBar
+      position="fixed"
+      sx={{
+        display: { xs: 'auto', md: 'none' },
+        boxShadow: 0,
+        bgcolor: 'background.paper',
+        backgroundImage: 'none',
+        borderBottom: '1px solid',
+        borderColor: 'divider',
+        top: 'var(--template-frame-height, 0px)',
+      }}
+    >
+      <ToolbarStyled>
+        <Stack
+          direction="row"
+          sx={{
+            alignItems: 'center',
+            flexGrow: 1,
+            width: '100%',
+            gap: 1,
+          }}
+        >
+          <Stack direction="row" spacing={1} sx={{ justifyContent: 'center', mr: 'auto' }}>
+            <CustomIcon />
+            <Typography variant="h4" component="h1" sx={{ color: 'text.primary' }}>
+              Dashboard
+            </Typography>
+          </Stack>
+          <ColorModeSelectDropdown />
+          <MenuButton aria-label="menu" onClick={toggleDrawer(true)}>
+            <MenuIcon />
+          </MenuButton>
+          <SideMenuMobile open={open} {...{ toggleDrawer }} />
+        </Stack>
+      </ToolbarStyled>
+    </AppBar>
   );
 }

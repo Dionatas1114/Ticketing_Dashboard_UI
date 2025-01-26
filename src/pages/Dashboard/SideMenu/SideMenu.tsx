@@ -5,7 +5,7 @@ import { styled, Drawer as MuiDrawer, drawerClasses, Divider } from '@mui/materi
 // import CardAlert from './CardAlert';
 import MenuContent from '../LeftBar';
 
-import UserProfile from '../../../components/UserProfile';
+import UserProfile from '../../../components/userProfile';
 
 const drawerWidth = 240;
 
@@ -22,16 +22,16 @@ const Drawer = styled(MuiDrawer)({
 
 export default function SideMenu() {
   return (
-      <Drawer
-        variant="permanent"
-        sx={{
-          display: { xs: 'none', md: 'block' },
-          [`& .${drawerClasses.paper}`]: {
-            backgroundColor: 'background.paper',
-          },
-        }}
-      >
-        {/* <Box
+    <Drawer
+      variant="permanent"
+      sx={{
+        display: { xs: 'none', md: 'block' },
+        [`& .${drawerClasses.paper}`]: {
+          backgroundColor: 'background.paper',
+        },
+      }}
+    >
+      {/* <Box
         sx={{
           display: 'flex',
           mt: 'calc(var(--template-frame-height, 0px) + 4px)',
@@ -40,14 +40,14 @@ export default function SideMenu() {
       >
         <SelectContent />
       </Box> */}
-        <Divider />
-        <MenuContent />
-        {/* <CardAlert /> */}
-        <UserProfile
-          name="Riley Carter"
-          email="riley@email.com"
-          avatarUrl="/static/images/avatar/7.jpg"
-        />
-      </Drawer>
+      <Divider />
+      <MenuContent />
+      {/* <CardAlert /> */}
+      <UserProfile
+        name="Riley Carter"
+        email="riley@email.com"
+        avatarUrl="/static/images/avatar/7.jpg"
+      />
+    </Drawer>
   );
 }
