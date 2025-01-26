@@ -3,9 +3,9 @@ import { Box, CardContent, Grid2 as Grid, Stack, CircularProgress, Alert } from 
 import {
   WbSunny as SunnyIcon, // ensolarado
   Bedtime as MoonIcon, // luar
-  WbCloudy as CloudIcon, // nublado
   Thunderstorm as RainIcon, // chuva ou tempestade
 } from '@mui/icons-material';
+import SunWithCloudsIcon from '../../assets/icons/SunWithCloudsIcon'; // sol entre nuvens
 
 import Title from '../title';
 import Card from '../card';
@@ -28,7 +28,7 @@ function getDailyWeatherIconByHour(hour: number) {
 
 const weatherIcons = {
   rain: <RainIcon sx={{ fontSize: 80, color: 'white' }} />,
-  cloudy: <CloudIcon sx={{ fontSize: 80, color: 'white' }} />,
+  cloudy: <SunWithCloudsIcon sx={{ fontSize: 80, color: 'orange' }} />,
   clear: <SunnyIcon sx={{ fontSize: 80, color: 'orange' }} />,
 };
 
@@ -72,7 +72,7 @@ export default function Weather() {
           <Stack direction="row" spacing={1} sx={{ justifyContent: 'center' }}>
             <Title>{dateNow}</Title> {/* Exibir a data atual */}
           </Stack>
-          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+          <Box sx={{ display: 'flex', justifyContent: 'center', width: 150, margin: '0 auto' }}>
             {/* carrousel: nuvem e temperatura */}
             <WeatherCarousel {...{ weatherTemperature, weatherIcon }} />
           </Box>
