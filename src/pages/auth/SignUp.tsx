@@ -18,14 +18,14 @@ import { i18n } from '../../translate/i18n';
 import AppTheme from '../../assets/themes/AppTheme';
 import { ColorModeSelectDropdown } from '../../assets/themes/ColorModeSelect';
 
-import Card from '../../components/Card';
-import StackContainer from '../../components/StackContainer';
-import RouterLink from '../../components/Link';
-import InputUserName from '../../components/Inputs/inputUserName';
-import InputEmail from '../../components/Inputs/inputEmail';
-import InputPassword from '../../components/Inputs/inputPassword';
-import SubmitBox from '../../components/Box/SubmitBox';
-import SubmitButton from '../../components/Button/SubmitButton';
+import Card from '../../components/card';
+import StackContainer from '../../components/stackContainer';
+import RouterLink from '../../components/link';
+import InputUserName from '../../components/inputs/inputUserName';
+import InputEmail from '../../components/inputs/inputEmail';
+import InputPassword from '../../components/inputs/inputPassword';
+import SubmitBox from '../../components/box/submitBox';
+import SubmitButton from '../../components/button/submitButton';
 // import { GoogleIcon, FacebookIcon, SitemarkIcon } from './CustomIcons';
 
 import { signUpSchema as validationSchema } from '../../validations/schemas/UserSchema';
@@ -44,8 +44,6 @@ const initialValues: SignUpType = {
 
 export default function SignUp(props: { disableCustomTheme?: boolean }) {
   const navigateTo = useNavigate();
-  // const [showPassword, setShowPassword] = React.useState<boolean>(false);
-  // const handleClickShowPassword = () => setShowPassword(!showPassword);
 
   const { handleSubmit, resetForm, handleChange, values, isSubmitting, touched, errors } =
     useFormik<SignUpType>({
