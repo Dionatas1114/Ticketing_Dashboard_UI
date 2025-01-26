@@ -47,18 +47,16 @@ const WeatherCarousel = ({ weatherTemperature, weatherIcon }: WeatherCarouselPro
   );
 
   return (
-    <Box sx={{ width: 150, margin: '0 auto' }}>
-      <div ref={sliderRef} className="keen-slider">
-        <div className="keen-slider__slide">
-          <Typography variant="h2" sx={{ display: 'flex', justifyContent: 'center', mt: '0.5em' }}>
-            {weatherTemperature} °C
-          </Typography>
-        </div>
-        <div className="keen-slider__slide">
-          <Box sx={{ display: 'flex', justifyContent: 'center' }}>{weatherIcon}</Box>
-        </div>
+    <div ref={sliderRef} className="keen-slider">
+      <div className="keen-slider__slide">
+        <Typography variant="h2" sx={{ display: 'flex', justifyContent: 'center', mt: '0.5em' }}>
+          {weatherTemperature} °C
+        </Typography>
       </div>
-    </Box>
+      <div className="keen-slider__slide">
+        <Box sx={{ display: 'flex', justifyContent: 'center' }}>{weatherIcon}</Box>
+      </div>
+    </div>
   );
 };
 
