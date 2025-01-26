@@ -1,6 +1,7 @@
 import React from 'react';
-import { Box, Button, TextField, Typography, Stack, IconButton, Card } from '@mui/material';
-import QrCodeIcon from '@mui/icons-material/QrCode'; // Ícone ilustrativo, substitua pelo real se necessário.
+import { Box, Button, Typography, Card } from '@mui/material';
+import QrCodeIcon from '@mui/icons-material/QrCode';
+import { i18n } from '../../../../translate/i18n';
 
 export default function QRCodeVerification() {
   return (
@@ -30,10 +31,10 @@ export default function QRCodeVerification() {
         </Box>
       </Box>
       <Typography variant="h6" component="h2" sx={{ mb: 1 }}>
-        Scan QR code
+        {i18n.t('connections.qrcodeModal.title')}
       </Typography>
       <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-        Click to Generate QR code
+        {i18n.t('connections.qrcodeModal.generateQrCode')}
       </Typography>
 
       {/* QR Code Placeholder */}
@@ -55,27 +56,9 @@ export default function QRCodeVerification() {
         </Typography>
       </Box>
 
-      {/* Campo de entrada manual */}
-      {/* <TextField
-        fullWidth
-        placeholder="Enter the code manually"
-        variant="outlined"
-        size="small"
-        slotProps={{
-          input: {
-            endAdornment: (
-              <IconButton>
-                <QrCodeIcon />
-              </IconButton>
-            ),
-          },
-        }}
-        sx={{ mb: 2 }}
-      /> */}
-
-      {/* Botão de verificação */}
+      {/* Botão de geração do QR Code */}
       <Button fullWidth variant="contained" color="primary" sx={{ textTransform: 'none' }}>
-        Generate QR code
+        {i18n.t('connections.qrcodeModal.generateQrCode')}
       </Button>
     </Card>
   );

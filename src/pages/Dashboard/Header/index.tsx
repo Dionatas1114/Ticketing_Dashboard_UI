@@ -2,9 +2,9 @@ import * as React from 'react';
 import { Stack } from '@mui/material';
 
 // import CustomDatePicker from './CustomDatePicker';
-import Search from '../../../components/Search';
+import Search from '../../../components/search';
 import NavbarBreadcrumbs from './NavbarBreadcrumbs';
-import Notifications from '../../../components/Notifications';
+import Notifications from '../../../components/notifications';
 
 import { ColorModeSelectDropdown } from '../../../assets/themes/ColorModeSelect';
 

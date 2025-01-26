@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Box, Button, Modal } from '@mui/material';
+
 import QrCodeVerification from './qrcode';
+import { i18n } from '../../../../translate/i18n';
 
 const AddNewConnection: React.FC = () => {
   const [open, setOpen] = useState(false);
@@ -20,7 +22,7 @@ const AddNewConnection: React.FC = () => {
           borderRadius: 2,
         }}
       >
-        Add New Connection
+        {i18n.t('connections.buttons.add')}
       </Button>
 
       {/* Modal para exibir o QR Code */}
@@ -48,7 +50,7 @@ const AddNewConnection: React.FC = () => {
 
           {/* Botão para fechar o modal */}
           <Button fullWidth variant="outlined" onClick={handleClose} sx={{ mt: 2 }}>
-            Close
+            {i18n.t('connections.qrcodeModal.close')}
           </Button>
         </Box>
       </Modal>

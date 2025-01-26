@@ -57,7 +57,8 @@ const messages = {
           fail: 'Erro ao efetuar login. Verifique os dados informados.',
         },
       },
-      dashboard: {
+      home: {
+        title: 'Home',
         charts: {
           perDay: {
             title: 'Tickets hoje: ',
@@ -75,8 +76,13 @@ const messages = {
           disconnectTitle: 'Desconectar',
           disconnectMessage: 'Tem certeza? Você precisará ler o QR Code novamente.',
         },
+        qrcodeModal: {
+          title: 'Leia o QR Code',
+          generateQrCode: 'Clique para gerar o QR Code',
+          close: 'Fechar',
+        },
         buttons: {
-          add: 'Adicionar WhatsApp',
+          add: 'Adicionar Conexão do Whatsapp',
           disconnect: 'desconectar',
           tryAgain: 'Tentar novamente',
           qrcode: 'QR CODE',
@@ -88,11 +94,6 @@ const messages = {
             title: 'Falha ao iniciar sessão do WhatsApp',
             content:
               'Certifique-se de que seu celular esteja conectado à internet e tente novamente, ou solicite um novo QR Code',
-          },
-          qrcode: {
-            title: 'Esperando leitura do QR Code',
-            content:
-              "Clique no botão 'QR CODE' e leia o QR Code com o seu celular para iniciar a sessão",
           },
           connected: {
             title: 'Conexão estabelecida!',
@@ -128,9 +129,6 @@ const messages = {
           cancel: 'Cancelar',
         },
         success: 'WhatsApp salvo com sucesso.',
-      },
-      qrCode: {
-        message: 'Leia o QrCode para iniciar a sessão',
       },
       contacts: {
         title: 'Contatos',
