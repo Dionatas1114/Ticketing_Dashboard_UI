@@ -1,8 +1,16 @@
 import { toast } from 'react-toastify';
-
 import { i18n } from '../../translate/i18n';
 
-export default function toastError(err: any) {
+type ApiError = {
+  response?: {
+    data?: {
+      error?: string;
+    };
+  };
+  message?: string;
+};
+
+export default function toastError(err: ApiError) {
   const errorMsg = err.response?.data?.error;
 
   if (errorMsg) {
@@ -16,6 +24,6 @@ export default function toastError(err: any) {
       });
     }
   } else {
-    toast.error(err.message);
+    toast.error(err.message || 'An unexpected error occurred.');
   }
 }
