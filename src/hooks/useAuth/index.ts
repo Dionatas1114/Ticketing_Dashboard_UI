@@ -4,10 +4,15 @@ import { ticketApi, socket } from '../../api';
 import signFunctions from '../../hooks/useAuth/signFunctions';
 import toastError from '../../utils/toastError';
 
+type RefreshTokenType = {
+  token?: string;
+  user?: User;
+};
+
 const useAuth = () => {
+  const [user, setUser] = useState<User | {}>({});
   const [isAuth, setIsAuth] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState({});
 
   ticketApi.interceptors.request.use(
     (config) => {
@@ -28,7 +33,7 @@ const useAuth = () => {
       if (error?.response?.status === 403 && !originalRequest._retry) {
         originalRequest._retry = true;
 
-        const { data }: any = await ticketApi.post('/auth/refresh_token');
+        const { data } = await ticketApi.post<RefreshTokenType>('/auth/refresh_token');
         if (data) {
           localStorage.setItem('token', JSON.stringify(data?.token));
           ticketApi.defaults.headers.common['Authorization'] = `Bearer ${data?.token}`;
@@ -46,19 +51,21 @@ const useAuth = () => {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    (async () => {
+    const refreshToken = async () => {
       if (token) {
         try {
-          const { data }: any = await ticketApi.post('/auth/refresh_token');
+          const { data } = await ticketApi.post<RefreshTokenType>('/auth/refresh_token');
           ticketApi.defaults.headers.common['Authorization'] = `Bearer ${data?.token}`;
           setIsAuth(true);
-          setUser(data?.user);
+          setUser(data?.user ?? {});
         } catch (err) {
           toastError(err);
         }
       }
       setLoading(false);
-    })();
+    };
+
+    refreshToken();
   }, []);
 
   useEffect(() => {
