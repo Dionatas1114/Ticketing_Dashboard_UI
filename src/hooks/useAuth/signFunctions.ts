@@ -19,6 +19,11 @@ type ChangePasswordType = {
   newPassword: string;
 };
 
+type LoginReturnType = {
+  token: string;
+  user: User;
+};
+
 const HandleSignUp = async (userData: SignUpType) => {
   try {
     await ticketApi.post('/auth/signup', userData);
@@ -34,7 +39,7 @@ const HandleLogin = async (userData: SignInType) => {
     const {
       data: { token, user },
       status,
-    }: any = await ticketApi.post('/auth/login', userData);
+    } = await ticketApi.post<LoginReturnType>('/auth/login', userData);
     console.log({ token, user, status });
   } catch (err) {
     toastError(err);
