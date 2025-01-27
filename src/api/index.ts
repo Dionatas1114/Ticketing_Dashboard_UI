@@ -22,7 +22,7 @@ const clientInstance = (
   });
 
 // const mediaBlobApi = clientInstance(mediaBaseURL, 'blob');
-const brapiApi = clientInstance(baseURL);
+const ticketApi = clientInstance(baseURL);
 const weatherApi = clientInstance(weatherBaseURL);
 
-export { brapiApi, weatherApi, baseURL, weatherBaseURL, weatherKey, city, socket };
+export { ticketApi, weatherApi, baseURL, weatherBaseURL, weatherKey, city, socket };
