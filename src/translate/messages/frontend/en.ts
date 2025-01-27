@@ -327,6 +327,8 @@ const messages = {
           deleteMessage:
             'Are you sure? It cannot be reverted! Tickets in this queue will still exist, but will not have any queues assigned.',
         },
+        loading: 'Loading queues...',
+        noData: 'No queues found.',
       },
       queueSelect: {
         inputLabel: 'Queues',
