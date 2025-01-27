@@ -48,9 +48,8 @@ export const fetchWeatherData = () => {
   React.useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data: weatherData }: any = await weatherApi.get(
-          `/weather?q=${city}&units=imperial&APPID=${weatherKey}`
-        );
+        const url = `/weather?q=${city}&units=imperial&APPID=${weatherKey}`;
+        const { data: weatherData } = await weatherApi.get<WeatherProps>(url);
         setWeather(weatherData);
       } catch (error) {
         setError('Não foi possível carregar os dados do clima. Tente novamente mais tarde.');
@@ -74,9 +73,8 @@ export const fetchForecastData = () => {
   React.useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data: forecastData }: any = await weatherApi.get(
-          `/forecast?q=${city}&units=imperial&APPID=${weatherKey}`
-        );
+        const url = `/forecast?q=${city}&units=imperial&APPID=${weatherKey}`;
+        const { data: forecastData } = await weatherApi.get<ForecastProps>(url);
         setForecast(forecastData);
       } catch (error) {
         setError('Não foi possível carregar os dados do clima. Tente novamente mais tarde.');
