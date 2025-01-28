@@ -327,6 +327,8 @@ const messages = {
           deleteMessage:
             '¿Estás seguro? ¡Esta acción no se puede revertir! Los tickets en esa cola seguirán existiendo, pero ya no tendrán ninguna cola asignada.',
         },
+        loading: 'Cargando Linhas...',
+        noData: 'Sin linhas.',
       },
       queueSelect: {
         inputLabel: 'Linhas',

@@ -26,9 +26,10 @@ import InputPassword from '../../components/inputs/inputPassword';
 import SubmitBox from '../../components/box/submitBox';
 import SubmitButton from '../../components/button/submitButton';
 
-import { loginSchema as validationSchema } from '../../validations/schemas/UserSchema';
 // import ForgotPassword from './ForgotPassword';
 // import { GoogleIcon, FacebookIcon, SitemarkIcon } from './CustomIcons';
+import { loginSchema as validationSchema } from '../../validations/schemas/UserSchema';
+import useAuth from '../../hooks/useAuth';
 
 export type SignInType = {
   email: string;
@@ -42,6 +43,7 @@ const initialValues: SignInType = {
 
 export default function SignIn(props: { disableCustomTheme?: boolean }) {
   const navigateTo = useNavigate();
+  const { HandleLogin } = useAuth();
 
   const { handleSubmit, resetForm, handleChange, values, isSubmitting, touched, errors } =
     useFormik<SignInType>({
@@ -51,7 +53,7 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
         setTimeout(async () => {
           setSubmitting(false);
           console.log('useFormik values: ', values);
-          // await HandleLogin(values);
+          await HandleLogin(values);
           resetForm();
           navigateTo('/dash');
         }, 500);

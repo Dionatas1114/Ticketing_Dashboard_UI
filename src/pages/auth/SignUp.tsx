@@ -29,6 +29,7 @@ import SubmitButton from '../../components/button/submitButton';
 // import { GoogleIcon, FacebookIcon, SitemarkIcon } from './CustomIcons';
 
 import { signUpSchema as validationSchema } from '../../validations/schemas/UserSchema';
+import useAuth from '../../hooks/useAuth';
 
 import { SignInType } from './SignIn';
 
@@ -44,17 +45,18 @@ const initialValues: SignUpType = {
 
 export default function SignUp(props: { disableCustomTheme?: boolean }) {
   const navigateTo = useNavigate();
+  const { HandleSignUp } = useAuth();
 
   const { handleSubmit, resetForm, handleChange, values, isSubmitting, touched, errors } =
     useFormik<SignUpType>({
       initialValues,
       validationSchema,
-      onSubmit: ({ email, password, name }, { setSubmitting }) => {
-        const values = { email, password, name: name.trim() }; // remove espacos no inicio e no final do nome
+      onSubmit: ({ name, ...rest }, { setSubmitting }) => {
+        const values = { name: name.trim(), ...rest }; // remove espacos no inicio e no final do nome
         setTimeout(async () => {
           setSubmitting(false);
           console.log('useFormik values: ', values);
-          // await HandleSignUp(values);
+          await HandleSignUp(values);
           resetForm();
           navigateTo('/dash');
         }, 500);

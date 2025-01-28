@@ -327,6 +327,8 @@ const messages = {
           deleteMessage:
             'Você tem certeza? Essa ação não pode ser revertida! Os tickets dessa fila continuarão existindo, mas não terão mais nenhuma fila atribuída.',
         },
+        loading: 'Carregando filas...',
+        noData: 'Nenhuma fila encontrada.',
       },
       queueSelect: {
         inputLabel: 'Filas',
