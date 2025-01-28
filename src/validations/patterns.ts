@@ -14,7 +14,7 @@ const passwordStrength = (password: string) => {
 };
 
 const patterns: RegExpElements = {
-  userName: /^[a-zA-Z\\s]*$/,
+  userName: /^\s*[\p{L}]+(?:\s[\p{L}]+)*\s*$/u, // Permite apenas letras com ou sem acentos e espaços entre, antes e depois dos nomes
   email: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
   // phone: '^\\d{' + phoneLength + '}$',
 };
