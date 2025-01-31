@@ -15,23 +15,27 @@ import Connections from '../pages/Dashboard/Contents/connections';
 import Queues from '../pages/Dashboard/Contents/queues';
 import Settings from '../pages/Dashboard/Contents/Settings';
 
+import { AuthProvider } from '../context/AuthContext';
+
 const AppRoutes = () => (
-  <Routes>
-    <Route path="/*" element={<SignIn />} />
-    <Route path="/signup" element={<SignUp />} />
-    {/* <Route path="/forgot-password" element={<ForgotPassword />} />
+  <AuthProvider>
+    <Routes>
+      <Route path="/*" element={<SignIn />} />
+      <Route path="/signup" element={<SignUp />} />
+      {/* <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/change-password" element={<ChangePassword />} /> */}
-    <Route path="dash" element={<Dashboard />}>
-      <Route path="home" element={<Home />} />
-      <Route path="tickets" element={<Tickets />} />
-      <Route path="contacts" element={<Contacts />} />
-      <Route path="quick-answers" element={<QuickAnswers />} />
-      <Route path="users" element={<Users />} />
-      <Route path="connections" element={<Connections />} />
-      <Route path="queues" element={<Queues />} />
-      <Route path="settings" element={<Settings />} />
-    </Route>
-  </Routes>
+      <Route path="dash" element={<Dashboard />}>
+        <Route path="home" element={<Home />} />
+        <Route path="tickets" element={<Tickets />} />
+        <Route path="contacts" element={<Contacts />} />
+        <Route path="quick-answers" element={<QuickAnswers />} />
+        <Route path="users" element={<Users />} />
+        <Route path="connections" element={<Connections />} />
+        <Route path="queues" element={<Queues />} />
+        <Route path="settings" element={<Settings />} />
+      </Route>
+    </Routes>
+  </AuthProvider>
 );
 
 export default AppRoutes;

@@ -13,6 +13,7 @@ import {
 
 import { passwordStrength } from '../../../validations/patterns';
 import usePasswordVisibility from '../../../hooks/usePasswordVisibility';
+import rules from '../../../validations/rules';
 
 interface InputPasswordProps {
   value: string;
@@ -46,7 +47,7 @@ const InputPassword = ({ value, error, ...props }: InputPasswordProps & TextFiel
         // showPassword={showPassword}
         type={showPassword ? 'text' : 'password'}
         inputProps={{
-          maxLength: 10, // Limita o input ao máx de 10 caracteres
+          maxLength: rules.passwMaxLength, // Limita o input ao máx de 10 caracteres
         }}
         slotProps={{
           input: {
@@ -95,7 +96,7 @@ const InputPassword = ({ value, error, ...props }: InputPasswordProps & TextFiel
             sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 1 }}
           >
             <Typography variant="body2" sx={{ color }}>
-              {'6-10 chars, A-z, 0-9, @!#*'}
+              {`${rules.passwMinLength}-${rules.passwMaxLength} chars, A-z, 0-9, @!#*`}
             </Typography>
             <Typography variant="body2" sx={{ color }}>
               {label}

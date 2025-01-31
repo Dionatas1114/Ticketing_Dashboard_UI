@@ -4,6 +4,7 @@ import { i18n } from '../../translate/i18n';
 type ApiError = {
   response?: {
     data?: {
+      message?: string;
       error?: string;
     };
   };
@@ -11,7 +12,8 @@ type ApiError = {
 };
 
 export default function toastError(err: ApiError) {
-  const errorMsg = err.response?.data?.error;
+  const data = err.response?.data;
+  const errorMsg = data?.message || data?.error;
 
   if (errorMsg) {
     if (i18n.exists(`backendErrors.${errorMsg}`)) {
