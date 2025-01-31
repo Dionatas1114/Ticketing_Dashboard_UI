@@ -58,7 +58,7 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
           console.log('useFormik values: ', values);
           await HandleSignUp(values);
           resetForm();
-          navigateTo('/dash');
+          navigateTo('/');
         }, 500);
       },
     });
