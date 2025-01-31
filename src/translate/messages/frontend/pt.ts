@@ -7,7 +7,7 @@ const messages = {
       signup: {
         title: 'Cadastre-se',
         toasts: {
-          success: 'Usuário criado com sucesso! Faça seu login',
+          success: 'Usuário criado com sucesso! Faça o login',
           fail: 'Erro ao criar usuário. Verifique os dados informados',
         },
         form: {
