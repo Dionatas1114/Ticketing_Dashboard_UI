@@ -13,8 +13,8 @@ import {
 } from '@mui/material';
 import { MenuRounded as MenuIcon, Settings as SettingsIcon } from '@mui/icons-material';
 
-import Title from '../../../../components/title';
-import Card from '../../../../components/Card';
+import Title from '../../../../components/Title';
+import Card from '../../../../components/card';
 import { i18n } from '../../../../translate/i18n';
 import { ColorModeList } from '../../../../assets/themes/ColorModeSelect';
 

@@ -3,7 +3,7 @@ import { Box, Grid2 as Grid } from '@mui/material';
 
 import AddNewConnection from './AddNewConnection';
 import CustomizedDataGrid from './CustomizedDataGrid';
-import Title from '../../../../components/title';
+import Title from '../../../../components/Title';
 
 import { i18n } from '../../../../translate/i18n';
 

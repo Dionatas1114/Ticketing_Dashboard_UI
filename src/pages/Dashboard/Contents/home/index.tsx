@@ -1,6 +1,6 @@
 import { Box, Grid2 as Grid } from '@mui/material';
 
-import Title from '../../../../components/title';
+import Title from '../../../../components/Title';
 import Weather from '../../../../components/weather';
 import { i18n } from '../../../../translate/i18n';
 
