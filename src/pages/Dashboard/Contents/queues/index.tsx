@@ -1,6 +1,6 @@
 import { Box, Grid2 as Grid, CircularProgress } from '@mui/material';
 
-import Title from '../../../../components/Title';
+import Title from '../../../../components/title';
 
 import useQueues from '../../../../hooks/useQueues';
 import { i18n } from '../../../../translate/i18n';
