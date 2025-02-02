@@ -1,7 +1,6 @@
 import { Box, Grid2 as Grid } from '@mui/material';
 
 import Title from '../../../../components/title';
-import Weather from '../../../../components/weather';
 import { i18n } from '../../../../translate/i18n';
 
 export default function Home() {
@@ -15,7 +14,6 @@ export default function Home() {
         }}
       >
         <Title>{i18n.t('home.title')}</Title>
-        <Weather />
       </Grid>
       {/* <Tickets /> */}
       Tickets

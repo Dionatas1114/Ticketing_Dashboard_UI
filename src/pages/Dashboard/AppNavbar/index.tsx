@@ -4,7 +4,7 @@ import { styled, AppBar, Box, Stack, Toolbar, tabsClasses, Typography } from '@m
 import { MenuRounded as MenuIcon, DashboardRounded as DashboardIcon } from '@mui/icons-material';
 
 import SideMenuMobile from '../SideMenu/SideMenuMobile';
-import MenuButton from '../../../components/button/menuButton';
+import MenuButton from '../../../components/button/MenuButton';
 import { ColorModeSelectDropdown } from '../../../assets/themes/ColorModeSelect';
 
 const ToolbarStyled = styled(Toolbar)({

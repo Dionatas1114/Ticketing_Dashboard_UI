@@ -14,7 +14,7 @@ import {
 
 import { LogoutRounded as LogoutIcon, MoreVertRounded as MoreVertIcon } from '@mui/icons-material';
 
-import MenuButton from '../../../components/button/menuButton';
+import MenuButton from '../../../components/button/MenuButton';
 
 const MuiMenuItem = styled(MenuItem)({
   margin: '2px 0',
