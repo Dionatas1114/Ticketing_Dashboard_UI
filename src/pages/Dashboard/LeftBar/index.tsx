@@ -22,11 +22,11 @@ import Weather from '../../../components/weather';
 
 import ItemSelectedContext from '../../../context/MenuItemSelectedContext';
 
-interface RouteType {
+type RouteType = {
   text: string;
   route: string;
   icon: React.JSX.Element;
-}
+};
 
 const mainListItems: RouteType[] = [
   { text: 'Home', route: 'home', icon: <HomeRoundedIcon /> },

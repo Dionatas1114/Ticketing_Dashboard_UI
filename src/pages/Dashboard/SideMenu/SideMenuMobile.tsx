@@ -3,15 +3,15 @@ import * as React from 'react';
 import { Button, Divider, Drawer, drawerClasses, Stack } from '@mui/material';
 import { LogoutRounded as LogoutIcon } from '@mui/icons-material';
 
-import Notifications from '../../../components/Notifications';
+import Notifications from '../../../components/notifications';
 import UserProfile from '../../../components/UserProfile';
 import MenuContent from '../LeftBar';
 // import CardAlert from './CardAlert';
 
-interface SideMenuMobileProps {
+type SideMenuMobileProps = {
   open: boolean | undefined;
   toggleDrawer: (newOpen: boolean) => () => void;
-}
+};
 
 export default function SideMenuMobile({ open, toggleDrawer }: SideMenuMobileProps) {
   return (

@@ -8,11 +8,10 @@ import { navigationCustomizations } from './custom/navigation';
 import { surfacesCustomizations } from './custom/surfaces';
 import { colorSchemes, typography, shadows, shape } from './themePrimitives';
 
-interface AppThemeProps {
-  children: React.ReactNode;
+type AppThemeProps = {
   disableCustomTheme?: boolean;
   themeComponents?: ThemeOptions['components'];
-}
+} & ChildrenProps;
 
 export default function AppTheme({ children, disableCustomTheme, themeComponents }: AppThemeProps) {
   if (disableCustomTheme) {

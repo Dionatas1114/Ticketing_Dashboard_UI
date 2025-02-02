@@ -15,9 +15,9 @@ import { passwordStrength } from '../../../validations/patterns';
 import usePasswordVisibility from '../../../hooks/usePasswordVisibility';
 import rules from '../../../validations/rules';
 
-interface InputPasswordProps {
+type InputPasswordProps = {
   value: string;
-}
+} & TextFieldProps;
 
 const strengthLabels: Record<number, { label: string; color: string }> = {
   1: { label: 'Very weak', color: colors.red[500] },
@@ -29,7 +29,7 @@ const strengthLabels: Record<number, { label: string; color: string }> = {
 
 const getStrengthLabel = (strength: number) => strengthLabels[strength] || strengthLabels[1];
 
-const InputPassword = ({ value, error, ...props }: InputPasswordProps & TextFieldProps) => {
+const InputPassword = ({ value, error, ...props }: InputPasswordProps) => {
   const { showPassword, togglePasswordVisibility } = usePasswordVisibility();
 
   const strength = passwordStrength(value);
