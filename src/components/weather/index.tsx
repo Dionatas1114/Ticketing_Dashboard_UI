@@ -6,6 +6,7 @@ import {
   CircularProgress,
   Alert,
   Typography,
+  CardProps,
 } from '@mui/material';
 
 import Title from '../title';
@@ -18,7 +19,7 @@ import { fetchWeatherData } from '../../hooks/weather';
 import { getDateNow } from '../../utils/functions/getDateNow';
 import fahrenheitToCelsius from '../../utils/functions/fahrenheitToCelsius';
 
-export default function Weather() {
+export default function Weather(props: CardProps) {
   const { weather, isLoading, error } = fetchWeatherData();
 
   const { dateNow, hours } = getDateNow();
@@ -38,10 +39,10 @@ export default function Weather() {
   const weatherIcon = getWeatherIcon(mainData);
   const dailyWeatherIcon = getDailyWeatherIcon(hours);
 
-  // Exibir loader ou mensagem enquanto os dados estão sendo carregados
+  // Exibir loader circular enquanto os dados estão sendo carregados
   if (isLoading) return <CircularProgress />;
 
-  // Caso os dados da API tenha retornado um erro
+  // Caso a API tenha retornado um erro
   if (error) return <Alert severity="error">{error}</Alert>;
 
   const contents = [
@@ -53,22 +54,22 @@ export default function Weather() {
 
   // Renderizar o componente apenas após os dados serem carregados
   return (
-    <Grid size={{ xs: 12, md: 6, lg: 9 }}>
-      <Card sx={{ padding: '1rem 0.5rem' }}>
-        <CardContent>
-          <Stack direction="row" spacing={1} sx={{ justifyContent: 'center' }}>
-            <Title>{dateNow}</Title> {/* Exibir a data atual */}
-          </Stack>
-          <Box sx={{ display: 'flex', justifyContent: 'center', width: 150, margin: '0 auto' }}>
-            {/* carrousel: nuvem e temperatura */}
-            <Carousel contents={contents} />
-          </Box>
-          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 1 }}>
-            {weatherCity + ' ' + weatherCountry}
-            {dailyWeatherIcon}
-          </Box>
-        </CardContent>
-      </Card>
-    </Grid>
+    // <Grid size={{ xs: 12, md: 6, lg: 9 }}>
+    <Card sx={{ padding: '1rem 0.5rem' }} {...props}>
+      <CardContent>
+        <Stack direction="row" spacing={1} sx={{ justifyContent: 'center' }}>
+          <Title>{dateNow}</Title> {/* Exibir a data atual */}
+        </Stack>
+        <Box sx={{ display: 'flex', justifyContent: 'center', width: 150, margin: '0 auto' }}>
+          {/* carrousel: nuvem e temperatura */}
+          <Carousel contents={contents} />
+        </Box>
+        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 1 }}>
+          {weatherCity + ' ' + weatherCountry}
+          {dailyWeatherIcon}
+        </Box>
+      </CardContent>
+    </Card>
+    // </Grid>
   );
 }
