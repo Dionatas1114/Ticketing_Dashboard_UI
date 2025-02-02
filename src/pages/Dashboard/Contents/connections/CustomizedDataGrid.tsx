@@ -11,9 +11,7 @@ export default function CustomizedDataGrid() {
       rowHeight={80}
       columnHeaderHeight={60}
       getRowClassName={(params) => (params.indexRelativeToCurrentPage % 2 === 0 ? 'even' : 'odd')}
-      initialState={{
-        pagination: { paginationModel: { pageSize: 20 } },
-      }}
+      initialState={{ pagination: { paginationModel: { pageSize: 20 } } }}
       pageSizeOptions={[10, 20, 50]}
       disableColumnResize
       density="compact"

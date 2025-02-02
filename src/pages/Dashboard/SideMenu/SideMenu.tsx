@@ -5,7 +5,7 @@ import { styled, Drawer as MuiDrawer, drawerClasses, Divider } from '@mui/materi
 // import CardAlert from './CardAlert';
 import MenuContent from '../LeftBar';
 
-import UserProfile from '../../../components/userProfile';
+import UserProfile from '../../../components/UserProfile';
 
 const drawerWidth = 240;
 

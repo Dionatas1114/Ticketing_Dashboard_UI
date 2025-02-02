@@ -1,9 +1,7 @@
 import { i18n } from '../../translate/i18n';
 
-const currentLanguage = i18n.language as 'pt' | 'en' | 'es';
-
 export const getDateNow = () => {
-  const allData = {
+  const localeData = {
     en: {
       days: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
       months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
@@ -18,15 +16,21 @@ export const getDateNow = () => {
     },
   };
 
-  const days = allData[currentLanguage].days;
-  const months = allData[currentLanguage].months;
+  // Idiomas permitidos
+  const allowedLanguages = ['pt', 'en', 'es'] as const;
 
-  const dateNow = new Date();
+  const currentLanguage = i18n.language as (typeof allowedLanguages)[number];
+  // Obtém o idioma atual ou define como 'pt' se for inválido
+  const language = allowedLanguages.includes(currentLanguage) ? currentLanguage : 'pt';
 
-  const hours = dateNow.getHours();
-  const day = days[dateNow.getDay()];
-  const date = dateNow.getDate();
-  const month = months[dateNow.getMonth()];
+  // Dados locais com fallback para 'pt'
+  const { days, months } = localeData[language] || localeData['pt'];
+
+  const now = new Date();
+  const day = days[now.getDay()];
+  const date = now.getDate();
+  const month = months[now.getMonth()];
+  const hours = now.getHours();
 
   return { dateNow: `${day} ${date} ${month}`, hours };
 };

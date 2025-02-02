@@ -18,6 +18,7 @@ import {
 // import HelpRoundedIcon from '@mui/icons-material/HelpRounded';
 
 import Router from '../../../components/router';
+import Weather from '../../../components/weather';
 
 import ItemSelectedContext from '../../../context/MenuItemSelectedContext';
 
@@ -91,6 +92,7 @@ export default function MenuContent() {
 
   return (
     <Stack sx={{ flexGrow: 1, p: 1, justifyContent: 'space-between' }}>
+      {/* Main list */}
       <List dense>
         {renderListItems(firstMainListItems)}
         <Typography variant="h6" sx={{ mb: 0.5, mt: 1 }}>
@@ -98,6 +100,11 @@ export default function MenuContent() {
         </Typography>
         {renderListItems(secondMainListItems)} {/* //TODO: Render only if user is admin */}
       </List>
+
+      {/* Weather component */}
+      <Weather sx={{ mb: 2 }} />
+
+      {/* Secondary list */}
       <List dense>{renderListItems(memoSecondaryListItems)}</List>
     </Stack>
   );
