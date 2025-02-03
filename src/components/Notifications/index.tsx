@@ -3,9 +3,9 @@ import { NotificationsRounded as NotificationsIcon } from '@mui/icons-material';
 
 import MenuButton from '../button/menuButton';
 
-interface NotificationMenuButtonProps {
+type NotificationMenuButtonProps = {
   showBadge?: boolean;
-}
+};
 
 const NotificationMenuButton = ({ showBadge }: NotificationMenuButtonProps) => {
   return (

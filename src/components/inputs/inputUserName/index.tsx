@@ -6,9 +6,9 @@ import { TextField, TextFieldProps } from '@mui/material';
 // event.target.value = value; // Atualiza o valor no input que será retornado para o componente Pai
 // };
 
-const InputUserName = (props: TextFieldProps) => (
+const InputUserName = ({ id = 'user name', ...props }: TextFieldProps) => (
   <TextField
-    id="user name"
+    id={id}
     name="name"
     autoComplete="name"
     fullWidth

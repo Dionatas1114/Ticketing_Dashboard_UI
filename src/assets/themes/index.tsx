@@ -4,10 +4,10 @@ import { useMediaQuery, ThemeProvider as MuiThemeProvider, PaletteMode } from '@
 import createAppTheme from './theme';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
 
-interface ThemeProps {
+type ThemeProps = {
   theme: PaletteMode;
   setTheme: Dispatch<SetStateAction<PaletteMode>>;
-}
+};
 
 export const ThemeContext = createContext<ThemeProps>({} as ThemeProps);
 

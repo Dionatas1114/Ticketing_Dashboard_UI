@@ -30,7 +30,7 @@ declare global {
   }
 
   interface ChildrenProps {
-    children: JSX.Element;
+    children: React.ReactNode;
   }
 
   namespace React {
