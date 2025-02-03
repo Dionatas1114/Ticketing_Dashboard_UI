@@ -1,12 +1,12 @@
 import { useReducer } from 'react';
 
-interface State {
+type State = {
   showPassword: boolean;
-}
+};
 
-interface Action {
+type Action = {
   type: 'TOGGLE_PASSWORD_VISIBILITY';
-}
+};
 
 const reducer = (state: State, action: Action): State => {
   switch (action.type) {

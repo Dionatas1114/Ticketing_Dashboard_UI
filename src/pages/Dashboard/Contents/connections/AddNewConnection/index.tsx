@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import { Box, Button, Modal } from '@mui/material';
+import { Box, Button } from '@mui/material';
 
-import QrCodeVerification from './qrcode';
-import { i18n } from '../../../../translate/i18n';
+// import QrCodeVerification from '../qrcode';
+import { i18n } from '../../../../../translate/i18n';
+import AddNewConnectionModal from './modal';
 
-const AddNewConnection: React.FC = () => {
+const AddNewConnection = () => {
   const [open, setOpen] = useState(false);
 
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const toggleOpen = () => setOpen((prev) => !prev);
 
   return (
     <Box>
@@ -16,7 +16,7 @@ const AddNewConnection: React.FC = () => {
       <Button
         variant="contained"
         color="primary"
-        onClick={handleOpen}
+        onClick={toggleOpen}
         sx={{
           textTransform: 'none',
           borderRadius: 2,
@@ -25,10 +25,12 @@ const AddNewConnection: React.FC = () => {
         {i18n.t('connections.buttons.add')}
       </Button>
 
+      <AddNewConnectionModal {...{ toggleOpen, open }} />
+
       {/* Modal para exibir o QR Code */}
-      <Modal
+      {/* <Modal
         open={open}
-        onClose={handleClose}
+        onClose={toggleOpen}
         aria-labelledby="add-connection-title"
         aria-describedby="add-connection-description"
       >
@@ -46,14 +48,14 @@ const AddNewConnection: React.FC = () => {
           }}
         >
           {/* Componente QR Code */}
-          <QrCodeVerification />
+      {/* <QrCodeVerification /> */}
 
-          {/* Botão para fechar o modal */}
-          <Button fullWidth variant="outlined" onClick={handleClose} sx={{ mt: 2 }}>
+      {/* Botão para fechar o modal */}
+      {/* <Button fullWidth variant="outlined" onClick={toggleOpen} sx={{ mt: 2 }}>
             {i18n.t('connections.qrcodeModal.close')}
           </Button>
         </Box>
-      </Modal>
+      </Modal> */}
     </Box>
   );
 };

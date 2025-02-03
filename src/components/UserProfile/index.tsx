@@ -3,12 +3,12 @@ import { Stack, Avatar, Box, Typography } from '@mui/material';
 
 import OptionsMenu from '../../pages/Dashboard/SideMenu/OptionsMenu';
 
-interface UserProfileProps {
+type UserProfileProps = {
   name: string;
   email: string;
   avatarUrl: string;
   open?: boolean;
-}
+};
 
 const UserProfile = ({ name, email, avatarUrl, open = false }: UserProfileProps) => {
   const avatarSize = open ? 24 : 36;

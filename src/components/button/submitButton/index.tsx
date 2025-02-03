@@ -1,15 +1,13 @@
 import * as React from 'react';
-import { Button } from '@mui/material';
+import { Button, ButtonOwnProps } from '@mui/material';
 
-interface SubmitButtonProps {
+type SubmitButtonProps = {
   isSubmitting: boolean;
-  children: React.ReactNode;
-}
+} & ChildrenProps &
+  ButtonOwnProps;
 
-const SubmitButton = ({ children, isSubmitting }: SubmitButtonProps) => (
-  <Button id="submit button" fullWidth type="submit" variant="contained" disabled={isSubmitting}>
-    {children}
-  </Button>
+const SubmitButton = ({ isSubmitting, ...props }: SubmitButtonProps) => (
+  <Button id="submit button" type="submit" disabled={isSubmitting} variant="contained" {...props} />
 );
 
 export default SubmitButton;
