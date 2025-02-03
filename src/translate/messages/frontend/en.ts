@@ -442,6 +442,7 @@ const messages = {
             samePassword: 'The new password cannot be the same as the old one.',
           },
         },
+        optional: '*Optional',
       },
       backendErrors: backMessages,
     },

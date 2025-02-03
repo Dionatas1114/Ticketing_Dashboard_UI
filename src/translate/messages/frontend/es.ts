@@ -444,6 +444,7 @@ const messages = {
             samePassword: 'La nueva contrasena no puede ser la misma que la antigua.',
           },
         },
+        optional: '*Opcional',
       },
       backendErrors: backMessages,
     },

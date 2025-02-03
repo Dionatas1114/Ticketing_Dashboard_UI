@@ -441,6 +441,7 @@ const messages = {
             samePassword: 'A nova senha não pode ser igual à senha antiga.',
           },
         },
+        optional: '*Opcional',
       },
       backendErrors: backMessages,
     },
