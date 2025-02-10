@@ -42,6 +42,8 @@ const initialValues = {
 const useAuth = () => {
   const [state, setState] = useState<UseAuthProps>(initialValues);
 
+  const verifyIsMaster = (user: User) => user?.customer === 'master';
+
   api.interceptors.request.use(
     (config) => {
       const token = localStorage.getItem('token');
@@ -169,8 +171,16 @@ const useAuth = () => {
     return true; // success
   };
 
-  const signFunctions = { HandleSignUp, HandleLogin, HandleLogout, HandleChangePassword };
-  return { ...state, ...signFunctions };
+  return {
+    ...state,
+    ...{
+      HandleSignUp,
+      HandleLogin,
+      HandleLogout,
+      HandleChangePassword,
+      verifyIsMaster,
+    },
+  };
 };
 
 export default useAuth;
