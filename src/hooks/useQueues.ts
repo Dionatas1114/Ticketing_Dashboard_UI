@@ -1,7 +1,9 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback, useContext } from 'react';
 import { ticketApi as api } from '../api';
 import toastError from '../utils/toastError';
 import convertByTimeZone from '../utils/functions/convertByTimeZone';
+import { AuthContext } from '../context/AuthContext';
+import { useTimeout } from './useTimeout';
 
 type UseQueuesReturn = {
   queues: Queue[];
@@ -9,23 +11,33 @@ type UseQueuesReturn = {
   hasMore: boolean;
 };
 
-const initialState = {
-  queues: [] as Queue[],
+const initialState: UseQueuesReturn = {
+  queues: [],
   loading: true,
   hasMore: false,
 };
 
+//! For testing
+// const queuesMocked: Queue[] = [
+//   { id: 1, name: 'queue1', color: 'red' },
+//   { id: 2, name: 'queue2', color: 'green' },
+// ];
+
 const useQueues = (): UseQueuesReturn => {
+  const { user } = useContext(AuthContext);
+
   const [state, setState] = useState(initialState);
 
   const fetchQueues = useCallback(async () => {
     try {
       const { data } = await api.get<Queue[]>('/queues');
-      const queues = data.map((queue: Queue) => ({
-        ...queue,
-        createdAt: convertByTimeZone(queue.createdAt),
-        updatedAt: convertByTimeZone(queue.updatedAt),
-      }));
+      const queues = data
+        .filter((queue) => user?.customer === 'master' || queue?.userId === user?.id)
+        .map((queue) => ({
+          ...queue,
+          createdAt: convertByTimeZone(queue.createdAt),
+          updatedAt: convertByTimeZone(queue.updatedAt),
+        }));
       setState({
         queues,
         loading: false,
@@ -37,10 +49,7 @@ const useQueues = (): UseQueuesReturn => {
     }
   }, []);
 
-  useEffect(() => {
-    const timeoutId = setTimeout(() => fetchQueues(), 500);
-    return () => clearTimeout(timeoutId);
-  }, [fetchQueues]);
+  useTimeout(fetchQueues);
 
   return state;
 };
