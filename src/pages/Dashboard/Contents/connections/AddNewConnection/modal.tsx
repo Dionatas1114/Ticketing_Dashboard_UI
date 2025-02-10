@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { useFormik } from 'formik';
 import {
   Box,
@@ -8,14 +8,18 @@ import {
   FormControl,
   FormControlLabel,
   FormLabel,
-  Button,
+  SelectChangeEvent,
 } from '@mui/material';
+
+import { ConnectionProps } from '../../../../../types/Connection';
 
 import Title from '../../../../../components/title';
 import InputUserName from '../../../../../components/inputs/inputUserName';
 import SubmitBox from '../../../../../components/box/submitBox';
 import SubmitButton from '../../../../../components/button/submitButton';
 import InputMultiline from '../../../../../components/inputs/inputMultiline';
+import CancelButton from '../../../../../components/button/cancelButton';
+import QueueSelect from './QueueSelect';
 
 import { connectionSchema } from '../../../../../validations/schemas/connectionSchema';
 
@@ -24,23 +28,18 @@ import { i18n } from '../../../../../translate/i18n';
 type ConnectionModalProps = {
   toggleOpen: () => void;
   open: boolean;
+  initialValues: ConnectionProps;
+  selectedQueueIds: number[];
+  handleSelectQueue: ({ target: { value } }: SelectChangeEvent<string[]>) => void;
 };
 
-type ConnectionProps = {
-  name: string;
-  greetingMessage?: string;
-  farewellMessage?: string;
-  isDefault?: boolean;
-};
-
-const initialValues: ConnectionProps = {
-  name: '',
-  greetingMessage: '',
-  farewellMessage: '',
-  isDefault: false,
-};
-
-const AddNewConnectionModal = ({ toggleOpen, open }: ConnectionModalProps) => {
+const AddNewConnectionModal = ({
+  toggleOpen,
+  open,
+  initialValues,
+  selectedQueueIds,
+  handleSelectQueue,
+}: ConnectionModalProps) => {
   const { handleSubmit, resetForm, handleChange, values, isSubmitting, touched, errors } =
     useFormik<ConnectionProps>({
       initialValues,
@@ -124,14 +123,8 @@ const AddNewConnectionModal = ({ toggleOpen, open }: ConnectionModalProps) => {
               placeholder={i18n.t('form.optional')}
             />
           </FormControl>
-          <Button
-            id="cancel button"
-            color="secondary"
-            onClick={toggleOpen}
-            variant="outlined"
-            children={i18n.t('whatsappModal.buttons.cancel')}
-            sx={{ mt: 1 }}
-          />
+          <QueueSelect {...{ selectedQueueIds, handleSelectQueue }} />
+          <CancelButton toggleOpen={toggleOpen} children={i18n.t('whatsappModal.buttons.cancel')} />
           <SubmitButton isSubmitting={isSubmitting}>
             {i18n.t('whatsappModal.buttons.okAdd')}
           </SubmitButton>
