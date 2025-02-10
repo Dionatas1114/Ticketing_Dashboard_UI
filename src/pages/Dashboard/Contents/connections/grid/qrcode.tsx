@@ -1,9 +1,9 @@
 import React from 'react';
 import { Box, Button, Typography, Card } from '@mui/material';
 import QrCodeIcon from '@mui/icons-material/QrCode';
-import { i18n } from '../../../../translate/i18n';
+import { i18n } from '../../../../../translate/i18n';
 
-export default function QRCodeVerification() {
+export default function QRCode() {
   return (
     <Card
       sx={{

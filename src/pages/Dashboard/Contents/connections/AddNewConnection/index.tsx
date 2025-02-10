@@ -1,14 +1,33 @@
 import React, { useState } from 'react';
-import { Box, Button } from '@mui/material';
+import { Box, Button, SelectChangeEvent } from '@mui/material';
 
 // import QrCodeVerification from '../qrcode';
 import { i18n } from '../../../../../translate/i18n';
 import AddNewConnectionModal from './modal';
 
+import { ConnectionProps } from '../../../../../types/Connection';
+
+const initialValues: ConnectionProps = {
+  name: '',
+  greetingMessage: '',
+  farewellMessage: '',
+  isDefault: false,
+};
+
 const AddNewConnection = () => {
   const [open, setOpen] = useState(false);
+  const [selectedQueueIds, setSelectedQueueIds] = useState<number[]>([]);
 
-  const toggleOpen = () => setOpen((prev) => !prev);
+  const handleSelectQueue = ({ target: { value } }: SelectChangeEvent<string[]>) => {
+    const selectedIds = Array.isArray(value) ? value.map(Number) : [];
+    setSelectedQueueIds(selectedIds);
+  };
+
+  const toggleOpen = () =>
+    setOpen((prev) => {
+      if (prev === true) setSelectedQueueIds([]);
+      return !prev;
+    });
 
   return (
     <Box>
@@ -25,7 +44,9 @@ const AddNewConnection = () => {
         {i18n.t('connections.buttons.add')}
       </Button>
 
-      <AddNewConnectionModal {...{ toggleOpen, open }} />
+      <AddNewConnectionModal
+        {...{ toggleOpen, open, initialValues, selectedQueueIds, handleSelectQueue }}
+      />
 
       {/* Modal para exibir o QR Code */}
       {/* <Modal
