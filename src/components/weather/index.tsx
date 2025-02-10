@@ -14,7 +14,7 @@ import Card from '../card';
 import Carousel from '../carousel';
 import { getWeatherIcon, getDailyWeatherIcon } from './weatherIcons';
 
-import { fetchWeatherData } from '../../hooks/weather';
+import { fetchWeatherData } from '../../hooks/useWeather';
 
 import { getDateNow } from '../../utils/functions/getDateNow';
 import fahrenheitToCelsius from '../../utils/functions/fahrenheitToCelsius';
