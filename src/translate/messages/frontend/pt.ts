@@ -153,6 +153,8 @@ const messages = {
           email: 'Email',
           actions: 'Ações',
         },
+        loading: 'Carregando contatos...',
+        noData: 'Nenhum contato encontrado.',
       },
       contactModal: {
         title: {

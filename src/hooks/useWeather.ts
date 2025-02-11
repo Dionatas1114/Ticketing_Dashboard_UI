@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { weatherApi, weatherKey, city } from '../../api';
+import { weatherApi, weatherKey, city } from '../api';
 
 export type WeatherProps = {
   coord: {
@@ -40,52 +40,75 @@ export type ForecastProps = {
   }[];
 };
 
+export type CommonProps = {
+  isLoading: boolean;
+  error: string | null;
+};
+
+export type WeatherState = {
+  weather: WeatherProps | null;
+} & CommonProps;
+
+const weatherInitialState: WeatherState = {
+  weather: null as WeatherProps | null,
+  isLoading: true,
+  error: null,
+};
+
 export const fetchWeatherData = () => {
-  const [weather, setWeather] = React.useState<WeatherProps | null>(null);
-  const [isLoading, setIsLoading] = React.useState<boolean>(true);
-  const [error, setError] = React.useState<string | null>(null);
+  const [state, setState] = React.useState(weatherInitialState);
 
   React.useEffect(() => {
     const fetchData = async () => {
       try {
         const url = `/weather?q=${city}&units=imperial&APPID=${weatherKey}`;
         const { data: weatherData } = await weatherApi.get<WeatherProps>(url);
-        setWeather(weatherData);
+        setState((prev) => ({ ...prev, weather: weatherData }));
       } catch (error) {
-        setError('Não foi possível carregar os dados do clima. Tente novamente mais tarde.');
+        const errorMessage = 'Erro ao obter dados do clima. Tente novamente mais tarde.';
+        setState((prev) => ({ ...prev, error: errorMessage }));
         console.error(error);
       } finally {
-        setIsLoading(false);
+        setState((prev) => ({ ...prev, isLoading: false }));
       }
     };
 
     fetchData();
   }, []);
 
-  return { weather, isLoading, error };
+  return state;
+};
+
+export type ForecastState = {
+  forecast: ForecastProps | null;
+} & CommonProps;
+
+const forecastInitialState: ForecastState = {
+  forecast: null as ForecastProps | null,
+  isLoading: true,
+  error: null,
 };
 
 export const fetchForecastData = () => {
-  const [forecast, setForecast] = React.useState<ForecastProps | null>(null);
-  const [isLoading, setIsLoading] = React.useState<boolean>(true);
-  const [error, setError] = React.useState<string | null>(null);
+  const [state, setState] = React.useState(forecastInitialState);
 
   React.useEffect(() => {
     const fetchData = async () => {
       try {
         const url = `/forecast?q=${city}&units=imperial&APPID=${weatherKey}`;
         const { data: forecastData } = await weatherApi.get<ForecastProps>(url);
-        setForecast(forecastData);
+        setState((prev) => ({ ...prev, forecast: forecastData }));
       } catch (error) {
-        setError('Não foi possível carregar os dados do clima. Tente novamente mais tarde.');
+        const errorMessage = 'Erro ao obter dados do clima. Tente novamente mais tarde.';
+        setState((prev) => ({ ...prev, error: errorMessage }));
         console.error(error);
       } finally {
-        setIsLoading(false);
+        setState((prev) => ({ ...prev, isLoading: false }));
       }
     };
 
     fetchData();
   }, []);
 
-  return { forecast, isLoading, error };
+  return state;
 };

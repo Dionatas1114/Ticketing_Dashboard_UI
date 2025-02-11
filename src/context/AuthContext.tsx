@@ -24,7 +24,7 @@ const DEFAULT_VALUE: AuthContextProps = {
   // token: undefined,
   // setToken: () => {},
   // handleLogin: ({email: '', password: ''}) => {return false},
-  user: {},
+  user: {} as User,
 };
 
 const AuthContext = React.createContext<AuthContextProps>(DEFAULT_VALUE);
