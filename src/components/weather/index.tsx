@@ -1,7 +1,6 @@
 import {
   Box,
   CardContent,
-  Grid2 as Grid,
   Stack,
   CircularProgress,
   Alert,
@@ -54,7 +53,6 @@ export default function Weather(props: CardProps) {
 
   // Renderizar o componente apenas após os dados serem carregados
   return (
-    // <Grid size={{ xs: 12, md: 6, lg: 9 }}>
     <Card sx={{ padding: '1rem 0.5rem' }} {...props}>
       <CardContent>
         <Stack direction="row" spacing={1} sx={{ justifyContent: 'center' }}>
@@ -70,6 +68,5 @@ export default function Weather(props: CardProps) {
         </Box>
       </CardContent>
     </Card>
-    // </Grid>
   );
 }
