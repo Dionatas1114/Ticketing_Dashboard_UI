@@ -2,22 +2,19 @@ import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 
 import { ticketApi as api, socket } from '../api';
-import { i18n } from '../translate/i18n';
-import toastError from '../utils/toastError';
 
-type RefreshTokenType = {
-  token?: string;
-  user?: User;
-};
+import { HttpStatusCode } from '../enum/httpStatus';
+import toastError from '../utils/toastError';
+import { i18n } from '../translate/i18n';
+
+type RefreshTokenType = Partial<LoginReturnType>; // campos do LoginReturnType só que opcionais
 
 type SignInType = {
   email: string;
   password: string;
 };
 
-type SignUpType = SignInType & {
-  name: string;
-};
+type SignUpType = SignInType & { name: string };
 
 type ChangePasswordType = {
   email: string;
@@ -30,17 +27,29 @@ type LoginReturnType = {
   user: User;
 };
 
+type UseAuthProps = {
+  user: User | {};
+  loading: boolean;
+  isAuth: boolean;
+};
+
+const initialValues = {
+  user: {} as User,
+  loading: true,
+  isAuth: false,
+};
+
 const useAuth = () => {
-  const [user, setUser] = useState<User | {}>({});
-  const [isAuth, setIsAuth] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [state, setState] = useState<UseAuthProps>(initialValues);
+
+  const verifyIsMaster = (user: User) => user?.customer === 'master';
 
   api.interceptors.request.use(
     (config) => {
       const token = localStorage.getItem('token');
       if (token) {
         // config.headers.Authorization = `Bearer ${JSON.parse(token)}`;
-        setIsAuth(true);
+        setState((prev) => ({ ...prev, isAuth: true }));
       }
       return config;
     },
@@ -51,7 +60,7 @@ const useAuth = () => {
     (response) => response,
     async (error) => {
       const originalRequest = error.config;
-      if (error?.response?.status === 403 && !originalRequest._retry) {
+      if (error?.response?.status === HttpStatusCode.FORBIDDEN && !originalRequest._retry) {
         originalRequest._retry = true;
 
         const { data } = await api.post<RefreshTokenType>('/auth/refresh_token');
@@ -61,10 +70,10 @@ const useAuth = () => {
         }
         return api(originalRequest);
       }
-      if (error?.response?.status === 401) {
+      if (error?.response?.status === HttpStatusCode.UNAUTHORIZED) {
         localStorage.removeItem('token');
         api.defaults.headers.common['Authorization'] = '';
-        setIsAuth(false);
+        setState((prev) => ({ ...prev, isAuth: false }));
       }
       return Promise.reject(error);
     }
@@ -77,13 +86,12 @@ const useAuth = () => {
         try {
           const { data } = await api.post<RefreshTokenType>('/auth/refresh_token');
           api.defaults.headers.common['Authorization'] = `Bearer ${data?.token}`;
-          setIsAuth(true);
-          setUser(data?.user ?? {});
+          setState((prev) => ({ ...prev, user: data?.user ?? {}, isAuth: true }));
         } catch (err) {
           toastError(err);
         }
       }
-      setLoading(false);
+      setState((prev) => ({ ...prev, loading: false }));
     };
 
     refreshToken();
@@ -100,7 +108,7 @@ const useAuth = () => {
     return () => {
       socket.disconnect();
     };
-  }, [user]);
+  }, [state.user]);
 
   const HandleSignUp = async (userData: SignUpType) => {
     try {
@@ -113,7 +121,7 @@ const useAuth = () => {
   };
 
   const HandleLogin = async (userData: SignInType) => {
-    setLoading(true);
+    setState((prev) => ({ ...prev, loading: true }));
 
     try {
       const {
@@ -122,14 +130,12 @@ const useAuth = () => {
       } = await api.post<LoginReturnType>('/auth/login', userData);
       localStorage.setItem('token', JSON.stringify(token));
       api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      setUser(user);
-      setIsAuth(true);
-      setLoading(false);
+      setState((prev) => ({ ...prev, user, isAuth: true, loading: false }));
       toast.success(i18n.t('auth.toasts.success'));
       // console.log({ token, user, status });
     } catch (err) {
       toastError(err);
-      setLoading(false);
+      setState((prev) => ({ ...prev, loading: false }));
       throw new Error(err.message || 'An unexpected error occurred.');
     }
   };
@@ -165,8 +171,16 @@ const useAuth = () => {
     return true; // success
   };
 
-  const signFunctions = { HandleSignUp, HandleLogin, HandleLogout, HandleChangePassword };
-  return { isAuth, user, loading, ...signFunctions };
+  return {
+    ...state,
+    ...{
+      HandleSignUp,
+      HandleLogin,
+      HandleLogout,
+      HandleChangePassword,
+      verifyIsMaster,
+    },
+  };
 };
 
 export default useAuth;
