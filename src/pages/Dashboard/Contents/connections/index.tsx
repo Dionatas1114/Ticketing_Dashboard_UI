@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Box, Grid2 as Grid } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 
 import Title from '../../../../components/title';
 import AddNewConnection from './AddNewConnection';
