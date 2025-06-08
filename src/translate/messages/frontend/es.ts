@@ -300,8 +300,9 @@ const messages = {
           contacts: 'Contactos',
           quickAnswers: 'Respuestas rápidas',
           queues: 'Linhas',
-          administration: 'Administración',
           users: 'Usuarios',
+          main: 'Itens principales',
+          administration: 'Administración',
         },
         appBar: {
           user: {
