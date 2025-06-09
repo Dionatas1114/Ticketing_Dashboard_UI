@@ -22,6 +22,8 @@ import Weather from '../../../components/weather';
 
 import ItemSelectedContext from '../../../context/MenuItemSelectedContext';
 
+import { i18n } from '../../../translate/i18n';
+
 type RouteType = {
   text: string;
   route: string;
@@ -92,11 +94,13 @@ export default function MenuContent() {
 
   return (
     <Stack sx={{ flexGrow: 1, p: 1, justifyContent: 'space-between' }}>
-      {/* Main list */}
       <List dense>
+        <Typography variant="h6" sx={{ mt: 0, mb: 1.5 }}>
+          {i18n.t('mainDrawer.listItems.main')}
+        </Typography>
         {renderListItems(firstMainListItems)}
-        <Typography variant="h6" sx={{ mb: 0.5, mt: 1 }}>
-          Admin
+        <Typography variant="h6" sx={{ mb: 0, mt: 1.5 }}>
+          {i18n.t('mainDrawer.listItems.administration')}
         </Typography>
         {renderListItems(secondMainListItems)} {/* //TODO: Render only if user is admin */}
       </List>
@@ -104,7 +108,7 @@ export default function MenuContent() {
       {/* Weather component */}
       <Weather sx={{ mb: 2 }} />
 
-      {/* Secondary list */}
+      {/* Secondary list: Settings, About, Feedback */}
       <List dense>{renderListItems(memoSecondaryListItems)}</List>
     </Stack>
   );

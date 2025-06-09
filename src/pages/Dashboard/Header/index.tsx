@@ -1,10 +1,9 @@
 import * as React from 'react';
 import { Stack } from '@mui/material';
 
-// import CustomDatePicker from './CustomDatePicker';
-import Search from '../../../components/Search';
-import NavbarBreadcrumbs from './NavbarBreadcrumbs';
-import Notifications from '../../../components/Notifications';
+import NavbarBreadcrumbs from '../../../components/navbar/NavbarBreadcrumbs';
+import Notifications from '../../../components/notifications';
+import Search from '../../../components/search';
 
 import { ColorModeSelectDropdown } from '../../../assets/themes/ColorModeSelect';
 
@@ -25,7 +24,6 @@ export default function Header() {
       <NavbarBreadcrumbs />
       <Stack direction="row" sx={{ gap: 1 }}>
         <Search />
-        {/* <CustomDatePicker /> */}
         <Notifications />
         <ColorModeSelectDropdown />
       </Stack>

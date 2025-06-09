@@ -39,7 +39,7 @@ const QueueSelect = ({ selectedQueueIds, handleSelectQueue }: QueueSelectProps) 
           renderValue={() =>
             selectedQueueIds.length > 0
               ? selectedQueueIds
-                  .map((id) => queues.find((q) => q.id === id)?.name || '')
+                  .map((queueId) => queues.find((queue) => queue.id === queueId)?.name || '')
                   .filter(Boolean) // Remove valores falsy (undefined/null)
                   .join(', ')
               : inputLabel

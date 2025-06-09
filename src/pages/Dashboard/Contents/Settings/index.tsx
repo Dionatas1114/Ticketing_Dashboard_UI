@@ -1,17 +1,16 @@
 import * as React from 'react';
 import {
   Box,
-  Grid2 as Grid,
+  Grid,
   CardContent,
   Stack,
   FormControl,
   RadioGroup,
-  useColorScheme,
   List,
   Chip,
   Typography,
 } from '@mui/material';
-import { MenuRounded as MenuIcon, Settings as SettingsIcon } from '@mui/icons-material';
+import { Settings as SettingsIcon } from '@mui/icons-material';
 
 import Title from '../../../../components/title';
 import Card from '../../../../components/card';
@@ -19,11 +18,6 @@ import { i18n } from '../../../../translate/i18n';
 import { ColorModeList } from '../../../../assets/themes/ColorModeSelect';
 
 export default function Settings() {
-  const { mode, setMode } = useColorScheme();
-  if (!mode) return null;
-
-  const modes = ['system', 'light', 'dark'] as const;
-
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
       <Title>{i18n.t('connections.buttons.qrcode')}</Title>
@@ -54,47 +48,10 @@ export default function Settings() {
                     aria-labelledby="settings-theme-toggle"
                     name="settings-theme-toggle"
                     defaultValue="dark"
-                    // value={mode}
-                    // onChange={(event) => setMode(event.target.value as 'system' | 'light' | 'dark')}
                   >
                     <List component="nav">
-                      {/* <ListItemButton
-                        sx={{
-                          border: '1px solid',
-                          borderRadius: 1,
-                          display: 'flex',
-                        }}
-                        selected={mode === 'dark'}
-                        onClick={() => setMode('dark')}
-                      >
-                        <ListItemIcon>
-                          <MenuIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="dark" />
-                      </ListItemButton> */}
                       <ColorModeList />
-                      {/* {modes.map((value) => (
-                        <React.Fragment key={value}>
-                          <ListItemButton
-                            sx={{
-                              border: '1px solid',
-                              borderRadius: 1,
-                              display: 'flex',
-                            }}
-                            selected={mode === value}
-                            onClick={() => setMode(value)}
-                          >
-                            <ListItemIcon>
-                              <MenuIcon />
-                            </ListItemIcon>
-                            <ListItemText primary={value} />
-                          </ListItemButton>
-                        </React.Fragment>
-                      ))} */}
                     </List>
-                    {/* <FormControlLabel value="dark" control={<Radio />} label="Dark" />
-                    <FormControlLabel value="light" control={<Radio />} label="Light" />
-                    <FormControlLabel value="system" control={<Radio />} label="System" /> */}
                   </RadioGroup>
                 </FormControl>
               </Stack>
