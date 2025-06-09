@@ -3,7 +3,7 @@ import * as React from 'react';
 import { styled, Typography, Breadcrumbs, breadcrumbsClasses } from '@mui/material';
 import { NavigateNextRounded as NavigateNextIcon } from '@mui/icons-material';
 
-import MenuItemSelectedContext from '../../../context/MenuItemSelectedContext';
+import MenuItemSelectedContext from '../../context/MenuItemSelectedContext';
 
 const StyledBreadcrumbs = styled(Breadcrumbs)(({ theme }) => ({
   margin: theme.spacing(1, 0),

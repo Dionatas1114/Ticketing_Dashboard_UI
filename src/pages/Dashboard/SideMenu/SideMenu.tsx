@@ -4,7 +4,6 @@ import { styled, Drawer as MuiDrawer, drawerClasses, Divider } from '@mui/materi
 // import SelectContent from './nonUse/SelectContent';
 // import CardAlert from './CardAlert';
 import MenuContent from '../LeftBar';
-
 import UserProfile from '../../../components/UserProfile';
 
 const drawerWidth = 240;
@@ -31,23 +30,13 @@ export default function SideMenu() {
         },
       }}
     >
-      {/* <Box
-        sx={{
-          display: 'flex',
-          mt: 'calc(var(--template-frame-height, 0px) + 4px)',
-          p: 1.5,
-        }}
-      >
-        <SelectContent />
-      </Box> */}
-      <Divider />
-      <MenuContent />
-      {/* <CardAlert /> */}
       <UserProfile
         name="Riley Carter"
         email="riley@email.com"
         avatarUrl="/static/images/avatar/7.jpg"
       />
+      <Divider />
+      <MenuContent />
     </Drawer>
   );
 }

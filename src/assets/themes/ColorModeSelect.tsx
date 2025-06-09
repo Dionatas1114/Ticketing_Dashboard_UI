@@ -1,17 +1,27 @@
 import * as React from 'react';
 import {
+  Box,
+  IconButton,
+  IconButtonOwnProps,
   ListItemButton,
   ListItemIcon,
+  Menu,
   MenuItem,
-  Select,
-  SelectProps,
   useColorScheme,
+  PaletteMode,
 } from '@mui/material';
+
 import {
   LightModeRounded as LightModeIcon,
   DarkModeRounded as DarkModeIcon,
   DevicesRounded as DevicesIcon,
 } from '@mui/icons-material';
+
+type ColorMode = PaletteMode | 'system';
+
+const modes: ColorMode[] = ['system', 'light', 'dark'];
+
+const capitalizeMode = (mode: string) => mode[0].toUpperCase() + mode.slice(1);
 
 const icons = {
   system: <DevicesIcon />,
@@ -19,27 +29,54 @@ const icons = {
   dark: <DarkModeIcon />,
 } as const;
 
-const modes = ['system', 'light', 'dark'] as const;
-
-const capitalizeMode = (mode: string) => mode[0].toUpperCase() + mode.slice(1);
-
 // Dropdown
-export function ColorModeSelectDropdown(props: SelectProps) {
-  const { mode, setMode } = useColorScheme();
-  if (!mode) return null;
+export function ColorModeSelectDropdown(props: IconButtonOwnProps) {
+  const { mode, systemMode, setMode } = useColorScheme();
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
+  const handleClose = () => setAnchorEl(null);
+  const handleMode = (targetMode: (typeof modes)[number]) => () => {
+    setMode(targetMode);
+    handleClose();
+  };
+
+  if (!mode) {
+    return (
+      <Box
+        sx={{
+          display: 'inline-flex',
+          width: '2.25rem',
+          height: '2.25rem',
+          borderRadius: 'borderRadius',
+          border: '1px solid',
+          borderColor: 'divider',
+        }}
+      />
+    );
+  }
+
+  const resolvedMode = (systemMode || mode) as PaletteMode;
 
   return (
-    <Select
-      value={mode}
-      onChange={(e) => setMode(e.target.value as (typeof modes)[number])}
-      {...props}
-    >
-      {modes.map((value) => (
-        <MenuItem key={value} value={value}>
-          {capitalizeMode(value)}
-        </MenuItem>
-      ))}
-    </Select>
+    <>
+      <IconButton
+        onClick={handleClick}
+        aria-controls={anchorEl ? 'color-scheme-menu' : undefined}
+        aria-haspopup="true"
+        aria-expanded={anchorEl ? 'true' : undefined}
+        {...props}
+      >
+        {icons[resolvedMode]}
+      </IconButton>
+      <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
+        {modes.map((value) => (
+          <MenuItem key={value} selected={mode === value} onClick={handleMode(value)}>
+            {capitalizeMode(value)}
+          </MenuItem>
+        ))}
+      </Menu>
+    </>
   );
 }
 

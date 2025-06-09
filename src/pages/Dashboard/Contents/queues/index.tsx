@@ -1,4 +1,4 @@
-import { Box, Grid2 as Grid, CircularProgress } from '@mui/material';
+import { Box, Grid, CircularProgress } from '@mui/material';
 
 import Title from '../../../../components/title';
 
@@ -17,14 +17,7 @@ export default function Main() {
         padding: '16px',
       }}
     >
-      <Grid
-        container
-        spacing={2}
-        sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-        }}
-      >
+      <Grid container spacing={2} sx={{ display: 'flex', justifyContent: 'space-between' }}>
         <Grid size={{ xs: 12, md: 6, lg: 9 }}>
           <Title>{i18n.t('queues.title')}</Title>
         </Grid>

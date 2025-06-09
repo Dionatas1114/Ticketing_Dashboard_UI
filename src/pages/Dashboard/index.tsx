@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Outlet } from 'react-router-dom';
 
-import { alpha, CssBaseline, Box, Stack } from '@mui/material';
+import { alpha, Box, CssBaseline, Stack } from '@mui/material';
 
 import SideMenu from './SideMenu/SideMenu';
 import AppNavbar from './AppNavbar';
@@ -24,7 +24,9 @@ export default function Dashboard(props: { disableCustomTheme?: boolean }) {
             component="main"
             sx={(theme) => ({
               flexGrow: 1,
-              backgroundColor: alpha(theme.palette.background.default, 1),
+              backgroundColor: theme.vars
+                ? `rgba(${theme.vars.palette.background.defaultChannel} / 1)`
+                : alpha(theme.palette.background.default, 1),
               overflow: 'auto',
             })}
           >
