@@ -1,10 +1,8 @@
 import * as React from 'react';
 import { styled, Drawer as MuiDrawer, drawerClasses, Divider } from '@mui/material';
 
-// import SelectContent from './nonUse/SelectContent';
-// import CardAlert from './CardAlert';
 import MenuContent from '../LeftBar';
-import UserProfile from '../../../components/UserProfile';
+import UserProfile from '../../../components/userProfile';
 
 const drawerWidth = 240;
 
