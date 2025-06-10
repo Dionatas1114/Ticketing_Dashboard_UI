@@ -44,14 +44,16 @@ export function ColorModeSelectDropdown(props: IconButtonOwnProps) {
   if (!mode) {
     return (
       <Box
-        sx={{
+        data-screenshot="toggle-mode"
+        sx={(theme) => ({
+          verticalAlign: 'bottom',
           display: 'inline-flex',
           width: '2.25rem',
           height: '2.25rem',
-          borderRadius: 'borderRadius',
+          borderRadius: (theme.vars || theme).shape.borderRadius,
           border: '1px solid',
-          borderColor: 'divider',
-        }}
+          borderColor: (theme.vars || theme).palette.divider,
+        })}
       />
     );
   }
@@ -61,7 +63,10 @@ export function ColorModeSelectDropdown(props: IconButtonOwnProps) {
   return (
     <>
       <IconButton
+        data-screenshot="toggle-mode"
         onClick={handleClick}
+        disableRipple
+        size="small"
         aria-controls={anchorEl ? 'color-scheme-menu' : undefined}
         aria-haspopup="true"
         aria-expanded={anchorEl ? 'true' : undefined}

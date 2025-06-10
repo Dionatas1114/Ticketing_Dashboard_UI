@@ -1,7 +1,7 @@
 import React from 'react';
 import { NotificationsRounded as NotificationsIcon } from '@mui/icons-material';
 
-import MenuButton from '../button/menuButton';
+import MenuButton from '../button/MenuButton';
 
 type NotificationMenuButtonProps = {
   showBadge?: boolean;
