@@ -1,6 +1,6 @@
 const specialCharsRegex = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
 
-const passwordIsValid = (password: string) => {
+const passwordStrength = (password: string) => {
   let strength = 0;
 
   // Pontuação com base em critérios
@@ -10,8 +10,10 @@ const passwordIsValid = (password: string) => {
   if (/\d/.test(password)) strength += 1; // Tem ao menos 1 número
   if (specialCharsRegex.test(password)) strength += 1; // Tem ao menos 1 caractere especial
 
-  return strength >= 5;
+  return strength;
 };
+
+const passwordIsValid = (value: string) => passwordStrength(value) >= 5;
 
 const patterns: RegExpElements = {
   userName: /^\s*[\p{L}]+(?:\s[\p{L}]+)*\s*$/u, // Permite apenas letras com ou sem acentos e espaços entre, antes e depois dos nomes
@@ -21,4 +23,4 @@ const patterns: RegExpElements = {
 
 const regexPatterns = (pattern: string) => patterns[pattern];
 
-export { regexPatterns, passwordIsValid };
+export { regexPatterns, passwordIsValid, passwordStrength };
