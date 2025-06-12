@@ -19,6 +19,7 @@ const messages = {
   INVALID_EMAIL: 'Informe um email válido.',
   EMAIL_IS_REQUIRED: 'É preciso informar um email.',
   EMAIL_ALREADY_REGISTERED: 'Este email já está sendo utilizado por outro usuário.',
+  EMAIL_NOT_FOUND: 'Nenhum usuário encontrado com este email.',
 
   PASSW_IS_REQUIRED: 'É preciso informar uma senha.',
   MIN_CARACHTERS_PASSW: `A senha deve conter no mínimo ${rules.passwMinLength} caracteres.`,

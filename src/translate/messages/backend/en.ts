@@ -19,6 +19,7 @@ const messages = {
   INVALID_EMAIL: 'A valid e-mail is required.',
   EMAIL_IS_REQUIRED: 'A e-mail is required.',
   EMAIL_ALREADY_REGISTERED: 'An user with this email already exists.',
+  EMAIL_NOT_FOUND: 'No user found with this email.',
 
   PASSW_IS_REQUIRED: 'A password is required.',
   MIN_CARACHTERS_PASSW: `The password must contain at least ${rules.passwMinLength} characters.`,
