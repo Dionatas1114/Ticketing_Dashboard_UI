@@ -34,7 +34,7 @@ const InputPassword = ({ value, error, ...props }: InputPasswordProps) => {
 
   const strength = passwordStrength(value);
   const { label, color } = getStrengthLabel(strength);
-  const showLineProgress = !error || strength > 1;
+  const showLineProgress = error || strength > 0;
 
   return (
     <div>
@@ -44,7 +44,6 @@ const InputPassword = ({ value, error, ...props }: InputPasswordProps) => {
         fullWidth
         autoFocus
         error={error}
-        // showPassword={showPassword}
         type={showPassword ? 'text' : 'password'}
         inputProps={{
           maxLength: rules.passwMaxLength, // Limita o input ao máx de 10 caracteres
@@ -74,7 +73,7 @@ const InputPassword = ({ value, error, ...props }: InputPasswordProps) => {
             ),
           },
         }}
-        sx={{ mb: showLineProgress ? '0.5rem' : '1rem' }}
+        sx={{ mb: showLineProgress ? '0' : '10%' }}
         {...props}
       />
       {showLineProgress && (

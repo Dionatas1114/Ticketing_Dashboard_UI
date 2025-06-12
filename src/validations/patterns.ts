@@ -13,6 +13,8 @@ const passwordStrength = (password: string) => {
   return strength;
 };
 
+const passwordIsValid = (value: string) => passwordStrength(value) >= 5; // Define o nível mínimo de força da senha (pontuação de 5 critérios)
+
 const patterns: RegExpElements = {
   userName: /^\s*[\p{L}]+(?:\s[\p{L}]+)*\s*$/u, // Permite apenas letras com ou sem acentos e espaços entre, antes e depois dos nomes
   email: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
@@ -21,4 +23,4 @@ const patterns: RegExpElements = {
 
 const regexPatterns = (pattern: string) => patterns[pattern];
 
-export { regexPatterns, passwordStrength };
+export { regexPatterns, passwordIsValid, passwordStrength };
