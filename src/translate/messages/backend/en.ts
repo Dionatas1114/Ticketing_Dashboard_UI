@@ -2,7 +2,7 @@ import rules from '../../../validations/rules';
 
 const messages = {
   //? ------------- AUTH MESSAGES -------------- */
-  ERR_INVALID_CREDENTIALS: 'Authentication error. Please try again.',
+  ERR_INVALID_CREDENTIALS: 'The password is incorrect. Please check the data provided.',
   ERR_SESSION_EXPIRED: 'Session expired. Please login.',
   ERR_NO_PERMISSION: "You don't have permission to access this resource.",
 

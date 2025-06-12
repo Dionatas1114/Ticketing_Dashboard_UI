@@ -2,7 +2,7 @@ import rules from '../../../validations/rules';
 
 const messages = {
   //? ------------- AUTH MESSAGES -------------- */
-  ERR_INVALID_CREDENTIALS: 'Error de autenticación. Vuelva a intentarlo.',
+  ERR_INVALID_CREDENTIALS: 'Contrasena incorrecta. Por favor, verifique los datos informados.',
   ERR_SESSION_EXPIRED: 'Sesión caducada. Inicie sesión.',
   ERR_NO_PERMISSION: 'No tienes permiso para acceder a este recurso.',
 
