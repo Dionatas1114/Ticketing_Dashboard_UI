@@ -1,9 +1,9 @@
 import * as Yup from 'yup';
 
-import rules from '../rules';
 import { i18n } from '../../translate/i18n';
-import { regexPatterns } from '../patterns';
-import { passwordStrength } from '../../validations/patterns';
+
+import rules from '../rules';
+import { regexPatterns, passwordIsValid } from '../patterns';
 
 const name = {
   name: Yup.string()
@@ -16,8 +16,8 @@ const name = {
 const email = {
   email: Yup.string()
     .required(i18n.t('form.validations.email.required'))
-    .email(i18n.t('form.validations.email.isValid')) // não confio muito nessa validação kkk
-    .matches(regexPatterns('email'), i18n.t('form.validations.email.isValid')),
+    .email(i18n.t('form.validations.email.isValid'))
+    .matches(regexPatterns('email'), i18n.t('form.validations.email.isValid')), // não confio muito na validação amterior kkk
 };
 
 const password = {
@@ -25,10 +25,8 @@ const password = {
     .required(i18n.t('form.validations.password.required'))
     .min(rules.passwMinLength, i18n.t('form.validations.password.minLength'))
     .max(rules.passwMaxLength, i18n.t('form.validations.password.maxLength'))
-    .test(
-      'password-strength', // Nome do teste
-      i18n.t('form.validations.password.isValid'), // Mensagem de erro para força da senha
-      (value) => passwordStrength(value) >= 5 // Define o nível mínimo de força da senha (pontuação de 5 critérios)
+    .test('password-strength', i18n.t('form.validations.password.isValid'), (value) =>
+      passwordIsValid(value)
     ),
 };
 
