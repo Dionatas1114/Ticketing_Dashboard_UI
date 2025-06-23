@@ -9,12 +9,18 @@ type Action = {
 };
 
 const reducer = (state: State, action: Action): State => {
-  switch (action.type) {
-    case 'TOGGLE_PASSWORD_VISIBILITY':
-      return { ...state, showPassword: !state.showPassword };
-    default:
-      throw new Error(`Unhandled action type: ${action.type}`);
-  }
+  const handlers: Record<Action['type'], () => State> = {
+    TOGGLE_PASSWORD_VISIBILITY: () => ({
+      ...state,
+      showPassword: !state.showPassword,
+    }),
+  };
+
+  const handler = handlers[action.type];
+
+  if (!handler) throw new Error(`Unhandled action type: ${action.type}`);
+
+  return handler();
 };
 
 const usePasswordVisibility = () => {
