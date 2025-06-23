@@ -7,7 +7,7 @@ import { HttpStatusCode } from '../enum/httpStatus';
 import toastError from '../utils/toastError';
 import { i18n } from '../translate/i18n';
 
-type RefreshTokenType = Partial<LoginReturnType>; // campos do LoginReturnType só que opcionais
+import { useLocalStorage } from './useLocalStorage';
 
 type SignInType = {
   email: string;
@@ -27,28 +27,33 @@ type LoginReturnType = {
   user: User;
 };
 
+// campos do LoginReturnType só que opcionais
+type RefreshTokenType = Partial<LoginReturnType>;
+
 type UseAuthProps = {
-  user: User | {};
+  user: User;
   loading: boolean;
   isAuth: boolean;
 };
 
-const initialValues = {
+const initialValues: UseAuthProps = {
   user: {} as User,
-  loading: true,
+  loading: false,
   isAuth: false,
 };
 
 const useAuth = () => {
+  const { getValue, setValue } = useLocalStorage();
   const [state, setState] = useState<UseAuthProps>(initialValues);
-
-  const verifyIsMaster = (user: User) => user?.customer === 'master';
 
   api.interceptors.request.use(
     (config) => {
-      const token = localStorage.getItem('token');
+      const token = getValue('token');
       if (token) {
-        // config.headers.Authorization = `Bearer ${JSON.parse(token)}`;
+        config.headers = {
+          ...config.headers,
+          Authorization: `Bearer ${token}`,
+        };
         setState((prev) => ({ ...prev, isAuth: true }));
       }
       return config;
@@ -60,45 +65,83 @@ const useAuth = () => {
     (response) => response,
     async (error) => {
       const originalRequest = error.config;
+
       if (error?.response?.status === HttpStatusCode.FORBIDDEN && !originalRequest._retry) {
         originalRequest._retry = true;
 
-        const { data } = await api.post<RefreshTokenType>('/auth/refresh_token');
-        if (data) {
-          localStorage.setItem('token', JSON.stringify(data?.token));
-          api.defaults.headers.common['Authorization'] = `Bearer ${data?.token}`;
+        try {
+          const { data } = await api.post<RefreshTokenType>('/auth/refresh_token');
+          if (data?.token) {
+            localStorage.setItem('token', data.token);
+            api.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
+            originalRequest.headers.Authorization = `Bearer ${data.token}`;
+            return api(originalRequest);
+          }
+        } catch (refreshErr) {
+          // localStorage.removeItem('token');
+          api.defaults.headers.common['Authorization'] = '';
+          setState((prev) => ({ ...prev, isAuth: false }));
+          toastError(refreshErr);
+          return Promise.reject(refreshErr);
         }
-        return api(originalRequest);
       }
+
       if (error?.response?.status === HttpStatusCode.UNAUTHORIZED) {
-        localStorage.removeItem('token');
+        // localStorage.removeItem('token');
         api.defaults.headers.common['Authorization'] = '';
         setState((prev) => ({ ...prev, isAuth: false }));
+        toastError(error);
       }
+
       return Promise.reject(error);
     }
   );
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    const refreshToken = async () => {
-      if (token) {
-        try {
-          const { data } = await api.post<RefreshTokenType>('/auth/refresh_token');
-          api.defaults.headers.common['Authorization'] = `Bearer ${data?.token}`;
-          setState((prev) => ({ ...prev, user: data?.user ?? {}, isAuth: true }));
-        } catch (err) {
-          toastError(err);
-        }
-      }
-      setState((prev) => ({ ...prev, loading: false }));
-    };
+  // useEffect(() => {
+  //   const refreshToken = async () => {
+  //     const storedToken = localStorage.getItem('token');
 
-    refreshToken();
-  }, []);
+  //     if (storedToken) {
+  //       try {
+  //         // Use o token diretamente, sem parse
+  //         api.defaults.headers.common['Authorization'] = `Bearer ${storedToken}`;
+
+  //         const { data } = await api.post<RefreshTokenType>('/auth/refresh_token');
+
+  //         if (data?.token) {
+  //           // Armazene o novo token diretamente
+  //           localStorage.setItem('token', data.token);
+  //           api.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
+  //           setState({
+  //             user: data.user,
+  //             isAuth: true,
+  //             loading: false,
+  //           });
+  //         }
+  //       } catch (err) {
+  //         // localStorage.removeItem('token');
+  //         api.defaults.headers.common['Authorization'] = '';
+  //         setState((prev) => ({
+  //           ...prev,
+  //           isAuth: false,
+  //           loading: false,
+  //         }));
+  //         toastError(err);
+  //       }
+  //     } else {
+  //       setState((prev) => ({
+  //         ...prev,
+  //         isAuth: false,
+  //         loading: false,
+  //       }));
+  //     }
+  //   };
+
+  //   // refreshToken();
+  // }, []);
 
   useEffect(() => {
-    socket.on('user', (data) => {
+    socket.on('user', () => {
       // if (data.action === 'update' && data.user.id === user.id) {
       //   setUser(data.user);
       // }
@@ -109,6 +152,20 @@ const useAuth = () => {
       socket.disconnect();
     };
   }, [state.user]);
+
+  // useEffect(() => {
+  //   let refreshInterval: NodeJS.Timeout;
+
+  //   if (state.isAuth) {
+  //     refreshInterval = setInterval(refreshToken, 30 * 60 * 1000); // Refresh a cada 30 minutos
+  //   }
+
+  //   return () => {
+  //     if (refreshInterval) {
+  //       clearInterval(refreshInterval);
+  //     }
+  //   };
+  // }, [state.isAuth]);
 
   const HandleSignUp = async (userData: SignUpType) => {
     try {
@@ -128,11 +185,13 @@ const useAuth = () => {
         data: { token, user },
         status,
       } = await api.post<LoginReturnType>('/auth/login', userData);
-      localStorage.setItem('token', JSON.stringify(token));
+
+      setValue('token', token);
+      setValue('customer', user.profile || '');
+
       api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       setState((prev) => ({ ...prev, user, isAuth: true, loading: false }));
       toast.success(i18n.t('auth.toasts.success'));
-      // console.log({ token, user, status });
     } catch (err) {
       toastError(err);
       setState((prev) => ({ ...prev, loading: false }));
@@ -178,7 +237,6 @@ const useAuth = () => {
       HandleLogin,
       HandleLogout,
       HandleChangePassword,
-      verifyIsMaster,
     },
   };
 };

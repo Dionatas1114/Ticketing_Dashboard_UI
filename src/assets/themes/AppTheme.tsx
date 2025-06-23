@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ThemeOptions, ThemeProvider, createTheme } from '@mui/material/styles';
+import { PaletteMode, ThemeProvider, createTheme } from '@mui/material/styles';
 
 import { inputsCustomizations } from './custom/inputs';
 import { dataDisplayCustomizations } from './custom/dataDisplay';
@@ -10,17 +10,13 @@ import { colorSchemes, typography, shadows, shape } from './themePrimitives';
 
 type AppThemeProps = {
   disableCustomTheme?: boolean;
-  themeComponents?: ThemeOptions['components'];
+  themeComponents?: PaletteMode | any; // ThemeOptions['components'];
 } & ChildrenProps;
 
 export default function AppTheme({ children, disableCustomTheme, themeComponents }: AppThemeProps) {
-  if (disableCustomTheme) {
-    return <React.Fragment>{children}</React.Fragment>;
-  }
+  if (disableCustomTheme) return <React.Fragment>{children}</React.Fragment>;
 
   const theme = React.useMemo(() => {
-    if (disableCustomTheme) return {};
-
     return createTheme({
       cssVariables: {
         colorSchemeSelector: 'data-mui-color-scheme',

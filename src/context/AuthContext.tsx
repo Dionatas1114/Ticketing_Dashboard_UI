@@ -1,13 +1,7 @@
 import React from 'react';
 
 import useAuth from '../hooks/useAuth';
-
-type User = {
-  id?: number;
-  name?: string;
-  email?: string;
-  customer?: string;
-};
+import { useLocalStorage } from '../hooks/useLocalStorage';
 
 type AuthContextProps = {
   loading: boolean;
@@ -16,27 +10,35 @@ type AuthContextProps = {
   // setToken: React.Dispatch<string>;
   // handleLogin: (data: FormData) => Promise<boolean>;
   user?: User;
+  isMaster: boolean;
+  isAdmin: boolean;
 };
 
-const DEFAULT_VALUE: AuthContextProps = {
+const initialValue: AuthContextProps = {
   loading: false,
   isAuth: false,
   // token: undefined,
   // setToken: () => {},
   // handleLogin: ({email: '', password: ''}) => {return false},
   user: {} as User,
+  isMaster: false,
+  isAdmin: false,
 };
 
-const AuthContext = React.createContext<AuthContextProps>(DEFAULT_VALUE);
+const AuthContext = React.createContext<AuthContextProps>(initialValue);
 
-type AuthProviderProps = {
-  children: React.ReactNode;
-};
-
-const AuthProvider = ({ children }: AuthProviderProps) => {
+const AuthProvider = ({ children }: ChildrenProps) => {
   const { loading, user, isAuth } = useAuth();
+  const { getValue } = useLocalStorage();
 
-  return <AuthContext.Provider value={{ loading, user, isAuth }}>{children}</AuthContext.Provider>;
+  const isAdmin = getValue('customer') === 'admin';
+
+  return (
+    <AuthContext.Provider
+      value={{ loading, user, isAuth, isMaster: false, isAdmin }}
+      children={children}
+    />
+  );
 };
 
 export { AuthContext, AuthProvider };
