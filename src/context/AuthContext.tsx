@@ -2,14 +2,15 @@ import React from 'react';
 
 import useAuth from '../hooks/useAuth';
 import { useLocalStorage } from '../hooks/useLocalStorage';
+import { decrypt } from '../utils/functions/crypto';
 
 type AuthContextProps = {
   loading: boolean;
   isAuth: boolean;
-  // token: string | undefined;
+  token: string;
   // setToken: React.Dispatch<string>;
   // handleLogin: (data: FormData) => Promise<boolean>;
-  user?: User;
+  user: User;
   isMaster: boolean;
   isAdmin: boolean;
 };
@@ -17,7 +18,7 @@ type AuthContextProps = {
 const initialValue: AuthContextProps = {
   loading: false,
   isAuth: false,
-  // token: undefined,
+  token: '',
   // setToken: () => {},
   // handleLogin: ({email: '', password: ''}) => {return false},
   user: {} as User,
@@ -25,20 +26,37 @@ const initialValue: AuthContextProps = {
   isAdmin: false,
 };
 
+export type DataProps = {
+  user: User;
+  token: string;
+};
+
 const AuthContext = React.createContext<AuthContextProps>(initialValue);
 
-const AuthProvider = ({ children }: ChildrenProps) => {
-  const { loading, user, isAuth } = useAuth();
-  const { getValue } = useLocalStorage();
+const useAuthContext = () => {
+  const context = React.useContext(AuthContext);
+  if (context === undefined) {
+    throw new Error('useAuthContext must be used within a AuthProvider');
+  }
+  return context;
+};
 
-  const isAdmin = getValue('customer') === 'admin';
+const AuthProvider = ({ children }: ChildrenProps) => {
+  const { loading, isAuth } = useAuth();
+
+  const { getValue } = useLocalStorage();
+  const data = getValue()!;
+
+  const { user, token }: DataProps = data ? JSON.parse(decrypt(data)) : ({} as DataProps);
+
+  const isAdmin = user?.profile === 'admin';
 
   return (
     <AuthContext.Provider
-      value={{ loading, user, isAuth, isMaster: false, isAdmin }}
+      value={{ loading, user, token, isAuth, isMaster: false, isAdmin }} // TODO: implement isMaster
       children={children}
     />
   );
 };
 
-export { AuthContext, AuthProvider };
+export { useAuthContext, AuthProvider, AuthContext };

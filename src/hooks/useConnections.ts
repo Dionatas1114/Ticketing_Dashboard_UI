@@ -1,145 +1,141 @@
-import { useState, useEffect, useReducer, useContext, useCallback } from 'react';
-// import openSocket from "socket.io-client";
+import { useEffect, useState, useReducer } from 'react';
 
-import { AuthContext } from '../context/AuthContext';
-import { useTimeout } from './useTimeout';
-import toastError from '../utils/toastError';
-
+import { useAuthContext } from '../context/AuthContext';
 import { ticketApi } from '../api';
 
-// const reducer = (state, action) => {
-//   if (action.type === "LOAD_WHATSAPPS") {
-//     const whatsApps = action.payload;
-//     return [...whatsApps];
-//   }
+type Connection = {
+  id: string;
+  status: string;
+  updatedAt: string;
+  qrcode?: string;
+  retries: number;
+  userId?: number;
+};
 
-//   if (action.type === "UPDATE_WHATSAPPS") {
-//     const whatsApp = action.payload;
-//     const whatsAppIndex = state.findIndex(s => s.id === whatsApp.id);
+type Action =
+  | { type: 'LOAD_WHATSAPPS'; payload: Connection }
+  | { type: 'UPDATE_WHATSAPPS'; payload: Connection }
+  | { type: 'DELETE_WHATSAPPS'; payload: string }
+  | { type: 'RESET' };
 
-//     if (whatsAppIndex !== -1) {
-//       state[whatsAppIndex] = whatsApp;
-//       return [...state];
-//     } else {
-//       return [whatsApp, ...state];
-//     }
-//   }
+const initialState: Connection[] = [];
 
-//   if (action.type === "UPDATE_SESSION") {
-//     const whatsApp = action.payload;
-//     const whatsAppIndex = state.findIndex(s => s.id === whatsApp.id);
+const reducer = (state: Connection[], action: Action): Connection[] => {
+  switch (action.type) {
+    case 'LOAD_WHATSAPPS':
+      return [...state, action.payload];
+    case 'UPDATE_WHATSAPPS':
+      const whatsApp = action.payload;
+      let whatsAppIndex;
+      whatsAppIndex = state.findIndex((s) => s.id === whatsApp.id);
+      if (whatsAppIndex !== -1) {
+        state[whatsAppIndex].status = whatsApp.status;
+        state[whatsAppIndex].updatedAt = whatsApp.updatedAt;
+        state[whatsAppIndex].qrcode = whatsApp.qrcode;
+        state[whatsAppIndex].retries = whatsApp.retries;
+        return [...state];
+      }
+      return [...state];
+    case 'DELETE_WHATSAPPS':
+      const whatsAppId = action.payload;
+      whatsAppIndex = state.findIndex((s) => s.id === whatsAppId);
+      if (whatsAppIndex !== -1) {
+        state.splice(whatsAppIndex, 1);
+      }
+      return [...state];
+    case 'RESET':
+      return [];
+    default:
+      return state;
+  }
+};
 
-//     if (whatsAppIndex !== -1) {
-//       state[whatsAppIndex].status = whatsApp.status;
-//       state[whatsAppIndex].updatedAt = whatsApp.updatedAt;
-//       state[whatsAppIndex].qrcode = whatsApp.qrcode;
-//       state[whatsAppIndex].retries = whatsApp.retries;
-//       return [...state];
-//     } else {
-//       return [...state];
-//     }
-//   }
-
-//   if (action.type === "DELETE_WHATSAPPS") {
-//     const whatsAppId = action.payload;
-
-//     const whatsAppIndex = state.findIndex(s => s.id === whatsAppId);
-
-//     if (whatsAppIndex !== -1) {
-//       state.splice(whatsAppIndex, 1);
-//     }
-//     return [...state];
-//   }
-
-//   if (action.type === "RESET") {
-//     return [];
-//   }
-// };
-
-type Props = {
+type ConnectionsFilteredProps = {
+  user: User;
+  isAdmin: boolean;
+  isMaster: boolean;
   connections: Connection[];
-  count: number;
-  hasMore: boolean;
 };
 
-export type UseConnectionsReturn = {
-  connections: Connection[];
-  loading: boolean;
-  hasMore: boolean;
-};
-
-const initialState: UseConnectionsReturn = {
-  connections: [],
-  loading: true,
-  hasMore: false,
-};
+const connectionsFiltered = ({ user, isAdmin, isMaster, connections }: ConnectionsFilteredProps) =>
+  connections.filter(
+    (connection) => isMaster || connection.userId === Number(isAdmin ? user.customer : user.id)
+  );
 
 const useConnections = () => {
-  // const [whatsApps, dispatch] = useReducer(reducer, []);
-  const [state, setState] = useState(initialState);
+  const [connections, dispatch] = useReducer(reducer, initialState);
   const [loading, setLoading] = useState(true);
-  const { user, isMaster } = useContext(AuthContext);
+  const { user, isAdmin, isMaster } = useAuthContext();
 
-  const fetchConnections = useCallback(async () => {
-    try {
-      const { data } = await ticketApi.get<Props>('/whatsapp/');
-      const { connections: allConnections, count, hasMore } = data;
-      const connections = allConnections.filter((connection) => {
-        console.log('connection: ', connection);
+  useEffect(() => {
+    if (loading) {
+      const fetchConnections = async () => {
+        try {
+          // TODO: implement param find by user and admin, if master return all
+          const { data: connections } = await ticketApi.get<Connection[]>('/whatsapp/');
 
-        // return isMaster ?
-      });
+          dispatch({ type: 'RESET' });
 
-      // const whatsAppData = data.filter(allConnections => {
-      //   return user?.customer === "master"
-      //     ? allConnections
-      //     : allConnections?.user?.id === user?.id ||
-      //         allConnections?.user?.name === user?.name ||
-      //         allConnections?.user?.email === user?.email ||
-      //         allConnections?.userId.toString() === user?.customer;
-      // });
-      // dispatch({ type: "LOAD_WHATSAPPS", payload: whatsAppData });
+          console.log(
+            '🚀 ~ fetchConnections ~ user: ',
+            user,
+            ' isAdmin: ',
+            isAdmin,
+            ' isMaster: ',
+            isMaster
+          );
 
-      setState({
-        connections,
-        loading: false,
-        hasMore: connections.length > 0,
-      });
-    } catch (err) {
-      setState((prev) => ({ ...prev, loading: false }));
-      toastError(err);
+          const filteredConnections = connectionsFiltered({ user, isAdmin, isMaster, connections });
+
+          filteredConnections.forEach((connection: Connection) => {
+            dispatch({ type: 'LOAD_WHATSAPPS', payload: connection });
+          });
+
+          setLoading(false);
+        } catch (error) {
+          console.error('Error fetching Connections:', error);
+          setLoading(false);
+        }
+      };
+      fetchConnections();
     }
-  }, []);
+  }, [user, isAdmin, isMaster]);
 
-  useTimeout(fetchConnections);
-  // useEffect(() => {
-  //   const socket = openSocket(process.env.REACT_APP_BACKEND_URL);
+  // const addConnection = async (connectionData: any) => {
+  //   try {
+  //     const { data } = await ticketApi.post<any>('/whatsapp/', connectionData);
+  //     dispatch({ type: 'LOAD_WHATSAPPS', payload: data });
+  //   } catch (error) {
+  //     console.error('Error adding Connection:', error);
+  //   }
+  // };
 
-  //   socket.on("whatsapp", data => {
-  //     if (data.action === "update") {
-  //       dispatch({ type: "UPDATE_WHATSAPPS", payload: data.whatsapp });
-  //     }
-  //   });
+  const updateConnection = async (whatsAppId: string, whatsAppData: any) => {
+    try {
+      const { data } = await ticketApi.put<any>(`/whatsapp/${whatsAppId}`, whatsAppData);
+      dispatch({ type: 'UPDATE_WHATSAPPS', payload: data });
+    } catch (error) {
+      console.error('Error updating WhatsApp:', error);
+    }
+  };
 
-  //   socket.on("whatsapp", data => {
-  //     if (data.action === "delete") {
-  //       dispatch({ type: "DELETE_WHATSAPPS", payload: data.whatsappId });
-  //     }
-  //   });
+  const deleteConnection = async (whatsAppId: string) => {
+    try {
+      await ticketApi.delete(`/whatsapp/${whatsAppId}`);
+      dispatch({ type: 'DELETE_WHATSAPPS', payload: whatsAppId });
+    } catch (error) {
+      console.error('Error deleting Connection:', error);
+    }
+  };
 
-  //   socket.on("whatsappSession", data => {
-  //     if (data.action === "update") {
-  //       dispatch({ type: "UPDATE_SESSION", payload: data.session });
-  //     }
-  //   });
-
-  //   return () => {
-  //     socket.disconnect();
-  //   };
-  // }, []);
-
-  // return { whatsApps, loading };
-  return state;
+  return {
+    connections,
+    loading,
+    hasMore: connections.length > 0,
+    // addConnection,
+    updateConnection,
+    deleteConnection,
+  };
 };
 
 export default useConnections;

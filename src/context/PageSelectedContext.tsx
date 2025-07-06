@@ -9,6 +9,14 @@ const PageSelectedContext = createContext<PageSelectedContextType | undefined>(u
 
 const homePage = 'Home';
 
+const usePageSelectedContext = () => {
+  const context = React.useContext(PageSelectedContext);
+  if (context === undefined) {
+    throw new Error('usePageSelectedContext must be used within a PageSelectedProvider');
+  }
+  return context;
+};
+
 export const PageSelectedProvider = ({ children }: ChildrenProps) => {
   const [pageSelected, setPageSelected] = useState<string>(homePage);
 
@@ -19,4 +27,4 @@ export const PageSelectedProvider = ({ children }: ChildrenProps) => {
   );
 };
 
-export default PageSelectedContext;
+export { PageSelectedContext, usePageSelectedContext };

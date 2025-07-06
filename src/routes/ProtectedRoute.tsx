@@ -1,8 +1,10 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 
-import { AuthContext } from '../context/AuthContext';
+import { useAuthContext } from '../context/AuthContext';
 import BackdropLoading from '../components/loading/BackdropLoading';
+
+import { useLocalStorage } from '../hooks/useLocalStorage';
 
 interface RouteProps {
   component?: React.ComponentType<any>;
@@ -18,14 +20,20 @@ const ProtectedRoute: React.FC<RouteProps> = ({
   adminOnly = false,
   ...rest
 }) => {
-  const { isAuth, isAdmin, loading } = useContext(AuthContext);
+  const { isAuth, isAdmin, loading, token } = useAuthContext();
+
   const location = useLocation();
+  // const { clear } = useLocalStorage();
 
   const renderContent = () => {
     if (loading) return <BackdropLoading />;
 
     // Se é uma rota privada e o usuário não está autenticado
-    if (isPrivate && !isAuth) {
+    const hasToken = token !== '';
+
+    if (isPrivate && !hasToken) {
+      console.log('🚀 ~ renderContent ~ isPrivate:', isPrivate);
+      // clear();
       return <Navigate to="/login" state={{ from: location }} replace />;
     }
 

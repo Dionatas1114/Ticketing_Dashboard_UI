@@ -1,61 +1,45 @@
 import { useState, useEffect } from 'react';
 import toastError from '../utils/toastError';
 
-// Definir as chaves permitidas usando um array constante
-const STORAGE_KEYS = ['token', 'customer', 'i18nextLng', 'theme'] as const;
+const storageKey = 'data';
 
-// Tipo baseado no array constante
-export type StorageKey = (typeof STORAGE_KEYS)[number];
+export type DataProps = {
+  user: User;
+  token: string;
+};
 
-// Interface para o retorno do hook
-export interface UseLocalStorageReturn {
-  getValue: (key: StorageKey) => string | null;
-  setValue: (key: StorageKey, value: string) => void;
-  clear: () => void;
-}
-
-// Hook principal
-export function useLocalStorage(): UseLocalStorageReturn {
-  const [storage, setStorage] = useState<Record<StorageKey, string | null>>(() => {
-    const initial: Record<StorageKey, string | null> = {} as Record<StorageKey, string | null>;
-    STORAGE_KEYS.forEach((key) => {
-      initial[key] = localStorage.getItem(key);
-    });
-    return initial;
+export function useLocalStorage() {
+  const [data, setData] = useState<string | null>(() => {
+    try {
+      return localStorage.getItem(storageKey);
+    } catch (error) {
+      toastError(error);
+      return null;
+    }
   });
 
-  // Atualizar estado quando o localStorage mudar
   useEffect(() => {
-    const handleStorage = (event: StorageEvent) => {
-      if (event.key && STORAGE_KEYS.includes(event.key as StorageKey)) {
-        const newValue = event.newValue || null;
-        setStorage((prev) => ({
-          ...prev,
-          [event.key as StorageKey]: newValue,
-        }));
-      }
+    const handleStorage = (e: StorageEvent) => {
+      if (e.key === storageKey) setData(e.newValue || null);
     };
 
     window.addEventListener('storage', handleStorage);
     return () => window.removeEventListener('storage', handleStorage);
   }, []);
 
-  const getValue = (key: StorageKey): string | null => {
+  const getValue = (): string | null => {
     try {
-      return localStorage.getItem(key);
+      return localStorage.getItem(storageKey);
     } catch (error) {
       toastError(error);
       return null;
     }
   };
 
-  const setValue = (key: StorageKey, value: string): void => {
+  const setValue = (value: string): void => {
     try {
-      localStorage.setItem(key, value);
-      setStorage((prev) => ({
-        ...prev,
-        [key]: value,
-      }));
+      localStorage.setItem(storageKey, value);
+      setData(value);
     } catch (error) {
       toastError(error);
     }
@@ -63,15 +47,8 @@ export function useLocalStorage(): UseLocalStorageReturn {
 
   const clear = (): void => {
     try {
-      STORAGE_KEYS.forEach((key) => localStorage.removeItem(key));
-      setStorage(() => {
-        const newStorage: Record<StorageKey, string | null> = {} as Record<
-          StorageKey,
-          string | null
-        >;
-        STORAGE_KEYS.forEach((key) => (newStorage[key] = null));
-        return newStorage;
-      });
+      localStorage.removeItem(storageKey);
+      setData(null);
     } catch (error) {
       toastError(error);
     }

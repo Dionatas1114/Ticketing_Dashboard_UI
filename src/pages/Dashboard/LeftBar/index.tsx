@@ -20,8 +20,8 @@ import {
 import Router from '../../../components/router';
 import Weather from '../../../components/weather';
 
-import { AuthContext } from '../../../context/AuthContext';
-import PageSelectedContext from '../../../context/PageSelectedContext';
+import { useAuthContext } from '../../../context/AuthContext';
+import { usePageSelectedContext } from '../../../context/PageSelectedContext';
 
 import { i18n } from '../../../translate/i18n';
 
@@ -53,11 +53,8 @@ const secondaryListPages: PageType[] = [
 const homePage = mainListPages[0];
 
 export default function MenuContent() {
-  const context = React.useContext(PageSelectedContext);
-  if (!context) throw new Error('Error with PageSelectedProvider');
-  const { pageSelected, setPageSelected } = context;
-
-  const { isAdmin } = React.useContext(AuthContext);
+  const { pageSelected, setPageSelected } = usePageSelectedContext();
+  const { isAdmin } = useAuthContext();
 
   const navigate = useNavigate();
   const navigateToPage = (route: string) => navigate(`/dash/${route}`);

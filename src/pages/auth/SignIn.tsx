@@ -43,7 +43,7 @@ const initialValues: SignInType = {
 
 export default function SignIn(props: { disableCustomTheme?: boolean }) {
   const navigateTo = useNavigate();
-  const { HandleLogin } = useAuth();
+  const { handleLogin } = useAuth();
 
   const { handleSubmit, resetForm, handleChange, values, isSubmitting, touched, errors } =
     useFormik<SignInType>({
@@ -53,7 +53,7 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
         setTimeout(async () => {
           setSubmitting(false);
           console.log('useFormik values: ', values);
-          await HandleLogin(values);
+          await handleLogin(values);
           resetForm();
           navigateTo('/dash');
         }, 500);

@@ -1,9 +1,22 @@
 import React from 'react';
 import { Box, Button, Typography, Card } from '@mui/material';
 import QrCodeIcon from '@mui/icons-material/QrCode';
+
+import QRCodeComponent from '../../../../../components/qrcode';
+
+import { useConnectionContext } from '../../../../../context/ConnectionsContext';
+
 import { i18n } from '../../../../../translate/i18n';
 
 export default function QRCode() {
+  const [qrCode, setQrCode] = React.useState('');
+
+  const { connections } = useConnectionContext();
+  const handleGenerateQrCode = () => {
+    console.log('🚀 ~ handleGenerateQrCode ~ connections[0].qrcode:', connections[0].qrcode);
+    setQrCode(connections[0].qrcode || '');
+  };
+
   return (
     <Card
       sx={{
@@ -48,16 +61,27 @@ export default function QRCode() {
           alignItems: 'center',
           justifyContent: 'center',
           borderRadius: 2,
+          pt: 1,
           mb: 3,
         }}
       >
         <Typography variant="caption" color="text.secondary">
-          <QrCodeIcon sx={{ width: 150, height: 150 }} />
+          {qrCode ? (
+            <QRCodeComponent value={qrCode} />
+          ) : (
+            <QrCodeIcon sx={{ width: 150, height: 150 }} />
+          )}
         </Typography>
       </Box>
 
       {/* Botão de geração do QR Code */}
-      <Button fullWidth variant="contained" color="primary" sx={{ textTransform: 'none' }}>
+      <Button
+        fullWidth
+        variant="contained"
+        color="primary"
+        sx={{ textTransform: 'none' }}
+        onClick={handleGenerateQrCode}
+      >
         {i18n.t('connections.qrcodeModal.generateQrCode')}
       </Button>
     </Card>

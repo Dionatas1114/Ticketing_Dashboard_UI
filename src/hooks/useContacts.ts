@@ -1,6 +1,6 @@
-import { useState, useCallback, useContext } from 'react';
+import { useState, useCallback } from 'react';
 
-import { AuthContext } from '../context/AuthContext';
+import { useAuthContext } from '../context/AuthContext';
 import { useTimeout } from './useTimeout';
 import useAuth from './useAuth';
 
@@ -38,7 +38,7 @@ const getTicketUserId = (contact: Contact) => contact?.tickets?.[0]?.userId;
 const useContacts = (): UseContactsReturn => {
   const [state, setState] = useState(initialState);
 
-  const { user, isMaster } = useContext(AuthContext);
+  const { user, isMaster } = useAuthContext();
 
   const fetchContacts = useCallback(async () => {
     try {
