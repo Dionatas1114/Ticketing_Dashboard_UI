@@ -17,73 +17,72 @@ import {
 // import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
 // import HelpRoundedIcon from '@mui/icons-material/HelpRounded';
 
-import Router from '../../../components/router';
-import Weather from '../../../components/weather';
-
 import { useAuthContext } from '../../../context/AuthContext';
 import { usePageSelectedContext } from '../../../context/PageSelectedContext';
-
+import Router from '../../../components/router';
+import Weather from '../../../components/weather';
 import { i18n } from '../../../translate/i18n';
 
 type PageType = {
-  text: string;
-  route: string;
-  icon: React.JSX.Element;
+  readonly route: string;
+  readonly icon: React.JSX.Element;
+};
+
+const homePage: PageType = {
+  route: 'home',
+  icon: <HomeRoundedIcon />,
 };
 
 const mainListPages: PageType[] = [
-  { text: 'Home', route: 'home', icon: <HomeRoundedIcon /> },
-  { text: 'Tickets', route: 'tickets', icon: <WhatsAppIcon /> },
-  { text: 'Contacts', route: 'contacts', icon: <ContactPageIcon /> },
+  homePage,
+  { route: 'tickets', icon: <WhatsAppIcon /> },
+  { route: 'contacts', icon: <ContactPageIcon /> },
 ];
 
 const adminListPages: PageType[] = [
-  { text: 'Quick Answers', route: 'quick-answers', icon: <AssignmentIcon /> },
-  { text: 'Users', route: 'users', icon: <PeopleRoundedIcon /> },
-  { text: 'Connections', route: 'connections', icon: <ConnectionIcon /> },
-  { text: 'Queues', route: 'queues', icon: <QueueIcon /> },
+  { route: 'quickAnswers', icon: <AssignmentIcon /> },
+  { route: 'users', icon: <PeopleRoundedIcon /> },
+  { route: 'connections', icon: <ConnectionIcon /> },
+  { route: 'queues', icon: <QueueIcon /> },
 ];
 
 const secondaryListPages: PageType[] = [
-  { text: 'Settings', route: 'settings', icon: <SettingsRoundedIcon /> },
-  // { text: 'About', icon: <InfoRoundedIcon /> },
-  // { text: 'Feedback', icon: <HelpRoundedIcon /> },
+  { route: 'settings', icon: <SettingsRoundedIcon /> },
+  // { route: 'About', icon: <InfoRoundedIcon /> },
+  // { route: 'Feedback', icon: <HelpRoundedIcon /> },
 ];
 
-const homePage = mainListPages[0];
+const renderPages = (
+  pages: PageType[],
+  pageSelected: string,
+  handleSelectPage: (page: PageType) => void
+) =>
+  pages.map((page) => (
+    <ListItem key={page.route} disablePadding sx={{ display: 'block' }}>
+      <Router
+        to={page.route}
+        selected={page.route === pageSelected}
+        onClick={() => handleSelectPage(page)}
+      >
+        <ListItemIcon>{page.icon}</ListItemIcon>
+        <ListItemText primary={i18n.t(`mainDrawer.listItems.${page.route}`)} />
+      </Router>
+    </ListItem>
+  ));
 
 export default function MenuContent() {
   const { pageSelected, setPageSelected } = usePageSelectedContext();
   const { isAdmin } = useAuthContext();
-
   const navigate = useNavigate();
+
   const navigateToPage = (route: string) => navigate(`/dash/${route}`);
-
-  const mainPages = React.useMemo(() => mainListPages, []);
-  const adminPages = React.useMemo(() => adminListPages, []);
-  const secondaryPages = React.useMemo(() => secondaryListPages, []);
-
   React.useEffect(() => {
-    if (pageSelected === homePage.text) navigateToPage(homePage.route);
+    if (pageSelected === homePage.route) navigateToPage(homePage.route);
   }, [pageSelected, navigate]);
 
   const handleSelectPage = (page: PageType) => {
-    if (page.text !== pageSelected) setPageSelected(page.text);
+    if (page.route !== pageSelected) setPageSelected(page.route);
   };
-
-  const renderPages = (pages: PageType[]) =>
-    pages.map((page) => (
-      <ListItem key={page.route} disablePadding sx={{ display: 'block' }}>
-        <Router
-          to={page.route}
-          selected={page.text === pageSelected}
-          onClick={() => handleSelectPage(page)}
-        >
-          <ListItemIcon>{page.icon}</ListItemIcon>
-          <ListItemText primary={page.text} />
-        </Router>
-      </ListItem>
-    ));
 
   return (
     <Stack sx={{ flexGrow: 1, p: 1, justifyContent: 'space-between' }}>
@@ -91,14 +90,14 @@ export default function MenuContent() {
         <Typography variant="h6" sx={{ mt: 0, mb: 1.5 }}>
           {i18n.t('mainDrawer.listItems.main')}
         </Typography>
-        {renderPages(mainPages)}
+        {renderPages(mainListPages, pageSelected, handleSelectPage)}
 
         {isAdmin && (
           <>
             <Typography variant="h6" sx={{ mb: 0, mt: 1.5 }}>
               {i18n.t('mainDrawer.listItems.administration')}
             </Typography>
-            {renderPages(adminPages)}
+            {renderPages(adminListPages, pageSelected, handleSelectPage)}
           </>
         )}
       </List>
@@ -107,7 +106,7 @@ export default function MenuContent() {
       <Weather sx={{ mb: 2 }} />
 
       {/* Secondary list: Settings, About, Feedback */}
-      <List dense>{renderPages(secondaryPages)}</List>
+      <List dense>{renderPages(secondaryListPages, pageSelected, handleSelectPage)}</List>
     </Stack>
   );
 }

@@ -31,7 +31,7 @@ const AppRoutes = () => (
         <Route path="home" element={<Protected isPrivate element={<Home />} />} />
         <Route path="tickets" element={<Protected isPrivate element={<Tickets />} />} />
         <Route path="contacts" element={<Protected isPrivate element={<Contacts />} />} />
-        <Route path="quick-answers" element={<Protected isPrivate element={<QuickAnswers />} />} />
+        <Route path="quickAnswers" element={<Protected isPrivate element={<QuickAnswers />} />} />
 
         {/* Admin routes */}
         <Route path="users" element={<Protected isPrivate adminOnly element={<Users />} />} />

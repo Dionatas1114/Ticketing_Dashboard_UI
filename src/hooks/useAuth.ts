@@ -159,21 +159,21 @@ const useAuth = () => {
   //   // refreshToken();
   // }, []);
 
-  useEffect(() => {
-    const socket = openSocket(baseURL);
-    socket.on('connect', () => {
-      console.log('Socket connected');
-    });
-    socket.on('user', (data) => {
-      if (data.action === 'update' && data.user.id === state.user.id) {
-        setState((prev) => ({ ...prev, user: data.user }));
-      }
-    });
+  // useEffect(() => {
+  //   const socket = openSocket(baseURL);
+  //   socket.on('connect', () => {
+  //     console.log('Socket connected');
+  //   });
+  //   socket.on('user', (data) => {
+  //     if (data.action === 'update' && data.user.id === state.user.id) {
+  //       setState((prev) => ({ ...prev, user: data.user }));
+  //     }
+  //   });
 
-    return () => {
-      socket.disconnect();
-    };
-  }, [state.user]);
+  //   return () => {
+  //     socket.disconnect();
+  //   };
+  // }, [state.user]);
 
   // useEffect(() => {
   //   let refreshInterval: NodeJS.Timeout;
