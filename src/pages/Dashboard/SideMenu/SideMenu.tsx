@@ -28,11 +28,7 @@ export default function SideMenu() {
         },
       }}
     >
-      <UserProfile
-        name="Riley Carter"
-        email="riley@email.com"
-        avatarUrl="/static/images/avatar/7.jpg"
-      />
+      <UserProfile />
       <Divider />
       <MenuContent />
     </Drawer>
