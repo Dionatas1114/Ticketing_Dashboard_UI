@@ -1,4 +1,4 @@
-import openSocket from 'socket.io-client';
+// import openSocket from 'socket.io-client';
 import axios from 'axios';
 
 const baseURL = import.meta.env.VITE_API_URL || 'https://localhost:3000/';
@@ -6,7 +6,7 @@ const weatherKey = import.meta.env.VITE_APP_WEATHER_API_KEY || '';
 const weatherBaseURL = import.meta.env.VITE_APP_WEATHER_API_URL || '';
 const city = import.meta.env.VITE_APP_WEATHER_API_CITY || 'Parobe';
 
-const socket = openSocket();
+// const socket = openSocket();
 
 const clientInstance = (
   baseURL: string,
@@ -25,4 +25,4 @@ const clientInstance = (
 const ticketApi = clientInstance(baseURL);
 const weatherApi = clientInstance(weatherBaseURL);
 
-export { ticketApi, weatherApi, baseURL, weatherBaseURL, weatherKey, city, socket };
+export { ticketApi, weatherApi, baseURL, weatherBaseURL, weatherKey, city };

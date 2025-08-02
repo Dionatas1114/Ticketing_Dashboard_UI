@@ -1,8 +1,11 @@
+import * as React from 'react';
 import { DataGrid, GridRowsProp, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 
 import SessionLabel from './labels/SessionLabel';
 import EditLabel from './labels/EditLabel';
 import StatusLabel, { Status } from './labels/StatusLabel';
+
+import { useConnectionContext } from '../../../../../context/ConnectionsContext';
 
 const columns: GridColDef[] = [
   { field: 'userName', headerName: 'User Name', flex: 1.5, minWidth: 200 },
@@ -31,21 +34,29 @@ const columns: GridColDef[] = [
   },
 ];
 
-const rows: GridRowsProp = [
-  {
-    id: 1,
-    userName: 'Homepage Overview',
-    status: 'Online',
-    // session: <Button variant="outlined">Outlined</Button>,
-    // actions: 212423,
-  },
-];
+// const rows: GridRowsProp = [
+//   {
+//     id: 1,
+//     userName: 'Homepage Overview',
+//     status: 'Online',
+//     // session: <Button variant="outlined">Outlined</Button>,
+//     // actions: 212423,
+//   },
+// ];
+
+const defaultProps = {
+  variant: 'outlined',
+  size: 'small',
+};
 
 export default function Grid() {
-  const defaultProps = {
-    variant: 'outlined',
-    size: 'small',
-  };
+  const { connections } = useConnectionContext();
+
+  const rows: GridRowsProp = connections.map(({ id, name: userName, status }) => ({
+    id,
+    userName,
+    status,
+  }));
 
   return (
     <DataGrid

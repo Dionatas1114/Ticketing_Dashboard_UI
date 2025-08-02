@@ -45,7 +45,7 @@ const initialValues: SignUpType = {
 
 export default function SignUp(props: { disableCustomTheme?: boolean }) {
   const navigateTo = useNavigate();
-  const { HandleSignUp } = useAuth();
+  const { handleSignUp } = useAuth();
 
   const { handleSubmit, resetForm, handleChange, values, isSubmitting, touched, errors } =
     useFormik<SignUpType>({
@@ -56,7 +56,7 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
         setTimeout(async () => {
           setSubmitting(false);
           console.log('useFormik values: ', values);
-          await HandleSignUp(values);
+          await handleSignUp(values);
           resetForm();
           navigateTo('/');
         }, 500);

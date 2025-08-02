@@ -17,79 +17,71 @@ import {
 // import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
 // import HelpRoundedIcon from '@mui/icons-material/HelpRounded';
 
+import { useAuthContext } from '../../../context/AuthContext';
+import { usePageSelectedContext } from '../../../context/PageSelectedContext';
 import Router from '../../../components/router';
 import Weather from '../../../components/weather';
-
-import ItemSelectedContext from '../../../context/MenuItemSelectedContext';
-
 import { i18n } from '../../../translate/i18n';
 
-type RouteType = {
-  text: string;
-  route: string;
-  icon: React.JSX.Element;
+type PageType = {
+  readonly route: string;
+  readonly icon: React.JSX.Element;
 };
 
-const mainListItems: RouteType[] = [
-  { text: 'Home', route: 'home', icon: <HomeRoundedIcon /> },
-  { text: 'Tickets', route: 'tickets', icon: <WhatsAppIcon /> },
-  { text: 'Contacts', route: 'contacts', icon: <ContactPageIcon /> },
-  { text: 'Quick Answers', route: 'quick-answers', icon: <AssignmentIcon /> },
-  // if user is admin
-  { text: 'Users', route: 'users', icon: <PeopleRoundedIcon /> },
-  { text: 'Connections', route: 'connections', icon: <ConnectionIcon /> },
-  { text: 'Queues', route: 'queues', icon: <QueueIcon /> },
+const homePage: PageType = {
+  route: 'home',
+  icon: <HomeRoundedIcon />,
+};
+
+const mainListPages: PageType[] = [
+  homePage,
+  { route: 'tickets', icon: <WhatsAppIcon /> },
+  { route: 'contacts', icon: <ContactPageIcon /> },
 ];
 
-const secondaryListItems: RouteType[] = [
-  { text: 'Settings', route: 'settings', icon: <SettingsRoundedIcon /> },
-  // { text: 'About', icon: <InfoRoundedIcon /> },
-  // { text: 'Feedback', icon: <HelpRoundedIcon /> },
+const adminListPages: PageType[] = [
+  { route: 'quickAnswers', icon: <AssignmentIcon /> },
+  { route: 'users', icon: <PeopleRoundedIcon /> },
+  { route: 'connections', icon: <ConnectionIcon /> },
+  { route: 'queues', icon: <QueueIcon /> },
 ];
 
-const homePage = mainListItems[0];
+const secondaryListPages: PageType[] = [
+  { route: 'settings', icon: <SettingsRoundedIcon /> },
+  // { route: 'About', icon: <InfoRoundedIcon /> },
+  // { route: 'Feedback', icon: <HelpRoundedIcon /> },
+];
+
+const renderPages = (
+  pages: PageType[],
+  pageSelected: string,
+  handleSelectPage: (page: PageType) => void
+) =>
+  pages.map((page) => (
+    <ListItem key={page.route} disablePadding sx={{ display: 'block' }}>
+      <Router
+        to={page.route}
+        selected={page.route === pageSelected}
+        onClick={() => handleSelectPage(page)}
+      >
+        <ListItemIcon>{page.icon}</ListItemIcon>
+        <ListItemText primary={i18n.t(`mainDrawer.listItems.${page.route}`)} />
+      </Router>
+    </ListItem>
+  ));
 
 export default function MenuContent() {
+  const { pageSelected, setPageSelected } = usePageSelectedContext();
+  const { isAdmin } = useAuthContext();
   const navigate = useNavigate();
 
-  const memoMainListItems = React.useMemo(() => mainListItems, []);
-  const memoSecondaryListItems = React.useMemo(() => secondaryListItems, []);
-
-  const firstMainListItems = memoMainListItems.slice(0, 3); // Until "Contacts"
-  const secondMainListItems = memoMainListItems.slice(3); // From "Quick Answers" onwards
-
-  const context = React.useContext(ItemSelectedContext);
-  if (!context) throw new Error('Error with ItemSelectedProvider');
-  const { itemSelected, setItemSelected } = context;
-
-  const navigateToRoute = (route: string) => navigate(`/dash/${route}`);
-
+  const navigateToPage = (route: string) => navigate(`/dash/${route}`);
   React.useEffect(() => {
-    if (itemSelected === homePage.text) {
-      navigateToRoute(homePage.route);
-    }
-  }, [itemSelected, navigate]);
+    if (pageSelected === homePage.route) navigateToPage(homePage.route);
+  }, [pageSelected, navigate]);
 
-  const handleItemClick = ({ text, route }: RouteType) => {
-    if (text !== itemSelected) {
-      setItemSelected(text);
-      setTimeout(() => navigateToRoute(route), 0);
-    }
-  };
-
-  const renderListItems = (items: RouteType[]) => {
-    return items.map((item) => (
-      <ListItem key={item.route} disablePadding sx={{ display: 'block' }}>
-        <Router
-          to={item.route}
-          selected={item.text === itemSelected}
-          onClick={() => handleItemClick(item)}
-        >
-          <ListItemIcon>{item.icon}</ListItemIcon>
-          <ListItemText primary={item.text} />
-        </Router>
-      </ListItem>
-    ));
+  const handleSelectPage = (page: PageType) => {
+    if (page.route !== pageSelected) setPageSelected(page.route);
   };
 
   return (
@@ -98,18 +90,23 @@ export default function MenuContent() {
         <Typography variant="h6" sx={{ mt: 0, mb: 1.5 }}>
           {i18n.t('mainDrawer.listItems.main')}
         </Typography>
-        {renderListItems(firstMainListItems)}
-        <Typography variant="h6" sx={{ mb: 0, mt: 1.5 }}>
-          {i18n.t('mainDrawer.listItems.administration')}
-        </Typography>
-        {renderListItems(secondMainListItems)} {/* //TODO: Render only if user is admin */}
+        {renderPages(mainListPages, pageSelected, handleSelectPage)}
+
+        {isAdmin && (
+          <>
+            <Typography variant="h6" sx={{ mb: 0, mt: 1.5 }}>
+              {i18n.t('mainDrawer.listItems.administration')}
+            </Typography>
+            {renderPages(adminListPages, pageSelected, handleSelectPage)}
+          </>
+        )}
       </List>
 
       {/* Weather component */}
       <Weather sx={{ mb: 2 }} />
 
       {/* Secondary list: Settings, About, Feedback */}
-      <List dense>{renderListItems(memoSecondaryListItems)}</List>
+      <List dense>{renderPages(secondaryListPages, pageSelected, handleSelectPage)}</List>
     </Stack>
   );
 }

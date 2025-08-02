@@ -14,23 +14,29 @@ import {
 
 import { LogoutRounded as LogoutIcon, MoreVertRounded as MoreVertIcon } from '@mui/icons-material';
 
-import MenuButton from '../../../components/button/MenuButton';
+import MenuButton from '../../../components/button/menuButton';
+
+import useAuth from '../../../hooks/useAuth';
+import { i18n } from '../../../translate/i18n';
 
 const MuiMenuItem = styled(MenuItem)({
   margin: '2px 0',
 });
 
 export default function OptionsMenu() {
+  const { handleLogout } = useAuth();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-
   const open = Boolean(anchorEl);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
-    setAnchorEl(null);
+  const handleCloseMenu = () => setAnchorEl(null);
+
+  const handleClickLogout = () => {
+    handleCloseMenu();
+    handleLogout();
   };
 
   return (
@@ -42,8 +48,8 @@ export default function OptionsMenu() {
         anchorEl={anchorEl}
         id="menu"
         open={open}
-        onClose={handleClose}
-        onClick={handleClose}
+        onClose={handleCloseMenu}
+        onClick={handleCloseMenu}
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
         sx={{
@@ -58,14 +64,14 @@ export default function OptionsMenu() {
           },
         }}
       >
-        <MuiMenuItem onClick={handleClose}>Profile</MuiMenuItem>
-        <MuiMenuItem onClick={handleClose}>My account</MuiMenuItem>
+        <MuiMenuItem onClick={handleCloseMenu}>Profile</MuiMenuItem>
+        <MuiMenuItem onClick={handleCloseMenu}>My account</MuiMenuItem>
         <Divider />
-        <MuiMenuItem onClick={handleClose}>Add another account</MuiMenuItem>
-        <MuiMenuItem onClick={handleClose}>Settings</MuiMenuItem>
+        <MuiMenuItem onClick={handleCloseMenu}>Add another account</MuiMenuItem>
+        <MuiMenuItem onClick={handleCloseMenu}>Settings</MuiMenuItem>
         <Divider />
         <MuiMenuItem
-          onClick={handleClose}
+          onClick={handleClickLogout}
           sx={{
             [`& .${listItemIconClasses.root}`]: {
               ml: 'auto',
@@ -73,7 +79,7 @@ export default function OptionsMenu() {
             },
           }}
         >
-          <ListItemText>Logout</ListItemText>
+          <ListItemText>{i18n.t('mainDrawer.appBar.user.logout')}</ListItemText>
           <ListItemIcon>
             <LogoutIcon fontSize="small" />
           </ListItemIcon>

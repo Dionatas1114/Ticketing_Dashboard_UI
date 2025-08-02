@@ -3,8 +3,10 @@ import * as React from 'react';
 import { Button, Divider, Drawer, drawerClasses, Stack } from '@mui/material';
 import { LogoutRounded as LogoutIcon } from '@mui/icons-material';
 
+import { i18n } from '../../../translate/i18n';
+
 import Notifications from '../../../components/notifications';
-import UserProfile from '../../../components/UserProfile';
+import UserProfile from '../../../components/userProfile';
 import MenuContent from '../LeftBar';
 // import CardAlert from './CardAlert';
 
@@ -34,12 +36,7 @@ export default function SideMenuMobile({ open, toggleDrawer }: SideMenuMobilePro
         }}
       >
         <Stack direction="row" sx={{ p: 2, pb: 0, gap: 1 }}>
-          <UserProfile
-            name="Riley Carter"
-            email="riley@email.com"
-            avatarUrl="/static/images/avatar/7.jpg"
-            open
-          />
+          <UserProfile open />
           <Notifications />
         </Stack>
         <Divider />
@@ -50,7 +47,7 @@ export default function SideMenuMobile({ open, toggleDrawer }: SideMenuMobilePro
         {/* <CardAlert /> */}
         <Stack sx={{ p: 2 }}>
           <Button variant="outlined" fullWidth startIcon={<LogoutIcon />}>
-            Logout
+            {i18n.t('mainDrawer.appBar.user.logout')}
           </Button>
         </Stack>
       </Stack>
