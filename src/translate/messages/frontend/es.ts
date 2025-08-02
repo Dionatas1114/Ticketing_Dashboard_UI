@@ -294,13 +294,14 @@ const messages = {
       },
       mainDrawer: {
         listItems: {
-          dashboard: 'Dashboard',
+          home: 'Home',
           connections: 'Conexiones',
           tickets: 'Tickets',
           contacts: 'Contactos',
           quickAnswers: 'Respuestas rápidas',
           queues: 'Linhas',
           users: 'Usuarios',
+          settings: 'Configuración',
           main: 'Itens principales',
           administration: 'Administración',
         },

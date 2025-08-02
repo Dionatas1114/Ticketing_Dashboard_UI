@@ -7,7 +7,7 @@ type PageSelectedContextType = {
 
 const PageSelectedContext = createContext<PageSelectedContextType | undefined>(undefined);
 
-const homePage = 'Home';
+const homePage = 'home';
 
 const usePageSelectedContext = () => {
   const context = React.useContext(PageSelectedContext);
