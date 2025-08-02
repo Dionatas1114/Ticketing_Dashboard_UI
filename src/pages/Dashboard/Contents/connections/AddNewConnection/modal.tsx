@@ -45,10 +45,10 @@ const AddNewConnectionModal = ({
       initialValues,
       validationSchema: connectionSchema,
       onSubmit: ({ name, ...rest }, { setSubmitting }) => {
-        const values2 = { name: name.trim(), ...rest };
+        const values = { name: name.trim(), ...rest };
         setTimeout(async () => {
           setSubmitting(false);
-          console.log('HandleSaveConnection values2: ', values2);
+          console.log('HandleSaveConnection values: ', values);
           // await HandleSaveConnection(values);
           resetForm();
         }, 500);

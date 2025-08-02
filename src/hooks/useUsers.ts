@@ -1,8 +1,8 @@
-import { useState, useCallback, useContext } from 'react';
+import { useState, useCallback } from 'react';
 import { ticketApi as api } from '../api';
 import toastError from '../utils/toastError';
 import convertByTimeZone from '../utils/functions/convertByTimeZone';
-import { AuthContext } from '../context/AuthContext';
+// import { useAuthContext } from '../context/AuthContext';
 import { useTimeout } from './useTimeout';
 
 type UsersBase = {
@@ -26,7 +26,8 @@ const usersMocked: User[] = [
 ];
 
 const useUsers = (): UsersReturn => {
-  const { user: authUser } = useContext(AuthContext);
+  // const { user: authUser } = useAuthContext();
+  // console.log('🚀 ~ useUsers ~ authUser:', authUser);
 
   const [state, setState] = useState(initialState);
 

@@ -1,8 +1,8 @@
-import { useState, useCallback, useContext } from 'react';
+import { useState, useCallback } from 'react';
 import { ticketApi as api } from '../api';
 import toastError from '../utils/toastError';
 import convertByTimeZone from '../utils/functions/convertByTimeZone';
-import { AuthContext } from '../context/AuthContext';
+import { useAuthContext } from '../context/AuthContext';
 import { useTimeout } from './useTimeout';
 
 type UseQueuesReturn = {
@@ -24,7 +24,7 @@ const initialState: UseQueuesReturn = {
 // ];
 
 const useQueues = (): UseQueuesReturn => {
-  const { user } = useContext(AuthContext);
+  const { user } = useAuthContext();
 
   const [state, setState] = useState(initialState);
 

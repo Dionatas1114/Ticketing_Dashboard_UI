@@ -1,10 +1,13 @@
-import { useState, useCallback, useContext } from 'react';
-import { ticketApi as api } from '../api';
-import toastError from '../utils/toastError';
-import convertByTimeZone from '../utils/functions/convertByTimeZone';
-import { AuthContext } from '../context/AuthContext';
+import { useState, useCallback } from 'react';
+
+import { useAuthContext } from '../context/AuthContext';
 import { useTimeout } from './useTimeout';
 import useAuth from './useAuth';
+
+import toastError from '../utils/toastError';
+import convertByTimeZone from '../utils/functions/convertByTimeZone';
+
+import { ticketApi as api } from '../api';
 
 type Props = {
   contacts: Contact[];
@@ -33,11 +36,9 @@ const initialState: UseContactsReturn = {
 const getTicketUserId = (contact: Contact) => contact?.tickets?.[0]?.userId;
 
 const useContacts = (): UseContactsReturn => {
-  const { verifyIsMaster } = useAuth();
-  const { user } = useContext(AuthContext);
   const [state, setState] = useState(initialState);
 
-  const isMaster = verifyIsMaster(user as User);
+  const { user, isMaster } = useAuthContext();
 
   const fetchContacts = useCallback(async () => {
     try {
