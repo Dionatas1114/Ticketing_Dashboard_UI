@@ -148,6 +148,7 @@ const messages = {
           add: 'Adicionar Contato',
         },
         table: {
+          profile: 'Perfil',
           name: 'Nome',
           whatsapp: 'WhatsApp',
           email: 'Email',
